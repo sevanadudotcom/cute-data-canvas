@@ -141,7 +141,7 @@ export default function App() {
     // Pick up any existing session on first paint, then track changes.
     supabase.auth.getUser().then(({ data }) => setAuthUser(data.user ?? null));
 
-    const { data: sub } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    const { data: sub } = supabase.auth.onAuthStateChange(async (event, session) => {
       const user = session?.user ?? null;
       setAuthUser(user);
       if (user) {
@@ -149,6 +149,15 @@ export default function App() {
         const photo = userPhotoURL(user);
         if (name) setCitizenName(name);
         if (user.email) setCitizenEmail(user.email);
+        if (event === "SIGNED_IN") {
+          triggerToast(
+            language === "hi"
+              ? `स्वागत है, ${name || "नागरिक"}!`
+              : `Signed in as ${name || user.email || "citizen"}.`,
+            "success"
+          );
+        }
+
 
         // Upsert profile row (merge on user_id)
         try {
