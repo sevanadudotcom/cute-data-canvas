@@ -9,24 +9,24 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase } from "@/integrations/supabase/client";
-import type { User } from "@supabase/supabase-js";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 // Derive a display name + avatar from a Supabase user (Google populates
 // user_metadata.full_name / avatar_url; email/password falls back to email).
-function userDisplayName(user: User): string {
+function userDisplayName(user: SupabaseUser): string {
   const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
   return (
-    (typeof meta.full_name === "string" && meta.full_name) ||
-    (typeof meta.name === "string" && meta.name) ||
+    (typeof meta["full_name"] === "string" && meta["full_name"]) ||
+    (typeof meta["name"] === "string" && meta["name"]) ||
     user.email?.split("@")[0] ||
     "Citizen"
   );
 }
-function userPhotoURL(user: User): string {
+function userPhotoURL(user: SupabaseUser): string {
   const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
   return (
-    (typeof meta.avatar_url === "string" && meta.avatar_url) ||
-    (typeof meta.picture === "string" && meta.picture) ||
+    (typeof meta["avatar_url"] === "string" && meta["avatar_url"]) ||
+    (typeof meta["picture"] === "string" && meta["picture"]) ||
     ""
   );
 }
