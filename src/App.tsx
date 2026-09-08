@@ -206,11 +206,27 @@ export default function App() {
 
   const handleGoogleSignIn = async () => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      // Google blocks its consent screen inside an iframe (editor preview),
+      // so in that case get the URL and open it in a top-level tab instead.
+      const framed = typeof window !== "undefined" && window.top !== window.self;
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: window.location.origin },
+        options: {
+          redirectTo: window.location.origin,
+          skipBrowserRedirect: framed,
+          queryParams: { prompt: "select_account" },
+        },
       });
       if (error) throw error;
+      if (framed && data?.url) {
+        window.open(data.url, "_blank", "noopener,noreferrer");
+        triggerToast(
+          language === "hi"
+            ? "साइन इन नए टैब में खुला है।"
+            : "Sign-in opened in a new tab.",
+          "info"
+        );
+      }
       // Supabase OAuth redirects away; toast fires on return via onAuthStateChange.
     } catch (err) {
       console.error("Google Sign-In Error:", err);
@@ -220,6 +236,7 @@ export default function App() {
       );
     }
   };
+
 
   const handleGoogleSignOut = async () => {
     try {
