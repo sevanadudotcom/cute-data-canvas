@@ -135,7 +135,7 @@ export default function App() {
   });
 
   // Supabase Auth state
-  const [authUser, setAuthUser] = useState<User | null>(null);
+  const [authUser, setAuthUser] = useState<SupabaseUser | null>(null);
 
   useEffect(() => {
     // Pick up any existing session on first paint, then track changes.
