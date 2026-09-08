@@ -206,15 +206,16 @@ export default function App() {
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      triggerToast(
-        language === "hi" ? "Google से सफलतापूर्वक लॉगिन किया गया!" : "Signed in with Google successfully!", 
-        "success"
-      );
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: window.location.origin },
+      });
+      if (error) throw error;
+      // Supabase OAuth redirects away; toast fires on return via onAuthStateChange.
     } catch (err) {
       console.error("Google Sign-In Error:", err);
       triggerToast(
-        language === "hi" ? "लॉगिन विफल हुआ। कृपया पुनः प्रयास करें।" : "Google sign in failed. Please try again.", 
+        language === "hi" ? "लॉगिन विफल हुआ। कृपया पुनः प्रयास करें।" : "Google sign in failed. Please try again.",
         "error"
       );
     }
@@ -222,9 +223,10 @@ export default function App() {
 
   const handleGoogleSignOut = async () => {
     try {
-      await signOut(auth);
+      await supabase.auth.signOut();
+      setAuthUser(null);
       triggerToast(
-        language === "hi" ? "सफलतापूर्वक लॉगआउट किया गया।" : "Signed out successfully.", 
+        language === "hi" ? "सफलतापूर्वक लॉगआउट किया गया।" : "Signed out successfully.",
         "info"
       );
     } catch (err) {
@@ -247,23 +249,26 @@ export default function App() {
     });
 
     if (authUser && matchedService) {
-      const docRef = doc(db, "users", authUser.uid, "savedServices", serviceId);
-      const path = `users/${authUser.uid}/savedServices/${serviceId}`;
       try {
         if (isCurrentlySaved) {
-          await deleteDoc(docRef);
+          await supabase
+            .from("saved_services")
+            .delete()
+            .eq("user_id", authUser.id)
+            .eq("service_id", serviceId);
         } else {
-          await setDoc(docRef, {
-            id: serviceId,
-            userId: authUser.uid,
-            serviceId: serviceId,
-            serviceTitle: matchedService.title || "",
-            department: matchedService.department || "",
-            savedAt: new Date().toISOString()
-          });
+          await supabase
+            .from("saved_services")
+            .insert({
+              user_id: authUser.id,
+              service_id: serviceId,
+              service_title: matchedService.title || "",
+              department: matchedService.department || "",
+            });
         }
+        // realtime channel refreshes the list; nothing else to do here.
       } catch (err) {
-        handleFirestoreError(err, isCurrentlySaved ? OperationType.DELETE : OperationType.WRITE, path);
+        console.error("saved_services write error:", err);
       }
     }
   };
