@@ -1,24 +1,48 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ClientOnly } from "@tanstack/react-router";
+import React, { Suspense } from "react";
+import { LanguageProvider } from "@/LanguageContext";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const App = React.lazy(() => import("@/App"));
+
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "SewaNadu — Indian Central & State Citizen e-Service Directory" },
+      {
+        name: "description",
+        content:
+          "SewaNadu is an independent guide to Indian central and state citizen e-services: service dossiers, eligibility checks, document lists, RTI help and state governance bulletins.",
+      },
+      { property: "og:title", content: "SewaNadu — Citizen e-Service Directory for India" },
+      {
+        property: "og:description",
+        content:
+          "Explore Indian government services, eligibility, documents and grievance guidance in your language. Independent, non-governmental information portal.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Loading() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen flex items-center justify-center bg-[#FCFBF7] text-stone-500 text-sm font-medium">
+      Loading SewaNadu…
     </div>
+  );
+}
+
+function HomePage() {
+  return (
+    <ClientOnly fallback={<Loading />}>
+      <Suspense fallback={<Loading />}>
+        <LanguageProvider>
+          <App />
+        </LanguageProvider>
+      </Suspense>
+    </ClientOnly>
   );
 }

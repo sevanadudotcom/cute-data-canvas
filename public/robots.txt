@@ -1,14 +1,21 @@
+User-agent: *
+Allow: /
+
+# Common ad/verification crawlers - allow explicitly
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Twitterbot
-Allow: /
+# Sitemap: add the absolute URL (https://your-domain/sitemap.xml) once the site is published.
 
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: *
-Allow: /
