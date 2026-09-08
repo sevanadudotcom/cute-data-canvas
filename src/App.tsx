@@ -485,21 +485,17 @@ export default function App() {
         ? `[Service Feedback: ${feedbackService.title}] ${feedbackComment}`
         : feedbackComment;
 
-      // Save to Firestore serviceFeedbacks collection if configured
-      const feedbackPath = "serviceFeedbacks";
-      const fbId = "fb-" + Date.now();
+      // Persist feedback to Supabase (anon inserts are allowed by RLS)
       try {
-        await addDoc(collection(db, "serviceFeedbacks"), {
-          id: fbId,
-          userId: authUser ? authUser.uid : "anonymous",
-          userName: authUser ? (authUser.displayName || "Citizen") : "Anonymous Citizen",
-          serviceId: feedbackService ? feedbackService.id : "portal-general",
+        await supabase.from("service_feedback").insert({
+          user_id: authUser ? authUser.id : null,
+          user_name: authUser ? userDisplayName(authUser) : "Anonymous Citizen",
+          service_id: feedbackService ? feedbackService.id : "portal-general",
           rating: feedbackRating,
           comment: payloadComment.slice(0, 1000),
-          createdAt: new Date().toISOString()
         });
       } catch (fErr) {
-        console.warn("Firestore feedback save info:", fErr);
+        console.warn("Supabase feedback save info:", fErr);
       }
 
       const response = await fetch(getApiUrl("/api/eseva/feedback"), {
