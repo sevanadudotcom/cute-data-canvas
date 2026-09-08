@@ -8,21 +8,28 @@ import {
   ArrowUp, Home, ChevronRight, Scale, ClipboardCheck, Users, LogIn
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  onAuthStateChanged, 
-  signInWithPopup, 
-  signOut, 
-  User as FirebaseUser 
-} from "firebase/auth";
-import { 
-  collection, 
-  doc, 
-  setDoc, 
-  deleteDoc, 
-  onSnapshot, 
-  addDoc 
-} from "firebase/firestore";
-import { auth, db, googleProvider, handleFirestoreError, OperationType } from "./lib/firebase";
+import { supabase } from "@/integrations/supabase/client";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
+
+// Derive a display name + avatar from a Supabase user (Google populates
+// user_metadata.full_name / avatar_url; email/password falls back to email).
+function userDisplayName(user: SupabaseUser): string {
+  const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
+  return (
+    (typeof meta["full_name"] === "string" && meta["full_name"]) ||
+    (typeof meta["name"] === "string" && meta["name"]) ||
+    user.email?.split("@")[0] ||
+    "Citizen"
+  );
+}
+function userPhotoURL(user: SupabaseUser): string {
+  const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
+  return (
+    (typeof meta["avatar_url"] === "string" && meta["avatar_url"]) ||
+    (typeof meta["picture"] === "string" && meta["picture"]) ||
+    ""
+  );
+}
 
 // Local types and Components
 import { ESevaService, GrievanceRecord, ChatMessage } from "./types";
@@ -127,76 +134,88 @@ export default function App() {
     }
   });
 
-  // Firebase Auth state
-  const [authUser, setAuthUser] = useState<FirebaseUser | null>(null);
+  // Supabase Auth state
+  const [authUser, setAuthUser] = useState<SupabaseUser | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    // Pick up any existing session on first paint, then track changes.
+    supabase.auth.getUser().then(({ data }) => setAuthUser(data.user ?? null));
+
+    const { data: sub } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const user = session?.user ?? null;
       setAuthUser(user);
       if (user) {
-        if (user.displayName) setCitizenName(user.displayName);
+        const name = userDisplayName(user);
+        const photo = userPhotoURL(user);
+        if (name) setCitizenName(name);
         if (user.email) setCitizenEmail(user.email);
-        
-        // Save user profile document in Firestore
-        const userRef = doc(db, "users", user.uid);
+
+        // Upsert profile row (merge on user_id)
         try {
-          await setDoc(userRef, {
-            uid: user.uid,
-            email: user.email || "",
-            displayName: user.displayName || "",
-            photoURL: user.photoURL || "",
-            updatedAt: new Date().toISOString(),
-            createdAt: new Date().toISOString()
-          }, { merge: true });
+          await supabase
+            .from("profiles")
+            .upsert(
+              {
+                user_id: user.id,
+                email: user.email ?? "",
+                display_name: name,
+                photo_url: photo,
+              },
+              { onConflict: "user_id" },
+            );
         } catch (err) {
-          console.error("Error creating user profile in Firestore:", err);
+          console.error("Error saving profile to Supabase:", err);
         }
       }
     });
-    return () => unsubscribe();
+    return () => sub.subscription.unsubscribe();
   }, []);
 
-  // Sync saved services with Firestore when logged in
+  // Sync saved services with Supabase when logged in (initial fetch + realtime)
   useEffect(() => {
     if (!authUser) return;
 
-    const path = `users/${authUser.uid}/savedServices`;
-    const savedRef = collection(db, "users", authUser.uid, "savedServices");
-    
-    const unsubscribe = onSnapshot(savedRef, (snapshot) => {
-      const ids: string[] = [];
-      snapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        if (data.serviceId) {
-          ids.push(data.serviceId);
-        }
-      });
-      if (ids.length > 0) {
-        setSavedServiceIds(ids);
-        try {
-          localStorage.setItem("sewanadu_saved_services", JSON.stringify(ids));
-        } catch (err) {
-          console.error(err);
-        }
-      }
-    }, (error) => {
-      handleFirestoreError(error, OperationType.GET, path);
-    });
+    let cancelled = false;
+    const channel = supabase
+      .channel(`saved_services:${authUser.id}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "saved_services", filter: `user_id=eq.${authUser.id}` },
+        () => { void refresh(); },
+      )
+      .subscribe();
 
-    return () => unsubscribe();
+    async function refresh() {
+      const { data, error } = await supabase
+        .from("saved_services")
+        .select("service_id")
+        .eq("user_id", authUser!.id);
+      if (error) { console.error("saved_services load error:", error); return; }
+      if (cancelled) return;
+      const ids = (data ?? []).map((r) => r.service_id);
+      setSavedServiceIds(ids);
+      try { localStorage.setItem("sewanadu_saved_services", JSON.stringify(ids)); } catch (e) { console.error(e); }
+    }
+    void refresh();
+
+    return () => {
+      cancelled = true;
+      supabase.removeChannel(channel);
+    };
   }, [authUser]);
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      triggerToast(
-        language === "hi" ? "Google से सफलतापूर्वक लॉगिन किया गया!" : "Signed in with Google successfully!", 
-        "success"
-      );
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: window.location.origin },
+      });
+      if (error) throw error;
+      // Supabase OAuth redirects away; toast fires on return via onAuthStateChange.
     } catch (err) {
       console.error("Google Sign-In Error:", err);
       triggerToast(
-        language === "hi" ? "लॉगिन विफल हुआ। कृपया पुनः प्रयास करें।" : "Google sign in failed. Please try again.", 
+        language === "hi" ? "लॉगिन विफल हुआ। कृपया पुनः प्रयास करें।" : "Google sign in failed. Please try again.",
         "error"
       );
     }
@@ -204,9 +223,10 @@ export default function App() {
 
   const handleGoogleSignOut = async () => {
     try {
-      await signOut(auth);
+      await supabase.auth.signOut();
+      setAuthUser(null);
       triggerToast(
-        language === "hi" ? "सफलतापूर्वक लॉगआउट किया गया।" : "Signed out successfully.", 
+        language === "hi" ? "सफलतापूर्वक लॉगआउट किया गया।" : "Signed out successfully.",
         "info"
       );
     } catch (err) {
@@ -229,23 +249,26 @@ export default function App() {
     });
 
     if (authUser && matchedService) {
-      const docRef = doc(db, "users", authUser.uid, "savedServices", serviceId);
-      const path = `users/${authUser.uid}/savedServices/${serviceId}`;
       try {
         if (isCurrentlySaved) {
-          await deleteDoc(docRef);
+          await supabase
+            .from("saved_services")
+            .delete()
+            .eq("user_id", authUser.id)
+            .eq("service_id", serviceId);
         } else {
-          await setDoc(docRef, {
-            id: serviceId,
-            userId: authUser.uid,
-            serviceId: serviceId,
-            serviceTitle: matchedService.title || "",
-            department: matchedService.department || "",
-            savedAt: new Date().toISOString()
-          });
+          await supabase
+            .from("saved_services")
+            .insert({
+              user_id: authUser.id,
+              service_id: serviceId,
+              service_title: matchedService.title || "",
+              department: matchedService.department || "",
+            });
         }
+        // realtime channel refreshes the list; nothing else to do here.
       } catch (err) {
-        handleFirestoreError(err, isCurrentlySaved ? OperationType.DELETE : OperationType.WRITE, path);
+        console.error("saved_services write error:", err);
       }
     }
   };
@@ -462,21 +485,17 @@ export default function App() {
         ? `[Service Feedback: ${feedbackService.title}] ${feedbackComment}`
         : feedbackComment;
 
-      // Save to Firestore serviceFeedbacks collection if configured
-      const feedbackPath = "serviceFeedbacks";
-      const fbId = "fb-" + Date.now();
+      // Persist feedback to Supabase (anon inserts are allowed by RLS)
       try {
-        await addDoc(collection(db, "serviceFeedbacks"), {
-          id: fbId,
-          userId: authUser ? authUser.uid : "anonymous",
-          userName: authUser ? (authUser.displayName || "Citizen") : "Anonymous Citizen",
-          serviceId: feedbackService ? feedbackService.id : "portal-general",
+        await supabase.from("service_feedback").insert({
+          user_id: authUser ? authUser.id : null,
+          user_name: authUser ? userDisplayName(authUser) : "Anonymous Citizen",
+          service_id: feedbackService ? feedbackService.id : "portal-general",
           rating: feedbackRating,
           comment: payloadComment.slice(0, 1000),
-          createdAt: new Date().toISOString()
         });
       } catch (fErr) {
-        console.warn("Firestore feedback save info:", fErr);
+        console.warn("Supabase feedback save info:", fErr);
       }
 
       const response = await fetch(getApiUrl("/api/eseva/feedback"), {
@@ -890,33 +909,39 @@ export default function App() {
               </button>
             </div>
 
-            {/* Firebase Google Auth Button */}
+            {/* Google Auth Button (Supabase) */}
             {authUser ? (
-              <div className="flex items-center gap-1.5 bg-stone-100 dark:bg-slate-800 border border-stone-250 dark:border-slate-700 pl-1 pr-2 py-0.5 rounded-full select-none text-[10.5px]">
-                {authUser.photoURL ? (
-                  <img 
-                    src={authUser.photoURL} 
-                    alt={authUser.displayName || "User"} 
-                    className="w-5 h-5 rounded-full object-cover border border-stone-300" 
-                    referrerPolicy="no-referrer"
-                  />
-                ) : (
-                  <div className="w-5 h-5 rounded-full bg-blue-600 text-white font-black text-[9px] flex items-center justify-center">
-                    {(authUser.displayName || "U").charAt(0).toUpperCase()}
+              (() => {
+                const name = userDisplayName(authUser);
+                const photo = userPhotoURL(authUser);
+                return (
+                  <div className="flex items-center gap-1.5 bg-stone-100 dark:bg-slate-800 border border-stone-250 dark:border-slate-700 pl-1 pr-2 py-0.5 rounded-full select-none text-[10.5px]">
+                    {photo ? (
+                      <img
+                        src={photo}
+                        alt={name}
+                        className="w-5 h-5 rounded-full object-cover border border-stone-300"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <div className="w-5 h-5 rounded-full bg-blue-600 text-white font-black text-[9px] flex items-center justify-center">
+                        {name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <span className="font-bold text-stone-800 dark:text-stone-200 hidden lg:inline max-w-[90px] truncate">
+                      {name}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleGoogleSignOut}
+                      className="p-1 text-stone-500 hover:text-red-600 dark:hover:text-red-400 transition cursor-pointer border-0 bg-transparent"
+                      title={language === "hi" ? "लॉगआउट करें" : "Sign Out"}
+                    >
+                      <LogOut className="w-3 h-3" />
+                    </button>
                   </div>
-                )}
-                <span className="font-bold text-stone-800 dark:text-stone-200 hidden lg:inline max-w-[90px] truncate">
-                  {authUser.displayName || "Citizen"}
-                </span>
-                <button
-                  type="button"
-                  onClick={handleGoogleSignOut}
-                  className="p-1 text-stone-500 hover:text-red-600 dark:hover:text-red-400 transition cursor-pointer border-0 bg-transparent"
-                  title={language === "hi" ? "लॉगआउट करें" : "Sign Out"}
-                >
-                  <LogOut className="w-3 h-3" />
-                </button>
-              </div>
+                );
+              })()
             ) : (
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -924,7 +949,7 @@ export default function App() {
                 onClick={handleGoogleSignIn}
                 className="flex items-center gap-1.5 px-2.5 py-1 sm:py-1.5 rounded-full bg-white dark:bg-slate-900 border border-stone-250 hover:border-blue-500 text-stone-800 dark:text-stone-200 hover:text-blue-600 font-extrabold text-[10px] sm:text-[10.5px] shadow-3xs cursor-pointer select-none transition shrink-0"
                 title={language === "hi" ? "गूगल से लॉगिन करें" : "Sign in with Google"}
-                id="firebase-google-login-btn"
+                id="google-login-btn"
               >
                 <LogIn className="w-3 h-3 text-blue-600 shrink-0" />
                 <span>{language === "hi" ? "लॉगिन" : "Sign In"}</span>

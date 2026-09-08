@@ -14,7 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string
+          email: string
+          id: string
+          photo_url: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string
+          email?: string
+          id?: string
+          photo_url?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          email?: string
+          id?: string
+          photo_url?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      saved_services: {
+        Row: {
+          department: string
+          id: string
+          saved_at: string
+          service_id: string
+          service_title: string
+          user_id: string
+        }
+        Insert: {
+          department?: string
+          id?: string
+          saved_at?: string
+          service_id: string
+          service_title?: string
+          user_id: string
+        }
+        Update: {
+          department?: string
+          id?: string
+          saved_at?: string
+          service_id?: string
+          service_title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      service_feedback: {
+        Row: {
+          comment: string
+          created_at: string
+          id: string
+          rating: number
+          service_id: string
+          user_id: string | null
+          user_name: string
+        }
+        Insert: {
+          comment?: string
+          created_at?: string
+          id?: string
+          rating: number
+          service_id?: string
+          user_id?: string | null
+          user_name?: string
+        }
+        Update: {
+          comment?: string
+          created_at?: string
+          id?: string
+          rating?: number
+          service_id?: string
+          user_id?: string | null
+          user_name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
