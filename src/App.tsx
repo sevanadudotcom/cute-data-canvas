@@ -134,63 +134,74 @@ export default function App() {
     }
   });
 
-  // Firebase Auth state
-  const [authUser, setAuthUser] = useState<FirebaseUser | null>(null);
+  // Supabase Auth state
+  const [authUser, setAuthUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    // Pick up any existing session on first paint, then track changes.
+    supabase.auth.getUser().then(({ data }) => setAuthUser(data.user ?? null));
+
+    const { data: sub } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const user = session?.user ?? null;
       setAuthUser(user);
       if (user) {
-        if (user.displayName) setCitizenName(user.displayName);
+        const name = userDisplayName(user);
+        const photo = userPhotoURL(user);
+        if (name) setCitizenName(name);
         if (user.email) setCitizenEmail(user.email);
-        
-        // Save user profile document in Firestore
-        const userRef = doc(db, "users", user.uid);
+
+        // Upsert profile row (merge on user_id)
         try {
-          await setDoc(userRef, {
-            uid: user.uid,
-            email: user.email || "",
-            displayName: user.displayName || "",
-            photoURL: user.photoURL || "",
-            updatedAt: new Date().toISOString(),
-            createdAt: new Date().toISOString()
-          }, { merge: true });
+          await supabase
+            .from("profiles")
+            .upsert(
+              {
+                user_id: user.id,
+                email: user.email ?? "",
+                display_name: name,
+                photo_url: photo,
+              },
+              { onConflict: "user_id" },
+            );
         } catch (err) {
-          console.error("Error creating user profile in Firestore:", err);
+          console.error("Error saving profile to Supabase:", err);
         }
       }
     });
-    return () => unsubscribe();
+    return () => sub.subscription.unsubscribe();
   }, []);
 
-  // Sync saved services with Firestore when logged in
+  // Sync saved services with Supabase when logged in (initial fetch + realtime)
   useEffect(() => {
     if (!authUser) return;
 
-    const path = `users/${authUser.uid}/savedServices`;
-    const savedRef = collection(db, "users", authUser.uid, "savedServices");
-    
-    const unsubscribe = onSnapshot(savedRef, (snapshot) => {
-      const ids: string[] = [];
-      snapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        if (data.serviceId) {
-          ids.push(data.serviceId);
-        }
-      });
-      if (ids.length > 0) {
-        setSavedServiceIds(ids);
-        try {
-          localStorage.setItem("sewanadu_saved_services", JSON.stringify(ids));
-        } catch (err) {
-          console.error(err);
-        }
-      }
-    }, (error) => {
-      handleFirestoreError(error, OperationType.GET, path);
-    });
+    let cancelled = false;
+    const channel = supabase
+      .channel(`saved_services:${authUser.id}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "saved_services", filter: `user_id=eq.${authUser.id}` },
+        () => { void refresh(); },
+      )
+      .subscribe();
 
-    return () => unsubscribe();
+    async function refresh() {
+      const { data, error } = await supabase
+        .from("saved_services")
+        .select("service_id")
+        .eq("user_id", authUser!.id);
+      if (error) { console.error("saved_services load error:", error); return; }
+      if (cancelled) return;
+      const ids = (data ?? []).map((r) => r.service_id);
+      setSavedServiceIds(ids);
+      try { localStorage.setItem("sewanadu_saved_services", JSON.stringify(ids)); } catch (e) { console.error(e); }
+    }
+    void refresh();
+
+    return () => {
+      cancelled = true;
+      supabase.removeChannel(channel);
+    };
   }, [authUser]);
 
   const handleGoogleSignIn = async () => {
