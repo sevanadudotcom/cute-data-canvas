@@ -8,21 +8,28 @@ import {
   ArrowUp, Home, ChevronRight, Scale, ClipboardCheck, Users, LogIn
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  onAuthStateChanged, 
-  signInWithPopup, 
-  signOut, 
-  User as FirebaseUser 
-} from "firebase/auth";
-import { 
-  collection, 
-  doc, 
-  setDoc, 
-  deleteDoc, 
-  onSnapshot, 
-  addDoc 
-} from "firebase/firestore";
-import { auth, db, googleProvider, handleFirestoreError, OperationType } from "./lib/firebase";
+import { supabase } from "@/integrations/supabase/client";
+import type { User } from "@supabase/supabase-js";
+
+// Derive a display name + avatar from a Supabase user (Google populates
+// user_metadata.full_name / avatar_url; email/password falls back to email).
+function userDisplayName(user: User): string {
+  const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
+  return (
+    (typeof meta.full_name === "string" && meta.full_name) ||
+    (typeof meta.name === "string" && meta.name) ||
+    user.email?.split("@")[0] ||
+    "Citizen"
+  );
+}
+function userPhotoURL(user: User): string {
+  const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
+  return (
+    (typeof meta.avatar_url === "string" && meta.avatar_url) ||
+    (typeof meta.picture === "string" && meta.picture) ||
+    ""
+  );
+}
 
 // Local types and Components
 import { ESevaService, GrievanceRecord, ChatMessage } from "./types";
