@@ -16,3 +16,5 @@ Sevanadu civic-services portal (uploaded zip) moved into this Supabase-connected
 ## Open / blocked
 - Google sign-in requires user to add Google Cloud OAuth credentials in Supabase Auth → Providers → Google (BYO Supabase; Lovable-managed Google not available for external Supabase).
 - (resolved) Pre-existing strict-TS warnings in Sevanadu's own files (LanguageContext, AdSenseUnit, ServiceDossier, SavedServices, ESevaServiceList) under this project's stricter tsconfig — do not block Vite dev/build (esbuild strips types); not in scope to fix unless asked.
+
+- [x] Weekly report page at /reports (saved services, feedback, sign-ins + CSV export)

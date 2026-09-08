@@ -15,6 +15,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ApiPublicEsevaSplatRouteImport } from './routes/api/public/eseva/$'
@@ -49,6 +50,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/cookies': typeof CookiesRoute
   '/disclaimer': typeof DisclaimerRoute
   '/privacy': typeof PrivacyRoute
+  '/reports': typeof ReportsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/api/public/eseva/$': typeof ApiPublicEsevaSplatRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/cookies': typeof CookiesRoute
   '/disclaimer': typeof DisclaimerRoute
   '/privacy': typeof PrivacyRoute
+  '/reports': typeof ReportsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/api/public/eseva/$': typeof ApiPublicEsevaSplatRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/cookies': typeof CookiesRoute
   '/disclaimer': typeof DisclaimerRoute
   '/privacy': typeof PrivacyRoute
+  '/reports': typeof ReportsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/api/public/eseva/$': typeof ApiPublicEsevaSplatRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/cookies'
     | '/disclaimer'
     | '/privacy'
+    | '/reports'
     | '/sitemap.xml'
     | '/terms'
     | '/api/public/eseva/$'
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/cookies'
     | '/disclaimer'
     | '/privacy'
+    | '/reports'
     | '/sitemap.xml'
     | '/terms'
     | '/api/public/eseva/$'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/cookies'
     | '/disclaimer'
     | '/privacy'
+    | '/reports'
     | '/sitemap.xml'
     | '/terms'
     | '/api/public/eseva/$'
@@ -142,6 +154,7 @@ export interface RootRouteChildren {
   CookiesRoute: typeof CookiesRoute
   DisclaimerRoute: typeof DisclaimerRoute
   PrivacyRoute: typeof PrivacyRoute
+  ReportsRoute: typeof ReportsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApiPublicEsevaSplatRoute: typeof ApiPublicEsevaSplatRoute
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -222,6 +242,7 @@ const rootRouteChildren: RootRouteChildren = {
   CookiesRoute: CookiesRoute,
   DisclaimerRoute: DisclaimerRoute,
   PrivacyRoute: PrivacyRoute,
+  ReportsRoute: ReportsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApiPublicEsevaSplatRoute: ApiPublicEsevaSplatRoute,
