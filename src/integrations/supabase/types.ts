@@ -71,6 +71,33 @@ export type Database = {
         }
         Relationships: []
       }
+      service_categories: {
+        Row: {
+          code: string
+          created_at: string
+          description: string
+          display_order: number
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          description?: string
+          display_order?: number
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          description?: string
+          display_order?: number
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       service_feedback: {
         Row: {
           comment: string
@@ -100,6 +127,59 @@ export type Database = {
           user_name?: string
         }
         Relationships: []
+      }
+      services: {
+        Row: {
+          category: string
+          created_at: string
+          department: string
+          description: string
+          documents_required: string[]
+          fees: number
+          id: string
+          is_curated: boolean
+          jurisdiction: string
+          processing_time: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          department?: string
+          description?: string
+          documents_required?: string[]
+          fees?: number
+          id: string
+          is_curated?: boolean
+          jurisdiction?: string
+          processing_time?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          department?: string
+          description?: string
+          documents_required?: string[]
+          fees?: number
+          id?: string
+          is_curated?: boolean
+          jurisdiction?: string
+          processing_time?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "services_category_fkey"
+            columns: ["category"]
+            isOneToOne: false
+            referencedRelation: "service_categories"
+            referencedColumns: ["code"]
+          },
+        ]
       }
     }
     Views: {
