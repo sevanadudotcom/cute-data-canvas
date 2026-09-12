@@ -2080,8 +2080,32 @@ export default function ESevaServiceList({
                           <span>{language === "hi" ? `औसत प्रसंस्करण समय: ${service.processingTime}` : `Avg. Processing Time: ${service.processingTime}`}</span>
                         </span>
                       </div>
+                      {service.localTitle && (
+                        <p className="text-[11px] font-bold text-stone-700 leading-snug" lang={service.localLanguage?.code}>
+                          {service.localTitle}
+                          {service.localLanguage && (
+                            <span className="ml-1.5 text-[9px] font-mono font-semibold text-stone-400 uppercase">{service.localLanguage.nativeLabel}</span>
+                          )}
+                        </p>
+                      )}
                       <p className="text-[11px] text-stone-500 leading-normal line-clamp-2">{getDisplayDescription(service)}</p>
+                      {service.contact && (
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 pt-1 text-[9.5px] font-mono font-semibold text-stone-500">
+                          <a
+                            href={service.contact.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-[#1D4ED8] hover:underline"
+                          >
+                            {service.contact.portalName}
+                          </a>
+                          <span className="text-stone-300">|</span>
+                          <span>☎ {service.contact.helpline}</span>
+                        </div>
+                      )}
                     </div>
+
 
                     {showProTips[service.id] && (
                       <motion.div
