@@ -1,4 +1,7 @@
 import { ESevaService } from "./types";
+import { JURISDICTION_LANGUAGE, LANGUAGES, localTemplateName } from "./services-localization";
+import { contactForService } from "./services-contacts";
+
 
 export const JURISDICTIONS = [
   { id: "andhra-pradesh", name: "Andhra Pradesh", short: "AP", isUT: false, deptPrefix: "Department of Revenue & IT, Govt of Andhra Pradesh" },
@@ -744,13 +747,13 @@ export const generateBulkServices = (): ESevaService[] => {
 
   // 1. Seed existing curated high-priority services first
   curatedServices.forEach(s => {
-    registry.set(s.id, s);
+    registry.set(s.id, { ...s, contact: contactForService(s.id) });
   });
 
   // 2. Add other central services
   otherCentralServices.forEach(s => {
     if (!registry.has(s.id)) {
-      registry.set(s.id, s);
+      registry.set(s.id, { ...s, contact: contactForService(s.id) });
     }
   });
 
@@ -770,6 +773,11 @@ export const generateBulkServices = (): ESevaService[] => {
       const customizedDept = `${state.deptPrefix}, Civil Welfare Bureau`;
       const customizedTitle = `${state.name} ${tmpl.titleTemplate}`;
 
+      // Local-language name, e.g. "தமிழ்நாடு வதிவிடச் சான்றிதழ்"
+      const langMeta = JURISDICTION_LANGUAGE[state.id];
+      const langInfo = langMeta ? LANGUAGES[langMeta.lang] : undefined;
+      const localTmpl = langMeta ? localTemplateName(tmpl.suffix, langMeta.lang) : undefined;
+
       const generatedService: ESevaService = {
         id: slug,
         title: customizedTitle,
@@ -778,7 +786,15 @@ export const generateBulkServices = (): ESevaService[] => {
         category: tmpl.category,
         processingTime: tmpl.processingTime,
         fees: tmpl.fees,
-        documentsRequired: [...tmpl.documentsRequired]
+        documentsRequired: [...tmpl.documentsRequired],
+        jurisdictionId: state.id,
+        contact: contactForService(slug, state.id),
+        ...(langMeta && localTmpl && langInfo
+          ? {
+              localTitle: `${langMeta.localName} ${localTmpl}`,
+              localLanguage: { code: langInfo.code, label: langInfo.name, nativeLabel: langInfo.nativeName },
+            }
+          : {}),
       };
 
       registry.set(slug, generatedService);
@@ -787,6 +803,7 @@ export const generateBulkServices = (): ESevaService[] => {
 
   return Array.from(registry.values());
 };
+
 
 // Ready-to-go single complete array of services!
 export const officialServicesList: ESevaService[] = generateBulkServices();

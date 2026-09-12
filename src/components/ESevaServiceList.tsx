@@ -1743,7 +1743,9 @@ export default function ESevaServiceList({
       }
       const matchesSearch = s.title.toLowerCase().includes(activeSearchQuery.toLowerCase()) || 
                             s.department.toLowerCase().includes(activeSearchQuery.toLowerCase()) ||
+                            (s.localTitle ? s.localTitle.toLowerCase().includes(activeSearchQuery.toLowerCase()) : false) ||
                             s.description.toLowerCase().includes(activeSearchQuery.toLowerCase());
+
       return matchesCategory && matchesSearch;
     });
 
@@ -2080,8 +2082,32 @@ export default function ESevaServiceList({
                           <span>{language === "hi" ? `औसत प्रसंस्करण समय: ${service.processingTime}` : `Avg. Processing Time: ${service.processingTime}`}</span>
                         </span>
                       </div>
+                      {service.localTitle && (
+                        <p className="text-[11px] font-bold text-stone-700 leading-snug" lang={service.localLanguage?.code}>
+                          {service.localTitle}
+                          {service.localLanguage && (
+                            <span className="ml-1.5 text-[9px] font-mono font-semibold text-stone-400 uppercase">{service.localLanguage.nativeLabel}</span>
+                          )}
+                        </p>
+                      )}
                       <p className="text-[11px] text-stone-500 leading-normal line-clamp-2">{getDisplayDescription(service)}</p>
+                      {service.contact && (
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 pt-1 text-[9.5px] font-mono font-semibold text-stone-500">
+                          <a
+                            href={service.contact.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-[#1D4ED8] hover:underline"
+                          >
+                            {service.contact.portalName}
+                          </a>
+                          <span className="text-stone-300">|</span>
+                          <span>☎ {service.contact.helpline}</span>
+                        </div>
+                      )}
                     </div>
+
 
                     {showProTips[service.id] && (
                       <motion.div
@@ -2778,6 +2804,14 @@ export default function ESevaServiceList({
                                   <span>{language === "hi" ? "प्रो-टिप" : "Pro-Tip"}</span>
                                 </button>
                               </div>
+                              {service.localTitle && (
+                                <p className="text-xs font-bold text-stone-700 leading-snug" lang={service.localLanguage?.code}>
+                                  {service.localTitle}
+                                  {service.localLanguage && (
+                                    <span className="ml-1.5 text-[9px] font-mono font-semibold text-stone-400 uppercase">{service.localLanguage.nativeLabel}</span>
+                                  )}
+                                </p>
+                              )}
                               <span className="text-[10px] font-semibold text-stone-400 block tracking-tight line-clamp-1 uppercase font-mono">
                                 {service.department}
                               </span>
@@ -2793,6 +2827,23 @@ export default function ESevaServiceList({
                             <p className="text-xs text-stone-605 leading-relaxed">
                               {getDisplayDescription(service)}
                             </p>
+
+                            {service.contact && (
+                              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-mono font-semibold text-stone-500">
+                                <a
+                                  href={service.contact.website}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="text-[#1D4ED8] hover:underline"
+                                >
+                                  {service.contact.portalName}
+                                </a>
+                                <span className="text-stone-300">|</span>
+                                <span>☎ {service.contact.helpline}</span>
+                              </div>
+                            )}
+
 
                             {showProTips[service.id] && (
                               <motion.div
