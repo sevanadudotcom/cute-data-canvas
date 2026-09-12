@@ -1,4 +1,7 @@
 import { ESevaService } from "./types";
+import { JURISDICTION_LANGUAGE, LANGUAGES, localTemplateName } from "./services-localization";
+import { contactForService } from "./services-contacts";
+
 
 export const JURISDICTIONS = [
   { id: "andhra-pradesh", name: "Andhra Pradesh", short: "AP", isUT: false, deptPrefix: "Department of Revenue & IT, Govt of Andhra Pradesh" },
