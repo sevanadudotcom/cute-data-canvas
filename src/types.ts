@@ -8,7 +8,21 @@ export interface ESevaService {
   fees: number;
   documentsRequired: string[];
   launchUrlName?: string;
+  /** Service name in the jurisdiction's official local language */
+  localTitle?: string;
+  /** Language code + label for localTitle, e.g. { code: "ta", label: "தமிழ்" } */
+  localLanguage?: { code: string; label: string; nativeLabel: string };
+  /** Jurisdiction (state/UT) id, empty for central services */
+  jurisdictionId?: string;
+  /** Official portal + helpline details */
+  contact?: {
+    portalName: string;
+    website: string;
+    helpline: string;
+    verified: boolean;
+  };
 }
+
 
 export interface ServiceApplication {
   id: string;
