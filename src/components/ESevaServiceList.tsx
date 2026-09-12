@@ -1743,7 +1743,9 @@ export default function ESevaServiceList({
       }
       const matchesSearch = s.title.toLowerCase().includes(activeSearchQuery.toLowerCase()) || 
                             s.department.toLowerCase().includes(activeSearchQuery.toLowerCase()) ||
+                            (s.localTitle ? s.localTitle.toLowerCase().includes(activeSearchQuery.toLowerCase()) : false) ||
                             s.description.toLowerCase().includes(activeSearchQuery.toLowerCase());
+
       return matchesCategory && matchesSearch;
     });
 
