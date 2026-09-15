@@ -738,6 +738,69 @@ const STATE_TEMPLATES = [
     processingTime: "Instant / Real-time registry",
     fees: 0,
     documentsRequired: ["Primary secondary qualification transcripts", "Residential domicile copy", "Aadhaar Card with photo verification"]
+  },
+  {
+    suffix: "health-insurance",
+    titleTemplate: "State Health Insurance Enrolment",
+    descTemplate: "Cashless hospitalisation cover enrolment under the state/UT health assurance scheme for eligible families, complementing Ayushman Bharat PM-JAY.",
+    category: "HEALTH" as const,
+    processingTime: "10-15 Working Days",
+    fees: 0,
+    documentsRequired: ["Ration card / family card copy", "Aadhaar of all family members", "Income certificate", "Passport-size photographs"]
+  },
+  {
+    suffix: "medical-fitness",
+    titleTemplate: "Medical Fitness Certificate",
+    descTemplate: "Official medical fitness certificate issued by government hospital boards for employment, driving licence, and institutional admission requirements in the state/UT.",
+    category: "HEALTH" as const,
+    processingTime: "1-3 Working Days",
+    fees: 50,
+    documentsRequired: ["Aadhaar Card", "Recent passport-size photographs", "Requisition letter from employer / institution"]
+  },
+  {
+    suffix: "kisan-credit",
+    titleTemplate: "Kisan Credit Card (KCC)",
+    descTemplate: "Short-term crop loan and working capital facility for farmers issued through the state/UT agriculture department's partner banks at subsidised interest.",
+    category: "AGRICULTURE" as const,
+    processingTime: "15-30 Working Days",
+    fees: 0,
+    documentsRequired: ["Land ownership records / tenancy proof", "Aadhaar Card", "Passport-size photographs", "Bank account details"]
+  },
+  {
+    suffix: "farmer-reg",
+    titleTemplate: "Farmer Registration (PM-KISAN Facilitation)",
+    descTemplate: "Registration of cultivators on the state/UT farmer registry, enabling PM-KISAN instalments, crop insurance, and subsidy benefit transfers.",
+    category: "AGRICULTURE" as const,
+    processingTime: "7-15 Working Days",
+    fees: 0,
+    documentsRequired: ["Land records / survey number extract", "Aadhaar Card", "Bank passbook copy", "Passport-size photograph"]
+  },
+  {
+    suffix: "soil-health",
+    titleTemplate: "Soil Health Card",
+    descTemplate: "Free soil-sample testing and printed nutrient report guiding farmers in the state/UT on balanced fertiliser and crop selection.",
+    category: "AGRICULTURE" as const,
+    processingTime: "15-20 Working Days",
+    fees: 0,
+    documentsRequired: ["Land records / survey number", "Aadhaar Card", "Contact mobile number"]
+  },
+  {
+    suffix: "school-tc",
+    titleTemplate: "School Transfer Certificate",
+    descTemplate: "Counter-signed transfer certificate for students moving between schools or boards within or outside the state/UT.",
+    category: "EDUCATION" as const,
+    processingTime: "3-7 Working Days",
+    fees: 10,
+    documentsRequired: ["Application from parent / guardian", "Last report card copy", "Aadhaar of student"]
+  },
+  {
+    suffix: "merit-scholarship",
+    titleTemplate: "State Merit Scholarship",
+    descTemplate: "Merit-based scholarship for top-performing board-examination students pursuing higher education, funded by the state/UT education department.",
+    category: "EDUCATION" as const,
+    processingTime: "30-45 Working Days",
+    fees: 0,
+    documentsRequired: ["Board examination marksheet", "Income certificate", "College admission proof", "Bank account details", "Aadhaar Card"]
   }
 ];
 
