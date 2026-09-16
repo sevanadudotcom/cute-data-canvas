@@ -302,9 +302,6 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
 
   return (
     <div className="bg-white border border-stone-200 rounded-2xl p-5 shadow-xs space-y-4 relative overflow-hidden" id="national-dev-fund-widget">
-      {/* Decorative Warm subtle corner glow */}
-      <span className="absolute -top-10 -right-10 w-24 h-24 bg-brand-coral/5 rounded-full blur-xl pointer-events-none"></span>
-
       {/* Header Banner info */}
       <div className="border-b border-stone-100 pb-3 flex items-start justify-between gap-2">
         <div className="space-y-1">

@@ -999,7 +999,7 @@ export default function App() {
                   "info"
                 );
               }}
-              className="flex items-center justify-center p-1.5 sm:p-2 rounded-full border border-stone-250 bg-white hover:bg-stone-50 text-stone-600 hover:text-stone-900 shadow-3xs cursor-pointer select-none transition shrink-0"
+              className="hidden min-[410px]:flex items-center justify-center p-1.5 sm:p-2 rounded-lg border border-border-subtle bg-brand-cream-card hover:bg-public-blue-soft text-charcoal-500 hover:text-public-blue shadow-3xs cursor-pointer select-none transition shrink-0"
               title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode Suitable for Low-light"}
               id="theme-mode-toggle"
             >
