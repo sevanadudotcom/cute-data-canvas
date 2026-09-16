@@ -674,7 +674,7 @@ export default function App() {
       {/* 1. Tricolor Top Visual Accent Strip */}
       <div className="h-[3px] w-full grid grid-cols-3 select-none" aria-hidden="true">
         <span className="bg-civic-amber" />
-        <span className="bg-background" />
+        <span className="bg-brand-cream-card" />
         <span className="bg-emerald-600" />
       </div>
 
@@ -1018,7 +1018,7 @@ export default function App() {
               }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowLauncher(true)}
-              className="relative hidden md:flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-public-blue hover:bg-public-blue-hover text-white font-display font-bold rounded-lg text-[10px] sm:text-[10.5px] uppercase tracking-wider transition duration-200 cursor-pointer select-none shrink-0 border-0 outline-hidden shadow-2xs"
+              className="relative hidden md:flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-public-blue hover:bg-public-blue-hover text-on-primary font-display font-bold rounded-lg text-[10px] sm:text-[10.5px] uppercase tracking-wider transition duration-200 cursor-pointer select-none shrink-0 border-0 outline-hidden shadow-2xs"
               id="header-start-btn"
               title={language === "hi" ? "त्वरित पहुंच केंद्र खोलें" : "Launch Quick Access Hub"}
             >

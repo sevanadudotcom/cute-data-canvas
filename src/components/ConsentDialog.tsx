@@ -94,7 +94,7 @@ export default function ConsentDialog({
                 onClick={() => handleToggle("privacy")}
                 className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
                   preferences.privacy 
-                    ? "bg-public-blue border-public-blue text-white" 
+                    ? "bg-public-blue border-public-blue text-on-primary" 
                     : "border-border-subtle hover:border-public-blue bg-brand-cream-card"
                 }`}
               >
@@ -134,7 +134,7 @@ export default function ConsentDialog({
                 onClick={() => handleToggle("terms")}
                 className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
                   preferences.terms 
-                    ? "bg-public-blue border-public-blue text-white" 
+                    ? "bg-public-blue border-public-blue text-on-primary" 
                     : "border-border-subtle hover:border-public-blue bg-brand-cream-card"
                 }`}
               >
@@ -174,7 +174,7 @@ export default function ConsentDialog({
                 onClick={() => handleToggle("cookies")}
                 className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
                   preferences.cookies 
-                    ? "bg-public-blue border-public-blue text-white" 
+                    ? "bg-public-blue border-public-blue text-on-primary" 
                     : "border-border-subtle hover:border-public-blue bg-brand-cream-card"
                 }`}
               >
@@ -214,7 +214,7 @@ export default function ConsentDialog({
                 onClick={() => handleToggle("disclaimer")}
                 className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
                   preferences.disclaimer 
-                    ? "bg-public-blue border-public-blue text-white" 
+                    ? "bg-public-blue border-public-blue text-on-primary" 
                     : "border-border-subtle hover:border-public-blue bg-brand-cream-card"
                 }`}
               >
@@ -264,7 +264,7 @@ export default function ConsentDialog({
                 onClick={onAccept}
                 className={`w-full sm:w-auto px-5 py-2.5 rounded-xl font-sans font-black text-xs leading-none transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                   preferences.privacy && preferences.terms && preferences.cookies && preferences.disclaimer
-                    ? "bg-public-blue hover:bg-public-blue-hover text-white active:scale-95 shadow-sm"
+                    ? "bg-public-blue hover:bg-public-blue-hover text-on-primary active:scale-95 shadow-sm"
                     : "bg-stone-200 dark:bg-stone-800 text-stone-400 dark:text-stone-500 cursor-not-allowed"
                 }`}
               >

@@ -50,11 +50,12 @@ svg {
   --color-charcoal-700: oklch(0.372 0.03 256.8);
   --color-charcoal-500: oklch(0.52 0.025 256.8);
   --color-border-subtle: oklch(0.88 0.012 247.9);
-  --color-public-blue: oklch(0.43 0.095 218.8);
-  --color-public-blue-hover: oklch(0.36 0.085 218.8);
-  --color-public-blue-soft: oklch(0.95 0.025 218.8);
-  --color-civic-amber: oklch(0.62 0.13 69.8);
-  --color-civic-amber-soft: oklch(0.96 0.035 82);
+  --public-blue: oklch(0.43 0.095 218.8);
+  --public-blue-hover: oklch(0.36 0.085 218.8);
+  --public-blue-soft: oklch(0.95 0.025 218.8);
+  --civic-amber: oklch(0.62 0.13 69.8);
+  --civic-amber-soft: oklch(0.96 0.035 82);
+  --on-primary: oklch(1 0 0);
   --color-slate-450: #64748B;
   --color-slate-455: #475569;
 }
@@ -68,11 +69,12 @@ html.dark {
   --color-charcoal-700: oklch(0.87 0.018 248);
   --color-charcoal-500: oklch(0.72 0.025 248);
   --color-border-subtle: oklch(0.34 0.035 238);
-  --color-public-blue: oklch(0.72 0.105 211);
-  --color-public-blue-hover: oklch(0.79 0.105 211);
-  --color-public-blue-soft: oklch(0.28 0.05 218);
-  --color-civic-amber: oklch(0.75 0.13 75);
-  --color-civic-amber-soft: oklch(0.29 0.045 69);
+  --public-blue: oklch(0.72 0.105 211);
+  --public-blue-hover: oklch(0.79 0.105 211);
+  --public-blue-soft: oklch(0.28 0.05 218);
+  --civic-amber: oklch(0.75 0.13 75);
+  --civic-amber-soft: oklch(0.29 0.045 69);
+  --on-primary: oklch(0.16 0.025 238);
   --color-slate-450: #94A3B8;
   --color-slate-455: #CBD5E1;
   
@@ -162,13 +164,14 @@ html.dark .shadow-xl {
   --color-brand-cream-bg: var(--color-brand-cream-bg);
   --color-brand-cream-card: var(--color-brand-cream-card);
   --color-brand-cream-dark: var(--color-brand-cream-dark);
-  --color-brand-coral: var(--color-public-blue);
-  --color-brand-coral-hover: var(--color-public-blue-hover);
-  --color-public-blue: var(--color-public-blue);
-  --color-public-blue-hover: var(--color-public-blue-hover);
-  --color-public-blue-soft: var(--color-public-blue-soft);
-  --color-civic-amber: var(--color-civic-amber);
-  --color-civic-amber-soft: var(--color-civic-amber-soft);
+  --color-brand-coral: var(--public-blue);
+  --color-brand-coral-hover: var(--public-blue-hover);
+  --color-public-blue: var(--public-blue);
+  --color-public-blue-hover: var(--public-blue-hover);
+  --color-public-blue-soft: var(--public-blue-soft);
+  --color-civic-amber: var(--civic-amber);
+  --color-civic-amber-soft: var(--civic-amber-soft);
+  --color-on-primary: var(--on-primary);
   --color-charcoal-900: var(--color-charcoal-900);
   --color-charcoal-700: var(--color-charcoal-700);
   --color-charcoal-500: var(--color-charcoal-500);
@@ -185,20 +188,20 @@ html.dark .shadow-xl {
 .institutional-theme .text-amber-700,
 .institutional-theme .text-amber-800,
 .institutional-theme .text-amber-900 {
-  color: var(--color-public-blue);
+  color: var(--public-blue);
 }
 
 .institutional-theme .bg-orange-500,
 .institutional-theme .bg-orange-600,
 .institutional-theme .bg-amber-500,
 .institutional-theme .bg-amber-600 {
-  background-color: var(--color-public-blue);
+  background-color: var(--public-blue);
 }
 
 .institutional-theme .border-orange-600,
 .institutional-theme .border-amber-500,
 .institutional-theme .border-amber-600 {
-  border-color: var(--color-public-blue);
+  border-color: var(--public-blue);
 }
 
 .institutional-theme .bg-amber-50,
@@ -206,14 +209,14 @@ html.dark .shadow-xl {
 .institutional-theme .bg-orange-500\/10,
 .institutional-theme .bg-amber-500\/10,
 .institutional-theme .bg-amber-500\/15 {
-  background-color: var(--color-public-blue-soft);
+  background-color: var(--public-blue-soft);
 }
 
 .institutional-theme .border-amber-200,
 .institutional-theme .border-amber-200\/50,
 .institutional-theme .border-amber-200\/60,
 .institutional-theme .border-amber-500\/30 {
-  border-color: color-mix(in oklab, var(--color-public-blue) 28%, transparent);
+  border-color: color-mix(in oklab, var(--public-blue) 28%, transparent);
 }
 
 .institutional-theme .shadow-sm,
