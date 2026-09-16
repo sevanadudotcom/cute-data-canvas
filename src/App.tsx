@@ -669,14 +669,18 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-cream-bg flex flex-col font-sans selection:bg-brand-coral selection:text-white pb-6 text-stone-900">
+    <div className="institutional-theme min-h-screen bg-brand-cream-bg flex flex-col font-sans selection:bg-brand-coral selection:text-white pb-6 text-stone-900">
       
       {/* 1. Tricolor Top Visual Accent Strip */}
-      <div className="h-[3px] w-full bg-gradient-to-r from-orange-500 via-white to-emerald-600 select-none"></div>
+      <div className="h-[3px] w-full grid grid-cols-3 select-none" aria-hidden="true">
+        <span className="bg-civic-amber" />
+        <span className="bg-brand-cream-card" />
+        <span className="bg-emerald-600" />
+      </div>
 
       {/* Public Service Notice & Disclaimer Banner */}
-      <div className="bg-amber-50 dark:bg-amber-950/20 border-b border-amber-200 dark:border-amber-900/40 py-2 px-4 text-center text-[10px] sm:text-xs select-none">
-        <p className="font-semibold text-amber-800 dark:text-amber-400">
+      <div className="bg-public-blue-soft border-b border-public-blue/15 py-2 px-4 text-center text-[10px] sm:text-xs select-none">
+        <p className="font-semibold text-charcoal-700 dark:text-charcoal-700">
           {language === "hi" 
             ? "🇮🇳 जन सामान्य हेतु सूचना: SewaNadu एक गैर-सरकारी मंच है, जिसे एक भारतीय द्वारा भारतीयों के लिए AI की सहायता से विकसित किया गया है। यह पूरी तरह से मुफ्त निर्देशिका (directory) है - कोई सरकारी संबद्धता नहीं है, और न ही किसी पंजीकरण या लॉगिन की आवश्यकता है।"
             : "🇮🇳 Public Service Notice: SewaNadu is a non-governmental platform developed by an Indian citizen for Indians with AI help. This is a free e-Sewa directory — no government affiliation, no logins, and no user registration required."
@@ -685,7 +689,7 @@ export default function App() {
       </div>
 
       {/* 2. SewaNadu Brand Header */}
-      <header className="bg-gradient-to-b from-brand-cream-bg to-stone-50 border-b border-stone-200/85 shrink-0 relative shadow-xs">
+      <header className="bg-brand-cream-card border-b border-border-subtle shrink-0 relative shadow-xs">
         <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3 sm:gap-4 flex-nowrap">
           
           {/* Logo Brand Emblems: Orange coral circle, :: white dots layout and "SewaNadu" */}
@@ -717,12 +721,12 @@ export default function App() {
                 "success"
               ); 
             }}
-            className="flex items-center gap-2 cursor-pointer select-none shrink-0 hover:scale-[1.02] active:scale-95 hover:bg-stone-100/60 p-1 sm:p-1.5 rounded-2xl transition duration-200 group border border-transparent hover:border-stone-200/40"
+            className="flex items-center gap-2 cursor-pointer select-none shrink-0 hover:bg-public-blue-soft p-1 sm:p-1.5 rounded-lg transition duration-200 group border border-transparent hover:border-public-blue/20"
             title={language === "hi" ? "मुखपृष्ठ / पुनः प्रारंभ" : "Click to Start / Reset Portal"}
             id="website-logo-start-button"
           >
             {/* Beautiful Orange-accent launch emblem */}
-            <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-brand-coral to-orange-500 rounded-xl flex items-center justify-center p-1.5 shadow-2xs group-hover:rotate-6 transition-transform duration-300">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 bg-public-blue rounded-lg flex items-center justify-center p-1.5 shadow-2xs transition-colors duration-200">
               <div className="grid grid-cols-2 gap-0.5">
                 <div className="w-1 h-1 rounded-full bg-white"></div>
                 <div className="w-1 h-1 rounded-full bg-white"></div>
@@ -764,7 +768,7 @@ export default function App() {
                 }}
                 onFocus={() => setFocusedInput("desktop")}
                 onBlur={() => setTimeout(() => setFocusedInput(null), 250)}
-                className="w-full bg-white border border-stone-250 py-1.5 pl-9 pr-14 rounded-xl text-[11px] font-sans outline-none focus:border-brand-coral focus:ring-3 focus:ring-brand-coral/10 hover:border-stone-300 transition text-stone-850 shadow-3xs"
+                  className="w-full bg-brand-cream-card border border-border-subtle py-2 pl-9 pr-14 rounded-lg text-[11px] font-sans outline-hidden focus:border-public-blue focus:ring-3 focus:ring-public-blue/10 hover:border-public-blue/40 transition text-charcoal-900 shadow-3xs"
               />
               
               {/* Keyboard visual shortcut element */}
@@ -842,7 +846,7 @@ export default function App() {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => { setActiveTab("services"); setSelectedService(null); setSearchQuery(""); }}
                 className={`relative p-2 rounded-xl transition cursor-pointer select-none shrink-0 ${
-                  activeTab === "services" ? "text-brand-coral bg-orange-500/10 border border-brand-coral/20" : "text-stone-500 hover:text-stone-900 hover:bg-stone-100/60 border border-transparent"
+                  activeTab === "services" ? "text-public-blue bg-public-blue-soft border border-public-blue/20" : "text-charcoal-500 hover:text-charcoal-900 hover:bg-public-blue-soft border border-transparent"
                 }`}
                 title={t("menu.all_services") || "All Services"}
               >
@@ -855,7 +859,7 @@ export default function App() {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => { setActiveTab("eligibility"); setSelectedService(null); }}
                 className={`relative p-2 rounded-xl transition cursor-pointer select-none shrink-0 ${
-                  activeTab === "eligibility" ? "text-brand-coral bg-orange-500/10 border border-brand-coral/20" : "text-stone-500 hover:text-stone-900 hover:bg-stone-100/60 border border-transparent"
+                  activeTab === "eligibility" ? "text-public-blue bg-public-blue-soft border border-public-blue/20" : "text-charcoal-500 hover:text-charcoal-900 hover:bg-public-blue-soft border border-transparent"
                 }`}
                 title={t("menu.compare") || "Compare"}
               >
@@ -995,7 +999,7 @@ export default function App() {
                   "info"
                 );
               }}
-              className="flex items-center justify-center p-1.5 sm:p-2 rounded-full border border-stone-250 bg-white hover:bg-stone-50 text-stone-600 hover:text-stone-900 shadow-3xs cursor-pointer select-none transition shrink-0"
+              className="hidden min-[410px]:flex items-center justify-center p-1.5 sm:p-2 rounded-lg border border-border-subtle bg-brand-cream-card hover:bg-public-blue-soft text-charcoal-500 hover:text-public-blue shadow-3xs cursor-pointer select-none transition shrink-0"
               title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode Suitable for Low-light"}
               id="theme-mode-toggle"
             >
@@ -1014,12 +1018,11 @@ export default function App() {
               }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowLauncher(true)}
-              className="relative hidden md:flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-brand-coral via-orange-500 to-amber-500 text-white font-display font-black rounded-full text-[10px] sm:text-[10.5px] uppercase tracking-wider transition duration-200 cursor-pointer select-none shrink-0 border-0 outline-none overflow-hidden shadow-2xs"
+              className="relative hidden md:flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-public-blue hover:bg-public-blue-hover text-on-primary font-display font-bold rounded-lg text-[10px] sm:text-[10.5px] uppercase tracking-wider transition duration-200 cursor-pointer select-none shrink-0 border-0 outline-hidden shadow-2xs"
               id="header-start-btn"
               title={language === "hi" ? "त्वरित पहुंच केंद्र खोलें" : "Launch Quick Access Hub"}
             >
               {/* Outer soft glowing ambient pulse */}
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-brand-coral via-orange-500 to-amber-500 blur-sm opacity-20 animate-pulse -z-10"></span>
               
               <div className="relative flex items-center gap-1 sm:gap-1.5 leading-none">
                 <motion.div
@@ -1067,7 +1070,7 @@ export default function App() {
       )}
 
       {/* 4. Interactive Navigation Tabs Panel (Desktop & Tablet only) */}
-      <div className="hidden md:block bg-white border-b border-gray-200 shrink-0 sticky top-0 z-40 shadow-xs select-none">
+      <div className="hidden md:block bg-brand-cream-card border-b border-border-subtle shrink-0 sticky top-0 z-40 shadow-xs select-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex overflow-x-auto gap-1 -mb-px pt-1.5 scrollbar-none">
             
@@ -1076,7 +1079,7 @@ export default function App() {
               onClick={() => { setActiveTab("services"); setSelectedService(null); }}
               className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
                 activeTab === "services" 
-                  ? "border-orange-600 text-orange-650" 
+                   ? "border-public-blue text-public-blue" 
                   : "border-transparent text-slate-500 hover:text-slate-900"
               }`}
             >
@@ -1089,7 +1092,7 @@ export default function App() {
               onClick={() => setActiveTab("eligibility")}
               className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
                 activeTab === "eligibility" 
-                  ? "border-orange-600 text-orange-650" 
+                   ? "border-public-blue text-public-blue" 
                   : "border-transparent text-slate-500 hover:text-slate-900"
               }`}
             >
@@ -1104,7 +1107,7 @@ export default function App() {
               onClick={() => setActiveTab("chatbot")}
               className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
                 activeTab === "chatbot" 
-                  ? "border-orange-600 text-orange-650" 
+                   ? "border-public-blue text-public-blue" 
                   : "border-transparent text-slate-500 hover:text-slate-900"
               }`}
             >
@@ -1117,7 +1120,7 @@ export default function App() {
               onClick={() => setActiveTab("faq")}
               className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
                 activeTab === "faq" 
-                  ? "border-orange-600 text-orange-650" 
+                   ? "border-public-blue text-public-blue" 
                   : "border-transparent text-slate-500 hover:text-slate-900"
               }`}
             >
@@ -1132,7 +1135,7 @@ export default function App() {
               onClick={() => setActiveTab("sitemap")}
               className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
                 activeTab === "sitemap" 
-                  ? "border-orange-600 text-orange-650" 
+                   ? "border-public-blue text-public-blue" 
                   : "border-transparent text-slate-500 hover:text-slate-900"
               }`}
             >
@@ -1148,7 +1151,7 @@ export default function App() {
               onClick={() => { setActiveTab("legal-hub"); setLegalHubDefaultSection("about"); }}
               className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
                 activeTab === "legal-hub" 
-                  ? "border-orange-600 text-orange-655" 
+                   ? "border-public-blue text-public-blue" 
                   : "border-transparent text-slate-500 hover:text-slate-900"
               }`}
             >
@@ -1161,7 +1164,7 @@ export default function App() {
               onClick={() => setActiveTab("discussions")}
               className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
                 activeTab === "discussions" 
-                  ? "border-orange-600 text-orange-655" 
+                   ? "border-public-blue text-public-blue" 
                   : "border-transparent text-slate-500 hover:text-slate-900"
               }`}
             >
@@ -1176,7 +1179,7 @@ export default function App() {
       {/* 4a. Interactive Breadcrumb Navigation Trail */}
       <div 
         id="breadcrumb-navigation-container"
-        className="bg-stone-50 dark:bg-slate-950/45 border-b border-stone-200/80 dark:border-white/5 py-3 px-4 sm:px-6 lg:px-8 select-none transition-colors duration-250 animate-fadeIn"
+        className="bg-brand-cream-dark border-b border-border-subtle py-3 px-4 sm:px-6 lg:px-8 select-none transition-colors duration-250 animate-fadeIn"
       >
         <div className="max-w-7xl mx-auto flex items-center flex-wrap gap-2 text-[10.5px] sm:text-[11.5px] text-stone-500 dark:text-slate-400 font-sans tracking-wide">
           
@@ -1540,13 +1543,13 @@ export default function App() {
       </div>
 
       {/* 5. Main Content Layout (Grid split with recent applications live tracker) */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
         
         {/* Left / Central Workspace column */}
         <div className={activeTab === "services" ? "lg:col-span-8 space-y-6" : "lg:col-span-12 space-y-6"}>
           
           {loading ? (
-            <div className="p-20 text-center bg-white border border-gray-150 rounded-3xl flex flex-col items-center justify-center space-y-4">
+            <div className="p-20 text-center bg-brand-cream-card border border-border-subtle rounded-lg flex flex-col items-center justify-center space-y-4">
               <div className="w-12 h-12 border-4 border-slate-950 border-t-transparent rounded-full animate-spin"></div>
               <p className="text-xs text-slate-500 font-mono">Securing encryption channels for e-Gov services gateway...</p>
             </div>

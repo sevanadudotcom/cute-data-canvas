@@ -1838,9 +1838,6 @@ export default function ESevaServiceList({
           {/* 1. HERO VIEW */}
           <div className="relative text-center max-w-3xl mx-auto pt-6 pb-2 space-y-6">
             
-            {/* Soft background colorful peach ambient glow on the right (matching screenshot mockup layout) */}
-            <div className="absolute -right-12 -top-12 w-64 h-64 rounded-full bg-brand-coral/5 blur-3xl -z-10 pointer-events-none"></div>
-            
             {/* Green dot active notification label */}
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 border border-emerald-100 rounded-full shadow-2xs">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -1850,7 +1847,7 @@ export default function ESevaServiceList({
             </div>
 
             {/* Main Premium Typography Display Heading */}
-            <h1 className="font-display font-extrabold text-[#111111] text-3xl sm:text-5xl md:text-6xl tracking-tight leading-[1.08] text-balance">
+            <h1 className="font-display font-extrabold text-charcoal-900 text-3xl sm:text-5xl md:text-6xl leading-[1.08] text-balance">
               {copy.heroTitle}
             </h1>
 
