@@ -29,7 +29,7 @@ export const Route = createFileRoute("/")({
 
 function Loading() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FCFBF7] text-stone-500 text-sm font-medium">
+    <div className="min-h-screen flex items-center justify-center bg-brand-cream-bg text-charcoal-500 text-sm font-medium">
       Loading SewaNadu…
     </div>
   );
