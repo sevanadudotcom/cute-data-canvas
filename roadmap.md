@@ -18,3 +18,9 @@ Sevanadu civic-services portal (uploaded zip) moved into this Supabase-connected
 - (resolved) Pre-existing strict-TS warnings in Sevanadu's own files (LanguageContext, AdSenseUnit, ServiceDossier, SavedServices, ESevaServiceList) under this project's stricter tsconfig — do not block Vite dev/build (esbuild strips types); not in scope to fix unless asked.
 
 - [x] Weekly report page at /reports (saved services, feedback, sign-ins + CSV export)
+- [x] Full pan-India coverage: 7 new templates (HEALTH x2, AGRICULTURE x3, EDUCATION x2) × 36 jurisdictions → 1093 services total, every state/UT covered in all categories
+- [x] Local-language names for new templates (15 languages) in services-localization.ts
+- [x] DB sync: AGRICULTURE + EDUCATION categories inserted; 252 new service rows seeded via REST
+
+## Known minor issue
+- New generated state-service cards show "CENTRAL" badge instead of the state name (badge uses curated/jurisdiction display logic in ESevaServiceList) — cosmetic; fix when touching card UI next.
