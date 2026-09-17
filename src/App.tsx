@@ -5,7 +5,7 @@ import {
   Handshake, ArrowRight, ShieldCheck, CreditCard, ExternalLink, Globe, Award,
   Zap, Plus, Search, LayoutGrid, FileText, HelpCircle,
   Bell, BellRing, Volume2, VolumeX, Star, Sun, Moon, Share2, AlertTriangle,
-  ArrowUp, Home, ChevronRight, Scale, ClipboardCheck, Users, LogIn
+  ArrowUp, Home, ChevronRight, ChevronDown, Scale, ClipboardCheck, Users, LogIn, Menu
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase } from "@/integrations/supabase/client";
@@ -53,6 +53,15 @@ import StatusCheckModal from "./components/StatusCheckModal";
 import VerifiedDiscussions from "./components/VerifiedDiscussions";
 import VoiceSearch from "./components/VoiceSearch";
 import { getApiUrl } from "./lib/api";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function App() {
   const { 
@@ -688,493 +697,161 @@ export default function App() {
         </p>
       </div>
 
-      {/* 2. SewaNadu Brand Header */}
-      <header className="bg-brand-cream-card border-b border-border-subtle shrink-0 relative shadow-xs">
-        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3 sm:gap-4 flex-nowrap">
-          
-          {/* Logo Brand Emblems: Orange coral circle, :: white dots layout and "SewaNadu" */}
-          <motion.div 
-            animate={logoPulse ? {
-              scale: [1, 1.08, 0.96, 1.04, 1],
-              boxShadow: [
-                "0 0 0 rgba(239, 68, 68, 0)",
-                "0 0 20px 4px rgba(255, 90, 43, 0.6)",
-                "0 0 10px 2px rgba(255, 90, 43, 0.3)",
-                "0 0 0 rgba(255, 90, 43, 0)"
-              ],
-              backgroundColor: [
-                "rgba(255, 255, 255, 0)",
-                "rgba(255, 90, 43, 0.08)",
-                "rgba(255, 90, 43, 0.03)",
-                "rgba(255, 255, 255, 0)"
-              ]
-            } : {}}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            onClick={() => { 
-              setActiveTab("services"); 
-              setSelectedService(null); 
-              setSearchQuery(""); 
-              triggerToast(
-                language === "hi" 
-                  ? "SewaNadu एकीकृत प्रविष्टि पोर्टल पुनः प्रारंभ हुआ!" 
-                  : "SewaNadu integrated citizen gateway restarted! Showing all services.", 
-                "success"
-              ); 
-            }}
-            className="flex items-center gap-2 cursor-pointer select-none shrink-0 hover:bg-public-blue-soft p-1 sm:p-1.5 rounded-lg transition duration-200 group border border-transparent hover:border-public-blue/20"
-            title={language === "hi" ? "मुखपृष्ठ / पुनः प्रारंभ" : "Click to Start / Reset Portal"}
-            id="website-logo-start-button"
-          >
-            {/* Beautiful Orange-accent launch emblem */}
-            <div className="w-8 h-8 sm:w-9 sm:h-9 bg-public-blue rounded-lg flex items-center justify-center p-1.5 shadow-2xs transition-colors duration-200">
-              <div className="grid grid-cols-2 gap-0.5">
-                <div className="w-1 h-1 rounded-full bg-white"></div>
-                <div className="w-1 h-1 rounded-full bg-white"></div>
-                <div className="w-1 h-1 rounded-full bg-white animate-pulse"></div>
-                <div className="w-1 h-1 rounded-full bg-white"></div>
-                <div className="w-1 h-1 rounded-full bg-white"></div>
-                <div className="w-1 h-1 rounded-full bg-white animate-pulse"></div>
-              </div>
-            </div>
-            
-            <div className="space-y-0.5 text-left">
-              <div className="flex items-center gap-1 md:gap-1.5 leading-none">
-                <span className="font-display font-black text-stone-900 text-sm sm:text-[17px] tracking-tight">
-                  SewaNadu
+      {/* 2. Responsive SewaNadu navigation */}
+      <header className="sticky top-0 z-40 shrink-0 border-b border-border-subtle bg-brand-cream-card shadow-xs">
+        <div className="mx-auto max-w-7xl px-3.5 sm:px-6 lg:px-8">
+          <div className="grid min-h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 py-2.5 md:flex md:gap-5 lg:min-h-18">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setActiveTab("services");
+                setSelectedService(null);
+                setSearchQuery("");
+              }}
+              className="h-auto min-w-0 justify-start gap-2 p-1 hover:bg-public-blue-soft"
+              title={language === "hi" ? "मुखपृष्ठ" : "SewaNadu home"}
+              id="website-logo-start-button"
+            >
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-public-blue shadow-2xs" aria-hidden="true">
+                <span className="grid grid-cols-2 gap-0.5">
+                  {[0, 1, 2, 3, 4, 5].map((dot) => <span key={dot} className="h-1 w-1 rounded-full bg-on-primary" />)}
                 </span>
-                <span className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 font-mono text-[8px] font-bold uppercase tracking-wider border border-emerald-500/20">
-                  <span className="w-1 h-1 rounded-full bg-emerald-500 animate-ping"></span>
-                  {language === "hi" ? "आरंभ" : "START"}
-                </span>
-              </div>
-              <span className="text-[7.5px] font-bold text-stone-400 tracking-wider leading-none uppercase font-mono hidden sm:block">
-                {t("app.logo_subtext") || "National Gateway"}
               </span>
-            </div>
-          </motion.div>
+              <span className="min-w-0 text-left">
+                <span className="block truncate font-display text-base font-black text-charcoal-900">SewaNadu</span>
+                <span className="hidden text-[8px] font-bold uppercase text-charcoal-500 sm:block">{t("app.logo_subtext") || "National Gateway"}</span>
+              </span>
+            </Button>
 
-          {/* Premium Middle search box (Desktop only) */}
-          <div className="hidden lg:flex items-center max-w-sm w-full gap-2 shrink-0" id="desktop-search-container">
-            <div className="relative flex-1">
-              <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3.5 font-bold animate-pulse" />
-              <input 
-                type="text" 
-                placeholder={t("app.search_placeholder") || "Search a service (e.g. Aadhaar, PAN, Passport)"}
+            <div className="relative hidden min-w-0 flex-1 md:block" id="desktop-search-container">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal-500" />
+              <input
+                type="search"
+                aria-label={language === "hi" ? "सेवाएँ खोजें" : "Search services"}
+                placeholder={t("app.search_placeholder") || "Search services (Aadhaar, PAN, Passport)"}
                 value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setActiveTab("services");
-                  setSelectedService(null);
-                }}
+                onChange={(e) => { setSearchQuery(e.target.value); setActiveTab("services"); setSelectedService(null); }}
                 onFocus={() => setFocusedInput("desktop")}
                 onBlur={() => setTimeout(() => setFocusedInput(null), 250)}
-                  className="w-full bg-brand-cream-card border border-border-subtle py-2 pl-9 pr-14 rounded-lg text-[11px] font-sans outline-hidden focus:border-public-blue focus:ring-3 focus:ring-public-blue/10 hover:border-public-blue/40 transition text-charcoal-900 shadow-3xs"
+                className="h-10 w-full rounded-lg border border-border-subtle bg-brand-cream-bg pl-10 pr-12 text-sm text-charcoal-900 outline-none transition focus:border-public-blue focus:bg-brand-cream-card focus:ring-3 focus:ring-public-blue/10"
               />
-              
-              {/* Keyboard visual shortcut element */}
-              <div className="absolute right-3.5 flex items-center gap-0.5 pointer-events-none select-none text-stone-400 font-sans text-[8px] uppercase tracking-wider font-extrabold px-1.5 py-0.5 bg-stone-100 border border-stone-200 rounded-md">
-                <span>⌘</span>
-                <span>K</span>
-              </div>
-
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-12 p-0.5 rounded-md text-stone-400 hover:text-stone-700 transition cursor-pointer border-0 bg-transparent"
-                  title="Clear Search"
-                >
-                  <span className="text-[10px] font-bold">✕</span>
-                </button>
-              )}
-
-              {/* Live Autocomplete suggestions dropdown */}
+              <span className="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 rounded border border-border-subtle bg-brand-cream-card px-1.5 py-0.5 text-[9px] font-bold text-charcoal-500 xl:block">⌘ K</span>
               {focusedInput === "desktop" && getAutoSuggestions().length > 0 && (
-                <div 
-                  className="absolute top-full left-0 right-0 mt-1.5 bg-white dark:bg-slate-900 border border-stone-200/80 dark:border-white/10 rounded-xl shadow-xl max-h-72 overflow-y-auto z-50 p-1 divide-y divide-stone-100 dark:divide-white/5 animate-fadeIn select-none"
-                  id="desktop-autosuggest-dropdown"
-                >
+                <div className="absolute left-0 right-0 top-full z-50 mt-1 max-h-72 overflow-y-auto rounded-lg border border-border-subtle bg-brand-cream-card p-1 shadow-xl">
                   {getAutoSuggestions().slice(0, 7).map((service) => {
-                    const sTrans = translateService(service);
+                    const translated = translateService(service);
                     return (
-                      <button
-                        key={service.id}
-                        type="button"
-                        onMouseDown={(e) => {
-                          e.preventDefault(); // Prevent input from losing focus immediately
-                          setActiveTab("services");
-                          setActiveDossier(service);
-                          setSearchQuery("");
-                        }}
-                        className="w-full text-left px-3.5 py-2.5 hover:bg-amber-500/10 dark:hover:bg-amber-500/10 first:rounded-t-lg last:rounded-b-lg flex flex-col gap-0.5 transition cursor-pointer text-stone-800 dark:text-stone-250 border-0 outline-none"
-                      >
-                        <span className="text-[10px] font-extrabold text-stone-900 dark:text-white leading-tight font-sans flex items-center justify-between">
-                          <span>{sTrans.title}</span>
-                          <span className="text-[8.5px] font-mono text-brand-coral opacity-80 shrink-0 font-bold ml-1.5">Launch →</span>
+                      <Button key={service.id} variant="ghost" onMouseDown={(event) => { event.preventDefault(); setActiveTab("services"); setActiveDossier(service); setSearchQuery(""); }} className="h-auto w-full justify-start rounded-md px-3 py-2 text-left">
+                        <span className="min-w-0">
+                          <span className="block truncate text-xs font-bold text-charcoal-900">{translated.title}</span>
+                          <span className="block truncate text-[10px] text-charcoal-500">{translated.department}</span>
                         </span>
-                        <span className="text-[8.5px] font-mono text-stone-450 dark:text-slate-400 tracking-wide uppercase">
-                          {sTrans.department}
-                        </span>
-                      </button>
+                      </Button>
                     );
                   })}
                 </div>
               )}
             </div>
 
-            <VoiceSearch
-              currentLanguage={language}
-              onSpeechResult={(text) => {
-                setSearchQuery(text);
-                setActiveTab("services");
-                setSelectedService(null);
-              }}
-              triggerToast={triggerToast}
-              className="h-8 w-8 shrink-0 shadow-3xs"
-              iconSize={14}
-            />
-          </div>
-
-          {/* Right Header Navigation Controls  */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 ml-auto sm:ml-0 flex-nowrap py-1 relative min-w-0 max-w-full overflow-x-auto overscroll-x-contain scrollbar-none">
-            
-            {/* Extra Top Nav Buttons for Medium+ screens (beautifully customized icons) */}
-            <div className="hidden md:flex items-center gap-1">
-              {/* All Services Tab Link */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => { setActiveTab("services"); setSelectedService(null); setSearchQuery(""); }}
-                className={`relative p-2 rounded-xl transition cursor-pointer select-none shrink-0 ${
-                  activeTab === "services" ? "text-public-blue bg-public-blue-soft border border-public-blue/20" : "text-charcoal-500 hover:text-charcoal-900 hover:bg-public-blue-soft border border-transparent"
-                }`}
-                title={t("menu.all_services") || "All Services"}
-              >
-                <FolderCheck className="w-4 h-4" />
-              </motion.button>
-
-              {/* Compare / Eligibility Tab Link */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => { setActiveTab("eligibility"); setSelectedService(null); }}
-                className={`relative p-2 rounded-xl transition cursor-pointer select-none shrink-0 ${
-                  activeTab === "eligibility" ? "text-public-blue bg-public-blue-soft border border-public-blue/20" : "text-charcoal-500 hover:text-charcoal-900 hover:bg-public-blue-soft border border-transparent"
-                }`}
-                title={t("menu.compare") || "Compare"}
-              >
-                <Award className="w-4 h-4" />
-              </motion.button>
-
-
-            </div>
-
-            {/* Indian Language Selection Dropdown (Perfect fit on Mobile/Desktop) */}
-            <div className="flex items-center gap-1 px-1.5 sm:px-2.5 py-1 sm:py-1.5 border border-stone-250 bg-white hover:border-stone-300 hover:bg-stone-50 text-stone-700 font-extrabold rounded-full text-[10.5px] sm:text-[11.5px] transition shadow-3xs shrink-0 select-none cursor-pointer">
-              <Globe className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-stone-400 shrink-0" />
-              <select
-                id="language-picker"
-                value={language}
-                onChange={(e) => {
-                  const newLang = e.target.value as any;
-                  setLanguage(newLang);
-                  const langName = INDIAN_LANGUAGES.find(l => l.code === newLang)?.name;
-                  triggerToast(`Language switched to ${langName} successfully.`, "info");
-                }}
-                className="bg-transparent border-none outline-none font-black pr-0.5 cursor-pointer text-stone-850 text-[10px] sm:text-[10.5px] focus:ring-0"
-              >
-                {INDIAN_LANGUAGES.map((lang) => (
-                  <option key={lang.code} value={lang.code} className="text-stone-900 font-bold">
-                     {lang.nativeName}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Saved Services Bookmark Trigger */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsSavedServicesOpen(true)}
-              className="relative flex items-center justify-center p-1.5 sm:p-2 rounded-full border border-stone-250 bg-white hover:bg-stone-50 text-stone-600 hover:text-stone-900 shadow-3xs cursor-pointer select-none transition shrink-0"
-              title={language === "hi" ? "पसंदीदा सेवाएँ" : "Saved Services"}
-              id="saved-services-trigger"
-            >
-              <BookmarkCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-coral" />
-              {savedServiceIds.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 min-w-[16px] h-4 px-1 bg-brand-coral text-white text-[8.5px] font-black rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 leading-none">
-                  {savedServiceIds.length}
-                </span>
-              )}
-            </motion.button>
-
-            {/* Quick Actions Desktop Row */}
-            <div className="hidden md:flex items-center gap-1 px-1.5 py-1 border border-stone-250 bg-stone-50/55 dark:bg-stone-900/60 rounded-full select-none shrink-0" id="header-quick-actions-row">
-              <span className="text-[7.5px] font-mono font-black text-stone-450 dark:text-stone-400 uppercase tracking-widest pl-1 leading-none">
-                {language === "hi" ? "त्वरित:" : "Quick:"}
-              </span>
-              
-              {/* RTI Filing Button */}
-              <button
-                type="button"
-                onClick={() => setIsRtiOpen(true)}
-                className="flex items-center gap-1 px-2 py-0.5 text-[9.5px] sm:text-[10px] font-bold text-stone-700 hover:text-stone-950 dark:text-stone-300 dark:hover:text-white rounded-full transition border-0 bg-transparent cursor-pointer whitespace-nowrap"
-                title={language === "hi" ? "सूचना का अधिकार (RTI) दायर करें" : "File an Online RTI Application Request"}
-              >
-                <Scale className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-600 dark:text-amber-500 shrink-0" />
-                <span>{language === "hi" ? "RTI दाखिला" : "RTI Filing"}</span>
-              </button>
-
-              <div className="w-px h-2.5 bg-stone-250 dark:bg-stone-800"></div>
-
-              {/* Status Check Button */}
-              <button
-                type="button"
-                onClick={() => setIsStatusCheckOpen(true)}
-                className="flex items-center gap-1 px-2 py-0.5 text-[9.5px] sm:text-[10px] font-bold text-stone-700 hover:text-stone-950 dark:text-stone-300 dark:hover:text-white rounded-full transition border-0 bg-transparent cursor-pointer whitespace-nowrap"
-                title={language === "hi" ? "आवेदन की स्थिति जांचें" : "Track Citizen Application Status"}
-              >
-                <ClipboardCheck className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-brand-coral shrink-0" />
-                <span>{language === "hi" ? "स्थिति जांच" : "Status Check"}</span>
-              </button>
-            </div>
-
-            {/* Google Auth Button (Supabase) */}
-            {authUser ? (
-              (() => {
-                const name = userDisplayName(authUser);
-                const photo = userPhotoURL(authUser);
-                return (
-                  <div className="flex items-center gap-1.5 bg-stone-100 dark:bg-slate-800 border border-stone-250 dark:border-slate-700 pl-1 pr-2 py-0.5 rounded-full select-none text-[10.5px]">
-                    {photo ? (
-                      <img
-                        src={photo}
-                        alt={name}
-                        className="w-5 h-5 rounded-full object-cover border border-stone-300"
-                        referrerPolicy="no-referrer"
-                      />
-                    ) : (
-                      <div className="w-5 h-5 rounded-full bg-blue-600 text-white font-black text-[9px] flex items-center justify-center">
-                        {name.charAt(0).toUpperCase()}
-                      </div>
-                    )}
-                    <span className="font-bold text-stone-800 dark:text-stone-200 hidden lg:inline max-w-[90px] truncate">
-                      {name}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={handleGoogleSignOut}
-                      className="p-1 text-stone-500 hover:text-red-600 dark:hover:text-red-400 transition cursor-pointer border-0 bg-transparent"
-                      title={language === "hi" ? "लॉगआउट करें" : "Sign Out"}
-                    >
-                      <LogOut className="w-3 h-3" />
-                    </button>
-                  </div>
-                );
-              })()
-            ) : (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleGoogleSignIn}
-                className="flex items-center gap-1.5 px-2.5 py-1 sm:py-1.5 rounded-full bg-white dark:bg-slate-900 border border-stone-250 hover:border-blue-500 text-stone-800 dark:text-stone-200 hover:text-blue-600 font-extrabold text-[10px] sm:text-[10.5px] shadow-3xs cursor-pointer select-none transition shrink-0"
-                title={language === "hi" ? "गूगल से लॉगिन करें" : "Sign in with Google"}
-                id="google-login-btn"
-              >
-                <LogIn className="w-3 h-3 text-blue-600 shrink-0" />
-                <span>{language === "hi" ? "लॉगिन" : "Sign In"}</span>
-              </motion.button>
-            )}
-
-            {/* Elegant Sun/Moon Theme Toggle (Matches high-contrast UI) */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                setDarkMode(prev => !prev);
-                triggerToast(
-                  !darkMode 
-                    ? (language === "hi" ? "डार्क मोड सक्रिय (Low-light)" : "High-Contrast Dark Mode enabled") 
-                    : (language === "hi" ? "लाइट मोड सक्रिय" : "Standard Light Mode enabled"),
-                  "info"
-                );
-              }}
-              className="hidden min-[410px]:flex items-center justify-center p-1.5 sm:p-2 rounded-lg border border-border-subtle bg-brand-cream-card hover:bg-public-blue-soft text-charcoal-500 hover:text-public-blue shadow-3xs cursor-pointer select-none transition shrink-0"
-              title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode Suitable for Low-light"}
-              id="theme-mode-toggle"
-            >
-              {darkMode ? (
-                <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500" />
-              ) : (
-                <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500" />
-              )}
-            </motion.button>
-
-            {/* Quick Start Launcher Button with animated glow & scale physical reactivity */}
-            <motion.button
-              whileHover={{ 
-                scale: 1.03,
-                boxShadow: "0 8px 12px -3px rgba(239, 68, 68, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setShowLauncher(true)}
-              className="relative hidden md:flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-public-blue hover:bg-public-blue-hover text-on-primary font-display font-bold rounded-lg text-[10px] sm:text-[10.5px] uppercase tracking-wider transition duration-200 cursor-pointer select-none shrink-0 border-0 outline-hidden shadow-2xs"
-              id="header-start-btn"
-              title={language === "hi" ? "त्वरित पहुंच केंद्र खोलें" : "Launch Quick Access Hub"}
-            >
-              {/* Outer soft glowing ambient pulse */}
-              
-              <div className="relative flex items-center gap-1 sm:gap-1.5 leading-none">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ repeat: Infinity, duration: 15, ease: "linear" }}
-                  className="flex items-center justify-center shrink-0"
-                >
-                  <LayoutGrid className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
-                </motion.div>
-                
-                {/* Responsive text length to fit perfectly on very small devices */}
-                <span>
-                  <span className="hidden sm:inline">
-                    {language === "hi" ? "त्वरित लॉन्च" : "Quick Launch"}
-                  </span>
-                  <span className="sm:hidden">
-                    {language === "hi" ? "आरंभ" : "Launch"}
-                  </span>
-                </span>
-                
-                {/* Visual tiny glowing live indicator dot */}
-                <span className="relative flex h-1 w-1 sm:h-1.5 sm:w-1.5 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-200 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1 sm:h-1.5 w-1 sm:w-1.5 bg-amber-300"></span>
-                </span>
+            <div className="flex shrink-0 items-center justify-end gap-1.5 sm:gap-2">
+              <div className="hidden items-center gap-1.5 rounded-md border border-border-subtle bg-brand-cream-bg px-2 lg:flex">
+                <Globe className="h-4 w-4 text-charcoal-500" />
+                <select id="language-picker" value={language} onChange={(e) => { const next = e.target.value as any; setLanguage(next); const langName = INDIAN_LANGUAGES.find((item) => item.code === next)?.name; triggerToast(`Language switched to ${langName} successfully.`, "info"); }} className="h-9 max-w-28 bg-transparent text-xs font-bold text-charcoal-900 outline-none">
+                  {INDIAN_LANGUAGES.map((lang) => <option key={lang.code} value={lang.code}>{lang.nativeName}</option>)}
+                </select>
               </div>
-            </motion.button>
 
+              <Button variant="outline" size="icon" onClick={() => setIsSavedServicesOpen(true)} className="relative h-10 w-10 border-border-subtle bg-brand-cream-card text-public-blue" title={language === "hi" ? "पसंदीदा सेवाएँ" : "Saved services"} id="saved-services-trigger">
+                <BookmarkCheck />
+                {savedServiceIds.length > 0 && <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-public-blue px-1 text-[8px] font-black text-on-primary">{savedServiceIds.length}</span>}
+              </Button>
+
+              {authUser ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="h-10 max-w-36 gap-2 border-border-subtle px-2">
+                      {userPhotoURL(authUser) ? <img src={userPhotoURL(authUser)} alt="" className="h-6 w-6 rounded-full object-cover" referrerPolicy="no-referrer" /> : <User />}
+                      <span className="hidden truncate text-xs font-bold sm:block">{userDisplayName(authUser)}</span>
+                      <ChevronDown className="hidden h-3 w-3 sm:block" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48 border-border-subtle bg-brand-cream-card text-charcoal-900">
+                    <DropdownMenuLabel className="truncate text-xs">{authUser.email}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onSelect={handleGoogleSignOut} className="min-h-10 cursor-pointer"><LogOut />{language === "hi" ? "लॉगआउट" : "Sign out"}</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button variant="outline" onClick={handleGoogleSignIn} className="h-10 gap-2 border-border-subtle px-2.5 text-charcoal-900 sm:px-3" title={language === "hi" ? "गूगल से लॉगिन करें" : "Sign in with Google"} id="google-login-btn">
+                  <LogIn className="text-public-blue" /><span className="hidden text-xs font-bold sm:inline">{language === "hi" ? "लॉगिन" : "Sign in"}</span>
+                </Button>
+              )}
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="h-10 gap-2 border-border-subtle px-2.5 text-charcoal-900" id="header-more-menu">
+                    <Menu /><span className="hidden text-xs font-bold xl:inline">{language === "hi" ? "और" : "More"}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64 border-border-subtle bg-brand-cream-card p-1.5 text-charcoal-900">
+                  <DropdownMenuLabel className="text-[10px] uppercase text-charcoal-500 lg:hidden">{language === "hi" ? "भाषा" : "Language"}</DropdownMenuLabel>
+                  <div className="px-2 pb-2 lg:hidden">
+                    <select value={language} onChange={(e) => setLanguage(e.target.value as any)} className="h-10 w-full rounded-md border border-border-subtle bg-brand-cream-bg px-2 text-sm font-bold">
+                      {INDIAN_LANGUAGES.map((lang) => <option key={lang.code} value={lang.code}>{lang.nativeName}</option>)}
+                    </select>
+                  </div>
+                  <DropdownMenuSeparator className="lg:hidden" />
+                  <DropdownMenuItem onSelect={() => setIsRtiOpen(true)} className="min-h-10 cursor-pointer"><Scale />{language === "hi" ? "RTI दाखिला" : "RTI filing"}</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setIsStatusCheckOpen(true)} className="min-h-10 cursor-pointer"><ClipboardCheck />{language === "hi" ? "स्थिति जांच" : "Application status"}</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setShowLauncher(true)} className="min-h-10 cursor-pointer"><LayoutGrid />{language === "hi" ? "त्वरित लॉन्च" : "Quick launch"}</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onSelect={() => setDarkMode((value) => !value)} className="min-h-10 cursor-pointer">{darkMode ? <Sun /> : <Moon />}{darkMode ? "Light mode" : "Dark mode"}</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
 
+          <div className="relative pb-2.5 md:hidden">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-[65%] text-charcoal-500" />
+            <input type="search" aria-label={language === "hi" ? "सेवाएँ खोजें" : "Search services"} placeholder={t("app.search_placeholder") || "Search services"} value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); setActiveTab("services"); setSelectedService(null); }} onFocus={() => setFocusedInput("mobile")} onBlur={() => setTimeout(() => setFocusedInput(null), 250)} className="h-11 w-full rounded-lg border border-border-subtle bg-brand-cream-bg pl-10 pr-4 text-sm text-charcoal-900 outline-none focus:border-public-blue focus:ring-3 focus:ring-public-blue/10" />
+            {focusedInput === "mobile" && getAutoSuggestions().length > 0 && (
+              <div className="absolute left-0 right-0 top-full z-50 max-h-64 overflow-y-auto rounded-lg border border-border-subtle bg-brand-cream-card p-1 shadow-xl">
+                {getAutoSuggestions().slice(0, 6).map((service) => <Button key={service.id} variant="ghost" onMouseDown={(event) => { event.preventDefault(); setActiveTab("services"); setActiveDossier(service); setSearchQuery(""); }} className="h-auto w-full justify-start px-3 py-2 text-left text-xs font-bold">{translateService(service).title}</Button>)}
+              </div>
+            )}
+          </div>
         </div>
+
+        <nav aria-label={language === "hi" ? "मुख्य नेविगेशन" : "Main navigation"} className="hidden border-t border-border-subtle md:block">
+          <div className="mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-4 sm:px-6 lg:px-8">
+            {[
+              { id: "services", label: t("tab.services"), icon: Landmark },
+              { id: "eligibility", label: t("tab.eligibility"), icon: Award },
+              { id: "chatbot", label: t("tab.chatbot"), icon: Bot },
+              { id: "faq", label: t("tab.faq"), icon: HelpCircle },
+            ].map((item) => {
+              const Icon = item.icon;
+              return <Button key={item.id} variant="ghost" onClick={() => { setActiveTab(item.id as typeof activeTab); if (item.id === "services") setSelectedService(null); }} className={`h-11 rounded-none border-b-2 px-3 text-xs font-bold ${activeTab === item.id ? "border-public-blue text-public-blue" : "border-transparent text-charcoal-500 hover:text-charcoal-900"}`}><Icon />{item.label}</Button>;
+            })}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild><Button variant="ghost" className="h-11 rounded-none px-3 text-xs font-bold text-charcoal-500"><Menu />{language === "hi" ? "और" : "More"}<ChevronDown className="h-3 w-3" /></Button></DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56 border-border-subtle bg-brand-cream-card text-charcoal-900">
+                <DropdownMenuItem onSelect={() => setActiveTab("sitemap")} className="min-h-10 cursor-pointer"><Globe />{language === "hi" ? "साइटमैप" : "Service sitemap"}</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => { setActiveTab("legal-hub"); setLegalHubDefaultSection("about"); }} className="min-h-10 cursor-pointer"><FileCheck2 />{language === "hi" ? "नीति एवं विलेख" : "Legal & information"}</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => setActiveTab("discussions")} className="min-h-10 cursor-pointer"><Users />{language === "hi" ? "नागरिक चर्चा" : "Citizen discussions"}</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </nav>
       </header>
 
       {/* 3. Global Toast Notifications Overlay */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 p-4 max-w-sm rounded-2xl shadow-xl border border-stone-200 animate-bounce flex items-start gap-2.5 text-xs font-sans bg-white">
-          <div className="w-5 h-5 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center shrink-0 font-bold">
-            ✓
-          </div>
-          <div className="space-y-0.5">
-            <h5 className="font-bold text-stone-900">{t("toast.header")}</h5>
-            <p className="text-stone-605 leading-relaxed font-normal">{toast.message}</p>
-          </div>
+        <div className="fixed bottom-6 right-6 z-50 flex max-w-sm items-start gap-2.5 rounded-lg border border-border-subtle bg-brand-cream-card p-4 text-xs shadow-xl">
+          <div className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-public-blue-soft font-bold text-public-blue">✓</div>
+          <div className="space-y-0.5"><h5 className="font-bold text-charcoal-900">{t("toast.header")}</h5><p className="leading-relaxed text-charcoal-500">{toast.message}</p></div>
         </div>
       )}
-
-      {/* 4. Interactive Navigation Tabs Panel (Desktop & Tablet only) */}
-      <div className="hidden md:block bg-brand-cream-card border-b border-border-subtle shrink-0 sticky top-0 z-40 shadow-xs select-none">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex overflow-x-auto gap-1 -mb-px pt-1.5 scrollbar-none">
-            
-            <button
-              id="desktop-nav-services"
-              onClick={() => { setActiveTab("services"); setSelectedService(null); }}
-              className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
-                activeTab === "services" 
-                   ? "border-public-blue text-public-blue" 
-                  : "border-transparent text-slate-500 hover:text-slate-900"
-              }`}
-            >
-              <Landmark className="w-3.5 h-3.5 shrink-0" />
-              {t("tab.services")}
-            </button>
-
-            <button
-              id="desktop-nav-eligibility"
-              onClick={() => setActiveTab("eligibility")}
-              className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
-                activeTab === "eligibility" 
-                   ? "border-public-blue text-public-blue" 
-                  : "border-transparent text-slate-500 hover:text-slate-900"
-              }`}
-            >
-              <Award className="w-3.5 h-3.5 text-orange-605 shrink-0" />
-              {t("tab.eligibility")}
-            </button>
-
-
-
-            <button
-              id="desktop-nav-chatbot"
-              onClick={() => setActiveTab("chatbot")}
-              className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
-                activeTab === "chatbot" 
-                   ? "border-public-blue text-public-blue" 
-                  : "border-transparent text-slate-500 hover:text-slate-900"
-              }`}
-            >
-              <Bot className="w-3.5 h-3.5 shrink-0" />
-              {t("tab.chatbot")}
-            </button>
-
-            <button
-              id="desktop-nav-faq"
-              onClick={() => setActiveTab("faq")}
-              className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
-                activeTab === "faq" 
-                   ? "border-public-blue text-public-blue" 
-                  : "border-transparent text-slate-500 hover:text-slate-900"
-              }`}
-            >
-              <HelpCircle className="w-3.5 h-3.5 shrink-0" />
-              {t("tab.faq")}
-            </button>
-
-
-
-            <button
-              id="desktop-nav-sitemap"
-              onClick={() => setActiveTab("sitemap")}
-              className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
-                activeTab === "sitemap" 
-                   ? "border-public-blue text-public-blue" 
-                  : "border-transparent text-slate-500 hover:text-slate-900"
-              }`}
-            >
-              <Globe className="w-3.5 h-3.5 shrink-0 text-[#FF5A2B]" />
-              <span className="flex items-center gap-1">
-                <span>{language === "hi" ? "100+ सेवाएँ" : "100+ Pages Sitemap"}</span>
-                <span className="text-[8px] bg-[#FF5A2B]/10 text-[#FF5A2B] px-1 py-0.2 rounded font-mono">NEW</span>
-              </span>
-            </button>
-
-            <button
-              id="desktop-nav-legal"
-              onClick={() => { setActiveTab("legal-hub"); setLegalHubDefaultSection("about"); }}
-              className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
-                activeTab === "legal-hub" 
-                   ? "border-public-blue text-public-blue" 
-                  : "border-transparent text-slate-500 hover:text-slate-900"
-              }`}
-            >
-              <FileCheck2 className="w-3.5 h-3.5 shrink-0" />
-              {language === "hi" ? "नीति एवं विलेख" : "Legal & Info"}
-            </button>
-
-            <button
-              id="desktop-nav-discussions"
-              onClick={() => setActiveTab("discussions")}
-              className={`flex items-center gap-1.5 py-2 px-3 border-b-2 font-extrabold text-[11px] uppercase tracking-wider transition whitespace-nowrap cursor-pointer select-none ${
-                activeTab === "discussions" 
-                   ? "border-public-blue text-public-blue" 
-                  : "border-transparent text-slate-500 hover:text-slate-900"
-              }`}
-            >
-              <Users className="w-3.5 h-3.5 shrink-0 text-amber-600" />
-              <span>{language === "hi" ? "सत्यापित चर्चाएँ" : "Citizen Discussions"}</span>
-            </button>
-
-          </div>
-        </div>
-      </div>
 
       {/* 4a. Interactive Breadcrumb Navigation Trail */}
       <div 
