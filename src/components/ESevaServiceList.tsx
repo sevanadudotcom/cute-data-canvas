@@ -8,6 +8,17 @@ import {
   ArrowDownAZ, X, ArrowLeft, PlayCircle
 } from "lucide-react";
 import { ESevaService } from "../types";
+import { JURISDICTIONS } from "../services-data";
+
+const JURISDICTION_NAMES: Record<string, string> = Object.fromEntries(
+  JURISDICTIONS.map((j) => [j.id, j.name])
+);
+
+function issuerLabel(service: ESevaService, fallback: string) {
+  const id = service.jurisdictionId;
+  if (id && JURISDICTION_NAMES[id]) return JURISDICTION_NAMES[id];
+  return fallback;
+}
 import { useLanguage, serviceTranslations, Language } from "../LanguageContext";
 import AdSenseUnit from "./AdSenseUnit";
 
@@ -2028,7 +2039,7 @@ export default function ESevaServiceList({
                     {/* Header line tag */}
                     <div className="flex items-center justify-between gap-1">
                       <span className={`px-2 py-0.5 rounded text-[9.5px] font-bold font-mono uppercase tracking-wider border ${getCategoryTheme(service.category, service.title)}`}>
-                        {getCategoryLabel(service)} • {copy.centralGovt}
+                        {getCategoryLabel(service)} • {issuerLabel(service, copy.centralGovt)}
                       </span>
                       <div className="flex flex-wrap items-center gap-2 text-[10px] font-mono text-stone-400 justify-end">
                         <span className="flex items-center gap-1 bg-rose-50 border border-rose-100/70 text-rose-700 px-1.5 py-0.5 rounded text-[9.5px] font-bold" title="Trending citizen interest metric">
@@ -2754,7 +2765,7 @@ export default function ESevaServiceList({
                             {/* Badge headers */}
                             <div className="flex items-start justify-between gap-1.5 flex-wrap">
                               <span className={`px-2 py-0.5 rounded text-[9.5px] font-bold font-mono uppercase tracking-wider border ${getCategoryTheme(service.category, service.title)}`}>
-                                {getCategoryLabel(service)} • {copy.centralGovt}
+                                {getCategoryLabel(service)} • {issuerLabel(service, copy.centralGovt)}
                               </span>
                               <div className="flex flex-wrap items-center gap-2 text-[10px] text-stone-450 font-mono justify-end font-sans">
                                 <span className="flex items-center gap-1 bg-rose-50 border border-rose-100/70 text-rose-700 px-1.5 py-0.5 rounded text-[9.5px] font-bold" title="Trending citizen interest metric">
