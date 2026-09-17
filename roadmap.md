@@ -24,4 +24,4 @@ Sevanadu civic-services portal (uploaded zip) moved into this Supabase-connected
 - [x] Refresh the portal with the selected Modern Institutional theme (public-service blue, Sora + Manrope, dashboard structure)
 
 ## Known minor issue
-- New generated state-service cards show "CENTRAL" badge instead of the state name (badge uses curated/jurisdiction display logic in ESevaServiceList) — cosmetic; fix when touching card UI next.
+- [x] Service cards now show the state/UT name on the badge (central services still show "Central").
