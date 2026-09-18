@@ -6,10 +6,11 @@ import {
 } from "lucide-react";
 
 interface RtiFilingModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
   language: string;
   triggerToast: (msg: string, type?: "success" | "info" | "error") => void;
+  presentation?: "modal" | "page";
 }
 
 const PUBLIC_AUTHORITIES = [
@@ -26,7 +27,8 @@ export default function RtiFilingModal({
   isOpen,
   onClose,
   language,
-  triggerToast
+  triggerToast,
+  presentation = "modal"
 }: RtiFilingModalProps) {
   const [step, setStep] = useState<"form" | "payment" | "receipt">("form");
   const [auth, setAuth] = useState("");
@@ -51,7 +53,7 @@ export default function RtiFilingModal({
     bplNo?: string;
   } | null>(null);
 
-  if (!isOpen) return null;
+  if (presentation === "modal" && !isOpen) return null;
 
   const isHi = language === "hi";
 
@@ -138,12 +140,12 @@ export default function RtiFilingModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-stone-900/80 dark:bg-slate-950/95 backdrop-blur-sm z-[99999] flex items-center justify-center p-4">
+    <div className={presentation === "modal" ? "fixed inset-0 z-[99999] flex items-center justify-center bg-charcoal-900/80 p-4 backdrop-blur-sm" : "w-full"}>
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
-        className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden flex flex-col max-h-[90vh]"
+        className={presentation === "modal" ? "flex max-h-[90vh] w-full max-w-xl flex-col overflow-hidden rounded-lg border border-border-subtle bg-brand-cream-card shadow-2xl" : "flex w-full flex-col overflow-hidden rounded-lg border border-border-subtle bg-brand-cream-card shadow-sm"}
         id="rti-filing-modal-container"
       >
         {/* Header */}
@@ -164,16 +166,19 @@ export default function RtiFilingModal({
               </h3>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-full transition cursor-pointer text-stone-400 hover:text-stone-700 dark:hover:text-stone-300 border-0 bg-transparent"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          {presentation === "modal" && onClose && (
+            <button
+              onClick={onClose}
+              aria-label={isHi ? "बंद करें" : "Close RTI form"}
+              className="p-1.5 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-full transition cursor-pointer text-stone-400 hover:text-stone-700 dark:hover:text-stone-300 border-0 bg-transparent"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
         {/* Dynamic content scroll area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-5">
+        <div className={presentation === "modal" ? "flex-1 space-y-5 overflow-y-auto p-6" : "space-y-5 p-5 sm:p-7"}>
           
           <AnimatePresence mode="wait">
             
@@ -193,7 +198,7 @@ export default function RtiFilingModal({
                   <div className="text-[11px] leading-relaxed text-amber-900 dark:text-amber-400">
                     {isHi
                       ? "नागरिक सुगमता हेतु विकसित इस शैक्षिक RTI सिमुलेटर द्वारा आप केंद्रीय अथवा राज्य लोक अधिकारियों से वैधानिक प्रारूप में सूचना मांग सकते हैं। इसकी सरकारी आवेदन शुल्क ₹10 निर्धारित है।"
-                      : "File an electronic RTI request with central departments. Complete requirements, write your specific query parameters, and pay the ₹10 statutory fee or apply for a BPL exemption."}
+                      : "Practice preparing an electronic RTI request. Complete the required fields, write a specific query, and simulate the ₹10 fee or a BPL exemption before using an official portal."}
                   </div>
                 </div>
 
@@ -569,7 +574,7 @@ export default function RtiFilingModal({
                       <div className="text-right">
                         <span className="text-[9px] font-mono text-stone-450 uppercase block">Fees Transaction</span>
                         <span className="text-[10.5px] font-sans font-black text-amber-600 dark:text-amber-500 block mt-1">
-                          {receipt.feesPaid > 0 ? `₹${receipt.feesPaid}.00 (SUCCESS)` : `EXEMPTED (${receipt.bplNo})`}
+                       {receipt.feesPaid > 0 ? `₹${receipt.feesPaid}.00 (SIMULATED)` : `PRACTICE EXEMPTION (${receipt.bplNo})`}
                         </span>
                       </div>
                     </div>
@@ -589,11 +594,11 @@ export default function RtiFilingModal({
                       setStep("form");
                       setAuth("");
                       setQuery("");
-                      onClose();
+                      onClose?.();
                     }}
                     className="w-full py-3 px-4 rounded-xl font-display font-black text-xs uppercase tracking-wider text-white bg-slate-900 hover:bg-slate-800 shadow-sm active:scale-98 transition flex items-center justify-center gap-1.5 cursor-pointer"
                   >
-                    <span>{isHi ? "पंजीकरण समाप्त करें" : "Return to Dashboard"}</span>
+                    <span>{presentation === "page" ? (isHi ? "एक और आवेदन शुरू करें" : "Start another request") : (isHi ? "पंजीकरण समाप्त करें" : "Return to Dashboard")}</span>
                   </button>
                 </div>
               </motion.div>
