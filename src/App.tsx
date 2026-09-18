@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "@tanstack/react-router";
 import { 
   Building2, Landmark, FolderCheck, Megaphone, Bot, User, 
   MapPin, LogOut, CheckCircle2, RefreshCw, BookmarkCheck, FileCheck2, 
@@ -48,8 +49,6 @@ import ConsentDialog from "./components/ConsentDialog";
 import CookieConsentBanner from "./components/CookieConsentBanner";
 import { openCookieSettings } from "@/lib/cookie-consent";
 import StateGovernanceNewsWidget from "./components/StateGovernanceNewsWidget";
-import RtiFilingModal from "./components/RtiFilingModal";
-import StatusCheckModal from "./components/StatusCheckModal";
 import VerifiedDiscussions from "./components/VerifiedDiscussions";
 import VoiceSearch from "./components/VoiceSearch";
 import { getApiUrl } from "./lib/api";
@@ -98,8 +97,6 @@ export default function App() {
   });
   const [legalHubDefaultSection, setLegalHubDefaultSection] = useState<"privacy" | "terms" | "rules" | "about" | "cookies" | "disclaimer">("about");
   const [logoPulse, setLogoPulse] = useState(false);
-  const [isRtiOpen, setIsRtiOpen] = useState(false);
-  const [isStatusCheckOpen, setIsStatusCheckOpen] = useState(false);
 
   // Citizen Profile (Interactive details - matched to metadata where applicable or pre-seeded dynamically for India)
   const [citizenName, setCitizenName] = useState("Shahrukh Khan");
@@ -801,8 +798,8 @@ export default function App() {
                     </select>
                   </div>
                   <DropdownMenuSeparator className="lg:hidden" />
-                  <DropdownMenuItem onSelect={() => setIsRtiOpen(true)} className="min-h-10 cursor-pointer"><Scale />{language === "hi" ? "RTI दाखिला" : "RTI filing"}</DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setIsStatusCheckOpen(true)} className="min-h-10 cursor-pointer"><ClipboardCheck />{language === "hi" ? "स्थिति जांच" : "Application status"}</DropdownMenuItem>
+                  <DropdownMenuItem asChild className="min-h-10 cursor-pointer"><Link to="/rti"><Scale />{language === "hi" ? "RTI दाखिला" : "RTI filing"}</Link></DropdownMenuItem>
+                  <DropdownMenuItem asChild className="min-h-10 cursor-pointer"><Link to="/status"><ClipboardCheck />{language === "hi" ? "स्थिति जांच" : "Application status"}</Link></DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => setShowLauncher(true)} className="min-h-10 cursor-pointer"><LayoutGrid />{language === "hi" ? "त्वरित लॉन्च" : "Quick launch"}</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={() => setDarkMode((value) => !value)} className="min-h-10 cursor-pointer">{darkMode ? <Sun /> : <Moon />}{darkMode ? "Light mode" : "Dark mode"}</DropdownMenuItem>
@@ -2430,27 +2427,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* 14. RTI Simulation & Application Tracking Modals */}
-      <AnimatePresence>
-        {isRtiOpen && (
-          <RtiFilingModal
-            isOpen={isRtiOpen}
-            onClose={() => setIsRtiOpen(false)}
-            language={language}
-            triggerToast={triggerToast}
-          />
-        )}
-        {isStatusCheckOpen && (
-          <StatusCheckModal
-            isOpen={isStatusCheckOpen}
-            onClose={() => setIsStatusCheckOpen(false)}
-            language={language}
-            triggerToast={triggerToast}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* 15. Regulatory Compliance & Policy Consent Overlay Dialog */}
+      {/* 14. Regulatory Compliance & Policy Consent Overlay Dialog */}
       <ConsentDialog
         isOpen={!hasConsentAccepted}
         language={language}

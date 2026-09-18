@@ -6,10 +6,11 @@ import {
 } from "lucide-react";
 
 interface StatusCheckModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
   language: string;
   triggerToast: (msg: string, type?: "success" | "info" | "error") => void;
+  presentation?: "modal" | "page";
 }
 
 interface ApplicationStatus {
@@ -87,7 +88,8 @@ export default function StatusCheckModal({
   isOpen,
   onClose,
   language,
-  triggerToast
+  triggerToast,
+  presentation = "modal"
 }: StatusCheckModalProps) {
   const [searchRef, setSearchRef] = useState("");
   const [currentApp, setCurrentApp] = useState<ApplicationStatus | null>(null);
@@ -96,7 +98,7 @@ export default function StatusCheckModal({
   const [isEscalating, setIsEscalating] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
+    if (presentation === "page" || isOpen) {
       try {
         const stored = localStorage.getItem("sewanadu_rtis");
         if (stored) {
@@ -110,9 +112,9 @@ export default function StatusCheckModal({
         console.error(e);
       }
     }
-  }, [isOpen]);
+  }, [isOpen, presentation]);
 
-  if (!isOpen) return null;
+  if (presentation === "modal" && !isOpen) return null;
 
   const isHi = language === "hi";
 
@@ -249,12 +251,12 @@ export default function StatusCheckModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-stone-900/80 dark:bg-slate-950/95 backdrop-blur-sm z-[99999] flex items-center justify-center p-4">
+    <div className={presentation === "modal" ? "fixed inset-0 z-[99999] flex items-center justify-center bg-charcoal-900/80 p-4 backdrop-blur-sm" : "w-full"}>
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
-        className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden flex flex-col max-h-[88vh]"
+        className={presentation === "modal" ? "flex max-h-[88vh] w-full max-w-xl flex-col overflow-hidden rounded-lg border border-border-subtle bg-brand-cream-card shadow-2xl" : "flex w-full flex-col overflow-hidden rounded-lg border border-border-subtle bg-brand-cream-card shadow-sm"}
         id="status-check-modal-wrapper"
       >
         {/* Header */}
@@ -272,16 +274,19 @@ export default function StatusCheckModal({
               </h3>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-full transition cursor-pointer text-stone-400 hover:text-stone-700 dark:text-stone-300 border-0 bg-transparent"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          {presentation === "modal" && onClose && (
+            <button
+              onClick={onClose}
+              aria-label={isHi ? "बंद करें" : "Close status tracker"}
+              className="p-1.5 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-full transition cursor-pointer text-stone-400 hover:text-stone-700 dark:text-stone-300 border-0 bg-transparent"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
         {/* Scrollable Workspace */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className={presentation === "modal" ? "flex-1 space-y-6 overflow-y-auto p-6" : "space-y-6 p-5 sm:p-7"}>
           
           {/* Tracking Search Input Form */}
           <form onSubmit={handleSearch} className="space-y-3 shrink-0">
@@ -326,7 +331,7 @@ export default function StatusCheckModal({
                   </button>
                 ))}
 
-                {localRtis.map((r, idx) => (
+                {localRtis.map((r) => (
                   <button
                     key={r.id}
                     type="button"

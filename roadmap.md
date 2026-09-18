@@ -26,3 +26,4 @@ Sevanadu civic-services portal (uploaded zip) moved into this Supabase-connected
 ## Known minor issue
 - [x] Service cards now show the state/UT name on the badge (central services still show "Central").
 - [x] Simplify the top navigation with responsive search, prioritized actions, and overflow menus.
+- [x] Add dedicated responsive RTI filing and service status pages, linked from the top navigation.
