@@ -198,7 +198,7 @@ export default function RtiFilingModal({
                   <div className="text-[11px] leading-relaxed text-amber-900 dark:text-amber-400">
                     {isHi
                       ? "नागरिक सुगमता हेतु विकसित इस शैक्षिक RTI सिमुलेटर द्वारा आप केंद्रीय अथवा राज्य लोक अधिकारियों से वैधानिक प्रारूप में सूचना मांग सकते हैं। इसकी सरकारी आवेदन शुल्क ₹10 निर्धारित है।"
-                      : "File an electronic RTI request with central departments. Complete requirements, write your specific query parameters, and pay the ₹10 statutory fee or apply for a BPL exemption."}
+                      : "Practice preparing an electronic RTI request. Complete the required fields, write a specific query, and simulate the ₹10 fee or a BPL exemption before using an official portal."}
                   </div>
                 </div>
 
@@ -574,7 +574,7 @@ export default function RtiFilingModal({
                       <div className="text-right">
                         <span className="text-[9px] font-mono text-stone-450 uppercase block">Fees Transaction</span>
                         <span className="text-[10.5px] font-sans font-black text-amber-600 dark:text-amber-500 block mt-1">
-                          {receipt.feesPaid > 0 ? `₹${receipt.feesPaid}.00 (SUCCESS)` : `EXEMPTED (${receipt.bplNo})`}
+                       {receipt.feesPaid > 0 ? `₹${receipt.feesPaid}.00 (SIMULATED)` : `PRACTICE EXEMPTION (${receipt.bplNo})`}
                         </span>
                       </div>
                     </div>

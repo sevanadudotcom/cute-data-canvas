@@ -15,7 +15,11 @@ export default function ServiceToolShell({ kind, title, description, children }:
 
   return (
     <main className="institutional-theme min-h-screen bg-brand-cream-bg font-sans text-charcoal-900">
-      <div className="h-1 bg-gradient-to-r from-orange-500 via-brand-cream-card to-emerald-600" aria-hidden="true" />
+      <div className="flex h-1" aria-hidden="true">
+        <span className="w-1/3 bg-orange-500" />
+        <span className="w-1/3 bg-brand-cream-card" />
+        <span className="w-1/3 bg-emerald-600" />
+      </div>
       <header className="border-b border-border-subtle bg-brand-cream-card">
         <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <Link to="/" className="flex min-w-0 items-center gap-2.5" aria-label="SewaNadu services home">

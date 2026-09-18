@@ -413,7 +413,7 @@ export default function StatusCheckModal({
                         ) : (
                           <>
                             <HeartHandshake className="w-3 h-3 text-neutral-950" />
-                            <span>{isHi ? "कलेक्टर अपील बाईपास - तत्काल स्वीकृत करें" : "DM Court Appeal - Secure Instant Approval"}</span>
+                             <span>{isHi ? "अपील परिणाम का अनुकरण करें" : "Simulate Appeal Outcome"}</span>
                           </>
                         )}
                       </button>
