@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  X, Search, Sparkles, ClipboardCheck, Clock, CheckCircle2, 
-  UserCheck, HeartHandshake, AlertTriangle, ChevronRight, HelpCircle 
+import {
+  X,
+  Search,
+  Sparkles,
+  ClipboardCheck,
+  Clock,
+  CheckCircle2,
+  UserCheck,
+  HeartHandshake,
+  AlertTriangle,
+  ChevronRight,
+  HelpCircle,
 } from "lucide-react";
 
 interface StatusCheckModalProps {
@@ -44,11 +53,38 @@ const STATIC_SAMPLERS: Record<string, ApplicationStatus> = {
     progressPercent: 50,
     currentMilestoneIndex: 1,
     stages: [
-      { titleEn: "Application Submitted", titleHi: "आवेदन प्राप्त हुआ", descEn: "Demographics filed and encrypted on state nodes.", descHi: "जनसांख्यिकी विवरण दर्ज किया गया और जिला सर्वर पर भेजा गया।", completed: true, date: "June 10, 2026 11:30 AM" },
-      { titleEn: "Assigned to Circle Revenue Officer", titleHi: "राजस्व निरीक्षक समीक्षा", descEn: "SDM designated Circle Officer Rajesh Sharma for assessment.", descHi: "अधिकारी राजेश शर्मा को भौतिक व पात्रता दस्तावेजों की समीक्षा सौंपी गई।", completed: true, date: "June 12, 2026 04:15 PM", officer: "Rajesh Sharma (Circle Revenue Inspector)" },
-      { titleEn: "Field Inquiry or Asset Check", titleHi: "क्षेत्रीय जांच / सत्यापन", descEn: "Verification of household land holding ledger limits under process.", descHi: "पारिवारिक आय तथा भूमि धारण विवरण का सत्यापन किया जा रहा है।", completed: false },
-      { titleEn: "Digitally Signed Certificate Issued", titleHi: "प्रमाण पत्र जारी हुआ", descEn: "Secured asymmetric key seal attached for direct download.", descHi: "डिजिटल हस्ताक्षर युक्त प्रमाण पत्र डाउनलोड और डिजीलॉकर हेतु सहेजें।", completed: false }
-    ]
+      {
+        titleEn: "Application Submitted",
+        titleHi: "आवेदन प्राप्त हुआ",
+        descEn: "Demographics filed and encrypted on state nodes.",
+        descHi: "जनसांख्यिकी विवरण दर्ज किया गया और जिला सर्वर पर भेजा गया।",
+        completed: true,
+        date: "June 10, 2026 11:30 AM",
+      },
+      {
+        titleEn: "Assigned to Circle Revenue Officer",
+        titleHi: "राजस्व निरीक्षक समीक्षा",
+        descEn: "SDM designated Circle Officer Rajesh Sharma for assessment.",
+        descHi: "अधिकारी राजेश शर्मा को भौतिक व पात्रता दस्तावेजों की समीक्षा सौंपी गई।",
+        completed: true,
+        date: "June 12, 2026 04:15 PM",
+        officer: "Rajesh Sharma (Circle Revenue Inspector)",
+      },
+      {
+        titleEn: "Field Inquiry or Asset Check",
+        titleHi: "क्षेत्रीय जांच / सत्यापन",
+        descEn: "Verification of household land holding ledger limits under process.",
+        descHi: "पारिवारिक आय तथा भूमि धारण विवरण का सत्यापन किया जा रहा है।",
+        completed: false,
+      },
+      {
+        titleEn: "Digitally Signed Certificate Issued",
+        titleHi: "प्रमाण पत्र जारी हुआ",
+        descEn: "Secured asymmetric key seal attached for direct download.",
+        descHi: "डिजिटल हस्ताक्षर युक्त प्रमाण पत्र डाउनलोड और डिजीलॉकर हेतु सहेजें।",
+        completed: false,
+      },
+    ],
   },
   "SEWA-MORT-2026-88B": {
     ref: "SEWA-MORT-2026-88B",
@@ -60,11 +96,39 @@ const STATIC_SAMPLERS: Record<string, ApplicationStatus> = {
     progressPercent: 75,
     currentMilestoneIndex: 2,
     stages: [
-      { titleEn: "Enrollment Registered", titleHi: "पंजीकरण दर्ज हुआ", descEn: "Aadhaar e-KYC verified; fees of ₹250 accepted.", descHi: "आधार ई-केवाईसी सत्यापित; ₹250 का शुल्क स्वीकार किया गया।", completed: true, date: "June 08, 2026 09:12 AM" },
-      { titleEn: "Medical Self-Cert Clearance", titleHi: "चिकित्सा प्रमाण पत्र स्वीकृति", descEn: "Self declaration fitness form cleared by motor licensing authority.", descHi: "परिवहन प्राधिकरण द्वारा चिकित्सा फिटनेस स्व-घोषणा स्वीकृत की गई।", completed: true, date: "June 08, 2026 10:45 AM", officer: "Dr. Sandip Roy (Certified MD)" },
-      { titleEn: "Slot Selected / Evaluation Scheduled", titleHi: "आरटीओ वाहन परीक्षण स्लॉट", descEn: "Computer test cleared. Live driving assessment booked for June 22.", descHi: "प्रारंभिक कंप्यूटर परीक्षा उत्तीर्ण। सड़क परीक्षण 22 जून हेतु आरक्षित।", completed: true, date: "June 11, 2026 02:00 PM" },
-      { titleEn: "Approved & licence Dispatched", titleHi: "लाइसेंस स्वीकृत और प्रेषित", descEn: "Hardcopy card will be delivered by Speed Post with tracking.", descHi: "डाक स्पीड पोस्ट विवरण के साथ भौतिक कार्ड घर भेज दिया जाएगा।", completed: false }
-    ]
+      {
+        titleEn: "Enrollment Registered",
+        titleHi: "पंजीकरण दर्ज हुआ",
+        descEn: "Aadhaar e-KYC verified; fees of ₹250 accepted.",
+        descHi: "आधार ई-केवाईसी सत्यापित; ₹250 का शुल्क स्वीकार किया गया।",
+        completed: true,
+        date: "June 08, 2026 09:12 AM",
+      },
+      {
+        titleEn: "Medical Self-Cert Clearance",
+        titleHi: "चिकित्सा प्रमाण पत्र स्वीकृति",
+        descEn: "Self declaration fitness form cleared by motor licensing authority.",
+        descHi: "परिवहन प्राधिकरण द्वारा चिकित्सा फिटनेस स्व-घोषणा स्वीकृत की गई।",
+        completed: true,
+        date: "June 08, 2026 10:45 AM",
+        officer: "Dr. Sandip Roy (Certified MD)",
+      },
+      {
+        titleEn: "Slot Selected / Evaluation Scheduled",
+        titleHi: "आरटीओ वाहन परीक्षण स्लॉट",
+        descEn: "Computer test cleared. Live driving assessment booked for June 22.",
+        descHi: "प्रारंभिक कंप्यूटर परीक्षा उत्तीर्ण। सड़क परीक्षण 22 जून हेतु आरक्षित।",
+        completed: true,
+        date: "June 11, 2026 02:00 PM",
+      },
+      {
+        titleEn: "Approved & licence Dispatched",
+        titleHi: "लाइसेंस स्वीकृत और प्रेषित",
+        descEn: "Hardcopy card will be delivered by Speed Post with tracking.",
+        descHi: "डाक स्पीड पोस्ट विवरण के साथ भौतिक कार्ड घर भेज दिया जाएगा।",
+        completed: false,
+      },
+    ],
   },
   "SEWA-UID-2026-55C": {
     ref: "SEWA-UID-2026-55C",
@@ -76,12 +140,37 @@ const STATIC_SAMPLERS: Record<string, ApplicationStatus> = {
     progressPercent: 25,
     currentMilestoneIndex: 0,
     stages: [
-      { titleEn: "Request Registered (Update Portal)", titleHi: "संशोधन अनुरोध प्राप्त", descEn: "Address validation rent lease submitted online.", descHi: "ऑनलाइन पता सत्यापन किरायानामा विवरण जमा किया गया।", completed: true, date: "June 15, 2026 08:30 PM" },
-      { titleEn: "UIDAI Data Validation", titleHi: "यूआईडीएआई डेटा जांच", descEn: "Verifying rent receipt signature match against regional property registry.", descHi: "संपत्ति रजिस्ट्री से किराया रसीद मिलान तथा पते की प्रामाणिकता जांच जारी।", completed: false },
-      { titleEn: "Biometric Consensus Check", titleHi: "बायोमेट्रिक मिलान निरूपण", descEn: "Validating thumb impressions matching the original enrollment registry.", descHi: "मूल पंजीकरण फिंगरप्रिंट तथा बायोमेट्रिक रिकॉर्ड से सुरक्षा समीक्षा।", completed: false },
-      { titleEn: "Aadhaar XML Record Updated", titleHi: "डेटाबेस अपडेट सफल", descEn: "New EAadhaar letter PDF available via instant digital OTP retrieval.", descHi: "सत्यापित संशोधित नया ई-आधार वेब डाउनलोड हेतु उपलब्ध।", completed: false }
-    ]
-  }
+      {
+        titleEn: "Request Registered (Update Portal)",
+        titleHi: "संशोधन अनुरोध प्राप्त",
+        descEn: "Address validation rent lease submitted online.",
+        descHi: "ऑनलाइन पता सत्यापन किरायानामा विवरण जमा किया गया।",
+        completed: true,
+        date: "June 15, 2026 08:30 PM",
+      },
+      {
+        titleEn: "UIDAI Data Validation",
+        titleHi: "यूआईडीएआई डेटा जांच",
+        descEn: "Verifying rent receipt signature match against regional property registry.",
+        descHi: "संपत्ति रजिस्ट्री से किराया रसीद मिलान तथा पते की प्रामाणिकता जांच जारी।",
+        completed: false,
+      },
+      {
+        titleEn: "Biometric Consensus Check",
+        titleHi: "बायोमेट्रिक मिलान निरूपण",
+        descEn: "Validating thumb impressions matching the original enrollment registry.",
+        descHi: "मूल पंजीकरण फिंगरप्रिंट तथा बायोमेट्रिक रिकॉर्ड से सुरक्षा समीक्षा।",
+        completed: false,
+      },
+      {
+        titleEn: "Aadhaar XML Record Updated",
+        titleHi: "डेटाबेस अपडेट सफल",
+        descEn: "New EAadhaar letter PDF available via instant digital OTP retrieval.",
+        descHi: "सत्यापित संशोधित नया ई-आधार वेब डाउनलोड हेतु उपलब्ध।",
+        completed: false,
+      },
+    ],
+  },
 };
 
 export default function StatusCheckModal({
@@ -89,7 +178,7 @@ export default function StatusCheckModal({
   onClose,
   language,
   triggerToast,
-  presentation = "modal"
+  presentation = "modal",
 }: StatusCheckModalProps) {
   const [searchRef, setSearchRef] = useState("");
   const [currentApp, setCurrentApp] = useState<ApplicationStatus | null>(null);
@@ -122,7 +211,10 @@ export default function StatusCheckModal({
     if (e) e.preventDefault();
     const cleanRef = searchRef.trim().toUpperCase();
     if (!cleanRef) {
-      triggerToast(isHi ? "कृपया संदर्भांक या नाम खोजें!" : "Please enter a valid application reference!", "error");
+      triggerToast(
+        isHi ? "कृपया संदर्भांक या नाम खोजें!" : "Please enter a valid application reference!",
+        "error",
+      );
       return;
     }
 
@@ -134,7 +226,7 @@ export default function StatusCheckModal({
     }
 
     // 2. Check local RTI filings
-    const matchedRti = localRtis.find(r => r.id.toUpperCase() === cleanRef);
+    const matchedRti = localRtis.find((r) => r.id.toUpperCase() === cleanRef);
     if (matchedRti) {
       // Map local RTI object onto full status structure
       const formattedApp: ApplicationStatus = {
@@ -147,57 +239,65 @@ export default function StatusCheckModal({
         progressPercent: matchedRti.feesPaid === 0 ? 50 : 25,
         currentMilestoneIndex: matchedRti.feesPaid === 0 ? 1 : 0,
         stages: [
-          { 
-            titleEn: "RTI Request Filed", 
-            titleHi: "RTI आवेदन प्राप्त हुआ", 
-            descEn: "Form registered securely. Fees validation successful.", 
-            descHi: "सूचना का अधिकार आवेदन सुरक्षित रूप से दर्ज। शुल्क पुष्टि सफल।", 
-            completed: true, 
-            date: matchedRti.date 
+          {
+            titleEn: "RTI Request Filed",
+            titleHi: "RTI आवेदन प्राप्त हुआ",
+            descEn: "Form registered securely. Fees validation successful.",
+            descHi: "सूचना का अधिकार आवेदन सुरक्षित रूप से दर्ज। शुल्क पुष्टि सफल।",
+            completed: true,
+            date: matchedRti.date,
           },
-          { 
-            titleEn: "Assigned to Public Information Officer (PIO)", 
-            titleHi: "लोक सूचना अधिकारी (PIO) नियुक्त", 
-            descEn: "Assigned to nodal officer representing authority board under Sec 5(1).", 
-            descHi: "लोक प्राधिकारी बोर्ड के सक्षम अधिकारी को समीक्षा हेतु सुपुर्द।", 
-            completed: matchedRti.feesPaid === 0, 
+          {
+            titleEn: "Assigned to Public Information Officer (PIO)",
+            titleHi: "लोक सूचना अधिकारी (PIO) नियुक्त",
+            descEn: "Assigned to nodal officer representing authority board under Sec 5(1).",
+            descHi: "लोक प्राधिकारी बोर्ड के सक्षम अधिकारी को समीक्षा हेतु सुपुर्द।",
+            completed: matchedRti.feesPaid === 0,
             date: matchedRti.feesPaid === 0 ? matchedRti.date : undefined,
-            officer: "Officer K.L. Nair (CPIO Nodal Node)" 
+            officer: "Officer K.L. Nair (CPIO Nodal Node)",
           },
-          { 
-            titleEn: "Information Harvesting", 
-            titleHi: "संबंधित प्रभाग से सूचना का संकलन", 
-            descEn: "Preparing official documentation files as solicited.", 
-            descHi: "मांगे गए दस्तावेजों का संकलन एवं विभागीय कार्यालय से निकासी जारी।", 
-            completed: false 
+          {
+            titleEn: "Information Harvesting",
+            titleHi: "संबंधित प्रभाग से सूचना का संकलन",
+            descEn: "Preparing official documentation files as solicited.",
+            descHi: "मांगे गए दस्तावेजों का संकलन एवं विभागीय कार्यालय से निकासी जारी।",
+            completed: false,
           },
-          { 
-            titleEn: "Information Despatch Issued", 
-            titleHi: "सूचना का निपटान पूरा", 
-            descEn: "Response uploaded digitally. Copy sent via registered speed post.", 
-            descHi: "आरटीआई प्रत्युत्तर वेब-पोर्टल पर अपलोड तथा पंजीकृत डाक द्वारा प्रेषित।", 
-            completed: false 
-          }
-        ]
+          {
+            titleEn: "Information Despatch Issued",
+            titleHi: "सूचना का निपटान पूरा",
+            descEn: "Response uploaded digitally. Copy sent via registered speed post.",
+            descHi: "आरटीआई प्रत्युत्तर वेब-पोर्टल पर अपलोड तथा पंजीकृत डाक द्वारा प्रेषित।",
+            completed: false,
+          },
+        ],
       };
       setCurrentApp(formattedApp);
-      triggerToast(isHi ? "आपकी हाल ही में दर्ज RTI मिल गई!" : "Your matching RTI record has been loaded!", "success");
+      triggerToast(
+        isHi ? "आपकी हाल ही में दर्ज RTI मिल गई!" : "Your matching RTI record has been loaded!",
+        "success",
+      );
       return;
     }
 
     // 3. Check local service applications
-    const matchedApp = localApps.find(app => app.ref.toUpperCase() === cleanRef);
+    const matchedApp = localApps.find((app) => app.ref.toUpperCase() === cleanRef);
     if (matchedApp) {
       setCurrentApp(matchedApp);
-      triggerToast(isHi ? "आपका सेवा आवेदन विवरण मिल गया!" : "Your matching service application record has been loaded!", "success");
+      triggerToast(
+        isHi
+          ? "आपका सेवा आवेदन विवरण मिल गया!"
+          : "Your matching service application record has been loaded!",
+        "success",
+      );
       return;
     }
 
     triggerToast(
-      isHi 
-        ? "कोई आवेदन नहीं मिला। कृपया नमूना संदर्भों में से किसी एक पर क्लिक करें।" 
-        : "No active reference found. Try clicking one of the interactive sample cards below.", 
-      "info"
+      isHi
+        ? "कोई आवेदन नहीं मिला। कृपया नमूना संदर्भों में से किसी एक पर क्लिक करें।"
+        : "No active reference found. Try clicking one of the interactive sample cards below.",
+      "info",
     );
   };
 
@@ -206,7 +306,10 @@ export default function StatusCheckModal({
     setTimeout(() => {
       if (STATIC_SAMPLERS[refKey]) {
         setCurrentApp(STATIC_SAMPLERS[refKey]);
-        triggerToast(isHi ? "नमूना रिकॉर्ड लोड हुआ।" : "Sample record loaded successfully.", "success");
+        triggerToast(
+          isHi ? "नमूना रिकॉर्ड लोड हुआ।" : "Sample record loaded successfully.",
+          "success",
+        );
       }
     }, 50);
   };
@@ -214,49 +317,59 @@ export default function StatusCheckModal({
   const handleSpeedUpApp = () => {
     if (!currentApp) return;
     setIsEscalating(true);
-    
+
     setTimeout(() => {
       setIsEscalating(false);
       // Create copy and transition all stages to complete
-      const upgradedStages = currentApp.stages.map(step => ({
+      const upgradedStages = currentApp.stages.map((step) => ({
         ...step,
         completed: true,
-        date: new Date().toLocaleString()
+        date: new Date().toLocaleString(),
       }));
 
       const updatedApp = {
         ...currentApp,
         progressPercent: 100,
         currentMilestoneIndex: 3,
-        stages: upgradedStages
+        stages: upgradedStages,
       };
 
       setCurrentApp(updatedApp);
 
       // Save back to localApps if it exists
-      const isLocalApp = localApps.some(app => app.ref === currentApp.ref);
+      const isLocalApp = localApps.some((app) => app.ref === currentApp.ref);
       if (isLocalApp) {
-        const nextApps = localApps.map(app => app.ref === currentApp.ref ? updatedApp : app);
+        const nextApps = localApps.map((app) => (app.ref === currentApp.ref ? updatedApp : app));
         setLocalApps(nextApps);
         localStorage.setItem("sewanadu_applications", JSON.stringify(nextApps));
       }
 
       triggerToast(
-        isHi 
-          ? "नागरिक अपील स्वीकृत! जिला कलेक्टर न्यायालय द्वारा सीधे त्वरित अनुमोदन।" 
-          : "Administrative Appeal Approved! Direct speed clearance approved by District Collector's desk.", 
-        "success"
+        isHi
+          ? "नागरिक अपील स्वीकृत! जिला कलेक्टर न्यायालय द्वारा सीधे त्वरित अनुमोदन।"
+          : "Administrative Appeal Approved! Direct speed clearance approved by District Collector's desk.",
+        "success",
       );
     }, 2200);
   };
 
   return (
-    <div className={presentation === "modal" ? "fixed inset-0 z-[99999] flex items-center justify-center bg-charcoal-900/80 p-4 backdrop-blur-sm" : "w-full"}>
+    <div
+      className={
+        presentation === "modal"
+          ? "fixed inset-0 z-[99999] flex items-center justify-center bg-charcoal-900/80 p-4 backdrop-blur-sm"
+          : "w-full"
+      }
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
-        className={presentation === "modal" ? "flex max-h-[88vh] w-full max-w-xl flex-col overflow-hidden rounded-lg border border-border-subtle bg-brand-cream-card shadow-2xl" : "flex w-full flex-col overflow-hidden rounded-lg border border-border-subtle bg-brand-cream-card shadow-sm"}
+        className={
+          presentation === "modal"
+            ? "flex max-h-[88vh] w-full max-w-xl flex-col overflow-hidden rounded-lg border border-border-subtle bg-brand-cream-card shadow-2xl"
+            : "flex w-full flex-col overflow-hidden rounded-lg border border-border-subtle bg-brand-cream-card shadow-sm"
+        }
         id="status-check-modal-wrapper"
       >
         {/* Header */}
@@ -286,13 +399,20 @@ export default function StatusCheckModal({
         </div>
 
         {/* Scrollable Workspace */}
-        <div className={presentation === "modal" ? "flex-1 space-y-6 overflow-y-auto p-6" : "space-y-6 p-5 sm:p-7"}>
-          
+        <div
+          className={
+            presentation === "modal"
+              ? "flex-1 space-y-6 overflow-y-auto p-6"
+              : "space-y-6 p-5 sm:p-7"
+          }
+        >
           {/* Tracking Search Input Form */}
           <form onSubmit={handleSearch} className="space-y-3 shrink-0">
             <div className="space-y-1.5">
               <label className="block text-[10px] font-black uppercase text-stone-500 dark:text-stone-400 font-mono tracking-wider">
-                {isHi ? "आवेदन संदर्भ संख्या (REF ID) दर्ज करें" : "Enter Application Reference Number"}
+                {isHi
+                  ? "आवेदन संदर्भ संख्या (REF ID) दर्ज करें"
+                  : "Enter Application Reference Number"}
               </label>
               <div className="flex gap-2">
                 <div className="relative flex-1">
@@ -301,7 +421,9 @@ export default function StatusCheckModal({
                     type="text"
                     value={searchRef}
                     onChange={(e) => setSearchRef(e.target.value)}
-                    placeholder={isHi ? "जैसे: SEWA-REVENUE-2026-77A" : "e.g. SEWA-REVENUE-2026-77A"}
+                    placeholder={
+                      isHi ? "जैसे: SEWA-REVENUE-2026-77A" : "e.g. SEWA-REVENUE-2026-77A"
+                    }
                     className="w-full pl-10 pr-4 py-2.5 text-xs font-mono border border-stone-250 dark:border-stone-800 rounded-xl bg-white dark:bg-stone-850 dark:text-white uppercase tracking-wider focus:ring-1 focus:ring-brand-coral outline-none"
                   />
                 </div>
@@ -317,7 +439,9 @@ export default function StatusCheckModal({
             {/* Quick Helper Sample Shortcuts */}
             <div className="text-[10px] leading-relaxed text-stone-550 dark:text-stone-400">
               <span className="font-extrabold block text-stone-700 dark:text-stone-300 mb-1">
-                {isHi ? "त्वरित जांच हेतु परीक्षण संदर्भ चुनें:" : "Test instantly with simulated cases:"}
+                {isHi
+                  ? "त्वरित जांच हेतु परीक्षण संदर्भ चुनें:"
+                  : "Test instantly with simulated cases:"}
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {Object.keys(STATIC_SAMPLERS).map((key) => (
@@ -344,7 +468,9 @@ export default function StatusCheckModal({
 
                 {localRtis.length === 0 && (
                   <span className="text-[9.5px] text-stone-400 font-normal italic">
-                    {isHi ? "(कोई हालिया RTI दर्ज नहीं है)" : "(No live RTIs filed yet. Create one via 'RTI Filing' first!)"}
+                    {isHi
+                      ? "(कोई हालिया RTI दर्ज नहीं है)"
+                      : "(No live RTIs filed yet. Create one via 'RTI Filing' first!)"}
                   </span>
                 )}
               </div>
@@ -374,7 +500,7 @@ export default function StatusCheckModal({
                       {currentApp.department}
                     </p>
                   </div>
-                  
+
                   <div className="text-right">
                     <span className="text-[9.5px] font-mono text-stone-450 block uppercase leading-none">
                       {isHi ? "कुल प्रगति" : "Total Progress"}
@@ -391,14 +517,16 @@ export default function StatusCheckModal({
                     <Sparkles className="w-4 h-4 text-amber-500 shrink-0 mt-0.5 animate-pulse" />
                     <div className="flex-1 space-y-1">
                       <h5 className="text-[11.5px] font-sans font-extrabold text-amber-950 dark:text-amber-400">
-                        {isHi ? "सुविधा: तत्काल प्रशासनिक गति बढ़ाएं" : "Escalation: Fast-Track Administrative Clearance?"}
+                        {isHi
+                          ? "सुविधा: तत्काल प्रशासनिक गति बढ़ाएं"
+                          : "Escalation: Fast-Track Administrative Clearance?"}
                       </h5>
                       <p className="text-[10px] leading-relaxed text-stone-600 dark:text-stone-400">
-                        {isHi 
-                          ? "क्या यह समीक्षा विभाग में लंबित लग रही है? क्षेत्रीय जिला मजिस्ट्रेट अपील मंच के तहत फाइल को तत्काल बाईपास एवं अनुमोदित करने के लिए दबाएं।" 
+                        {isHi
+                          ? "क्या यह समीक्षा विभाग में लंबित लग रही है? क्षेत्रीय जिला मजिस्ट्रेट अपील मंच के तहत फाइल को तत्काल बाईपास एवं अनुमोदित करने के लिए दबाएं।"
                           : "Tired of regular bureaucratic delay? Simulate an immediate citizen appeal filing to the District Collector's desk to bypass verify this record."}
                       </p>
-                      
+
                       <button
                         type="button"
                         onClick={handleSpeedUpApp}
@@ -413,7 +541,9 @@ export default function StatusCheckModal({
                         ) : (
                           <>
                             <HeartHandshake className="w-3 h-3 text-neutral-950" />
-                             <span>{isHi ? "अपील परिणाम का अनुकरण करें" : "Simulate Appeal Outcome"}</span>
+                            <span>
+                              {isHi ? "अपील परिणाम का अनुकरण करें" : "Simulate Appeal Outcome"}
+                            </span>
                           </>
                         )}
                       </button>
@@ -425,7 +555,11 @@ export default function StatusCheckModal({
                 <div className="space-y-4 pt-1">
                   <h5 className="text-[10px] font-black font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400 border-b border-stone-100 dark:border-stone-850 pb-2 flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5 text-stone-400 shrink-0" />
-                    <span>{isHi ? "लॉजिस्टिक ट्रैकिंग माइलस्टोन्स" : "Statutory Verification Milestones"}</span>
+                    <span>
+                      {isHi
+                        ? "लॉजिस्टिक ट्रैकिंग माइलस्टोन्स"
+                        : "Statutory Verification Milestones"}
+                    </span>
                   </h5>
 
                   <div className="relative pl-6 space-y-5.5">
@@ -438,15 +572,20 @@ export default function StatusCheckModal({
                       const isComplete = stage.completed;
 
                       return (
-                        <div key={idx} className="relative flex items-start gap-3.5 text-left leading-normal text-xs font-sans">
+                        <div
+                          key={idx}
+                          className="relative flex items-start gap-3.5 text-left leading-normal text-xs font-sans"
+                        >
                           {/* Node Icon */}
-                          <div className={`absolute -left-6 w-5 h-5 rounded-full flex items-center justify-center border-2 shrink-0 z-10 transition-colors ${
-                            isComplete 
-                              ? "bg-emerald-500 border-emerald-500 text-white" 
-                              : isActive 
-                                ? "bg-amber-500 border-amber-500 text-neutral-950 stroke-[3]" 
-                                : "bg-white dark:bg-stone-900 border-stone-250 dark:border-stone-750 text-stone-400"
-                          }`}>
+                          <div
+                            className={`absolute -left-6 w-5 h-5 rounded-full flex items-center justify-center border-2 shrink-0 z-10 transition-colors ${
+                              isComplete
+                                ? "bg-emerald-500 border-emerald-500 text-white"
+                                : isActive
+                                  ? "bg-amber-500 border-amber-500 text-neutral-950 stroke-[3]"
+                                  : "bg-white dark:bg-stone-900 border-stone-250 dark:border-stone-750 text-stone-400"
+                            }`}
+                          >
                             {isComplete ? (
                               <CheckCircle2 className="w-3.5 h-3.5 stroke-[3]" />
                             ) : isActive ? (
@@ -457,9 +596,15 @@ export default function StatusCheckModal({
                           </div>
 
                           <div className="flex-1 space-y-0.5">
-                            <span className={`text-[12.5px] font-extrabold flex items-center gap-1.5 ${
-                              isComplete ? "text-stone-900 dark:text-white" : isActive ? "text-amber-600 dark:text-amber-500" : "text-stone-400"
-                            }`}>
+                            <span
+                              className={`text-[12.5px] font-extrabold flex items-center gap-1.5 ${
+                                isComplete
+                                  ? "text-stone-900 dark:text-white"
+                                  : isActive
+                                    ? "text-amber-600 dark:text-amber-500"
+                                    : "text-stone-400"
+                              }`}
+                            >
                               {isHi ? stage.titleHi : stage.titleEn}
                               {isComplete && (
                                 <span className="text-[8px] font-mono uppercase bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 px-1 rounded font-bold">
@@ -472,7 +617,9 @@ export default function StatusCheckModal({
                                 </span>
                               )}
                             </span>
-                            <p className={`text-[10.5px] leading-relaxed ${isComplete || isActive ? "text-stone-600 dark:text-stone-350" : "text-stone-400"}`}>
+                            <p
+                              className={`text-[10.5px] leading-relaxed ${isComplete || isActive ? "text-stone-600 dark:text-stone-350" : "text-stone-400"}`}
+                            >
                               {isHi ? stage.descHi : stage.descEn}
                             </p>
 
@@ -509,18 +656,19 @@ export default function StatusCheckModal({
                 <HelpCircle className="w-8 h-8 text-stone-300 dark:text-stone-750" />
                 <div className="space-y-1 max-w-sm">
                   <h5 className="text-[12.5px] font-sans font-extrabold text-stone-900 dark:text-white">
-                    {isHi ? "कोई सक्रिय स्थिति क्वेरी लोड नहीं" : "No Active Tracking Session Loaded"}
+                    {isHi
+                      ? "कोई सक्रिय स्थिति क्वेरी लोड नहीं"
+                      : "No Active Tracking Session Loaded"}
                   </h5>
                   <p className="text-[10px] text-stone-500 dark:text-stone-400 leading-normal font-sans">
-                    {isHi 
-                      ? "उपरोक्त पाठ क्षेत्र में अपना रसीद संदर्भांक कोड भरें या स्थिति प्रलेखन का परीक्षण करने के लिए किसी एक उदाहरण संदर्भ पत्र पर क्लिक करें।" 
+                    {isHi
+                      ? "उपरोक्त पाठ क्षेत्र में अपना रसीद संदर्भांक कोड भरें या स्थिति प्रलेखन का परीक्षण करने के लिए किसी एक उदाहरण संदर्भ पत्र पर क्लिक करें।"
                       : "Type an application reference key above or select one of our prepackaged e-Sewa sample cases below to test current status checks and appeal workflows."}
                   </p>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
-
         </div>
       </motion.div>
     </div>

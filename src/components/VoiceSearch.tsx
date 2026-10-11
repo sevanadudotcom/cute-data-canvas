@@ -1,6 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Mic, MicOff, X, Globe, RefreshCw, AlertCircle, Sparkles, Check, HelpCircle } from "lucide-react";
+import {
+  Mic,
+  MicOff,
+  X,
+  Globe,
+  RefreshCw,
+  AlertCircle,
+  Sparkles,
+  Check,
+  HelpCircle,
+} from "lucide-react";
 
 interface VoiceSearchProps {
   currentLanguage: string;
@@ -21,7 +31,7 @@ const INDIAN_SPEECH_LANGUAGES = [
   { code: "kn", locale: "kn-IN", name: "Kannada (ಕನ್ನಡ)", nativeName: "ಕನ್ನಡ" },
   { code: "ml", locale: "ml-IN", name: "Malayalam (മലയാളം)", nativeName: "മലയാളം" },
   { code: "pa", locale: "pa-IN", name: "Punjabi (ਪੰਜਾਬੀ)", nativeName: "ਪੰਜਾਬੀ" },
-  { code: "or", locale: "or-IN", name: "Odia (ଓଡ଼ିଆ)", nativeName: "ଓଡ଼ିଆ" }
+  { code: "or", locale: "or-IN", name: "Odia (ଓଡ଼ିଆ)", nativeName: "ଓଡ଼ିଆ" },
 ];
 
 export default function VoiceSearch({
@@ -29,14 +39,14 @@ export default function VoiceSearch({
   onSpeechResult,
   triggerToast,
   className = "",
-  iconSize = 16
+  iconSize = 16,
 }: VoiceSearchProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [interimTranscript, setInterimTranscript] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState(() => {
-    const match = INDIAN_SPEECH_LANGUAGES.find(l => l.code === currentLanguage);
+    const match = INDIAN_SPEECH_LANGUAGES.find((l) => l.code === currentLanguage);
     return match ? match : INDIAN_SPEECH_LANGUAGES[0]; // Fallback to English
   });
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -45,7 +55,7 @@ export default function VoiceSearch({
 
   // Synchronize language if it changes externally
   useEffect(() => {
-    const match = INDIAN_SPEECH_LANGUAGES.find(l => l.code === currentLanguage);
+    const match = INDIAN_SPEECH_LANGUAGES.find((l) => l.code === currentLanguage);
     if (match) {
       setSelectedLanguage(match);
     }
@@ -65,7 +75,8 @@ export default function VoiceSearch({
   }, []);
 
   const checkSupport = () => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     return !!SpeechRecognition;
   };
 
@@ -74,18 +85,19 @@ export default function VoiceSearch({
     setTranscript("");
     setInterimTranscript("");
 
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
       setErrorMsg(
         currentLanguage === "hi"
           ? "आपके ब्राउज़र या डिवाइस पर स्पीच रिकग्निशन समर्थित नहीं है।"
-          : "Speech recognition is not supported on this browser/device."
+          : "Speech recognition is not supported on this browser/device.",
       );
       triggerToast(
         currentLanguage === "hi"
           ? "स्पीच रिकग्निशन समर्थित नहीं है।"
           : "Speech recognition not supported on this device.",
-        "error"
+        "error",
       );
       return;
     }
@@ -113,7 +125,7 @@ export default function VoiceSearch({
         }
 
         if (final) {
-          setTranscript(prev => prev + " " + final);
+          setTranscript((prev) => prev + " " + final);
         }
         setInterimTranscript(interim);
       };
@@ -124,13 +136,15 @@ export default function VoiceSearch({
           setErrorMsg(
             currentLanguage === "hi"
               ? "माइक्रोफ़ोन अनुमति अस्वीकृत। कृपया ब्राउज़र सेटिंग्स में माइक्रोफ़ोन एक्सेस सक्षम करें।"
-              : "Microphone permission denied. Please allow microphone access in browser/system settings."
+              : "Microphone permission denied. Please allow microphone access in browser/system settings.",
           );
         } else if (event.error === "no-speech") {
           // Do not show hard error, just alert
           triggerToast(
-            currentLanguage === "hi" ? "कोई आवाज़ नहीं सुनी गई।" : "No speech detected. Please speak louder.",
-            "info"
+            currentLanguage === "hi"
+              ? "कोई आवाज़ नहीं सुनी गई।"
+              : "No speech detected. Please speak louder.",
+            "info",
           );
         } else {
           setErrorMsg(`Error: ${event.error}`);
@@ -175,7 +189,7 @@ export default function VoiceSearch({
         currentLanguage === "hi"
           ? "यह ब्राउज़र या डिवाइस वॉयस सर्च का समर्थन नहीं करता है।"
           : "Your device or WebView does not support speech-to-text search.",
-        "error"
+        "error",
       );
       return;
     }
@@ -191,7 +205,7 @@ export default function VoiceSearch({
     setIsOpen(false);
   };
 
-  const handleSelectLanguage = (lang: typeof INDIAN_SPEECH_LANGUAGES[0]) => {
+  const handleSelectLanguage = (lang: (typeof INDIAN_SPEECH_LANGUAGES)[0]) => {
     setSelectedLanguage(lang);
     stopListening();
     // Restart recognition with the new language after a brief delay
@@ -199,8 +213,9 @@ export default function VoiceSearch({
       setErrorMsg(null);
       setTranscript("");
       setInterimTranscript("");
-      
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+
+      const SpeechRecognition =
+        (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       if (SpeechRecognition) {
         try {
           const recognition = new SpeechRecognition();
@@ -216,7 +231,7 @@ export default function VoiceSearch({
               if (event.results[i].isFinal) final += event.results[i][0].transcript;
               else interim += event.results[i][0].transcript;
             }
-            if (final) setTranscript(prev => prev + " " + final);
+            if (final) setTranscript((prev) => prev + " " + final);
             setInterimTranscript(interim);
           };
           recognition.onerror = (event: any) => {
@@ -243,14 +258,14 @@ export default function VoiceSearch({
         currentLanguage === "hi"
           ? `खोज क्वेरी लागू की गई: "${finalResult}"`
           : `Applied spoken query: "${finalResult}"`,
-        "success"
+        "success",
       );
     } else {
       triggerToast(
         currentLanguage === "hi"
           ? "कृपया लागू करने से पहले कुछ बोलें।"
           : "Please speak something before applying search.",
-        "info"
+        "info",
       );
     }
   };
@@ -291,7 +306,9 @@ export default function VoiceSearch({
                 <div className="flex items-center gap-1.5">
                   <Sparkles className="w-4 h-4 text-brand-coral animate-pulse" />
                   <h3 className="text-sm font-display font-extrabold text-stone-900">
-                    {currentLanguage === "hi" ? "आवाज से खोजें (Voice Search)" : "Sovereign Voice Search"}
+                    {currentLanguage === "hi"
+                      ? "आवाज से खोजें (Voice Search)"
+                      : "Sovereign Voice Search"}
                   </h3>
                 </div>
                 <button
@@ -324,7 +341,12 @@ export default function VoiceSearch({
                           initial={{ scale: 0.8, opacity: 0.4 }}
                           animate={{ scale: 2.3, opacity: 0 }}
                           exit={{ opacity: 0 }}
-                          transition={{ repeat: Infinity, duration: 2, delay: 0.6, ease: "easeOut" }}
+                          transition={{
+                            repeat: Infinity,
+                            duration: 2,
+                            delay: 0.6,
+                            ease: "easeOut",
+                          }}
                           className="absolute w-16 h-16 bg-brand-coral/10 rounded-full"
                         />
                       </>
@@ -341,19 +363,29 @@ export default function VoiceSearch({
                     }`}
                     id="speech-toggle-mic-circle"
                   >
-                    {isListening ? <Mic className="w-7 h-7 animate-pulse" /> : <MicOff className="w-7 h-7 text-stone-400" />}
+                    {isListening ? (
+                      <Mic className="w-7 h-7 animate-pulse" />
+                    ) : (
+                      <MicOff className="w-7 h-7 text-stone-400" />
+                    )}
                   </button>
                 </div>
 
                 <div className="text-center space-y-1 z-10">
-                  <span className={`text-[11px] font-extrabold uppercase tracking-wider ${isListening ? "text-brand-coral" : "text-stone-500"}`}>
-                    {isListening 
-                      ? (currentLanguage === "hi" ? "आवाज सुनी जा रही है..." : "Listening...") 
-                      : (currentLanguage === "hi" ? "सुनना बंद है। शुरू करने के लिए माइक दबाएं" : "Paused. Tap mic to start")}
+                  <span
+                    className={`text-[11px] font-extrabold uppercase tracking-wider ${isListening ? "text-brand-coral" : "text-stone-500"}`}
+                  >
+                    {isListening
+                      ? currentLanguage === "hi"
+                        ? "आवाज सुनी जा रही है..."
+                        : "Listening..."
+                      : currentLanguage === "hi"
+                        ? "सुनना बंद है। शुरू करने के लिए माइक दबाएं"
+                        : "Paused. Tap mic to start"}
                   </span>
                   <p className="text-[10px] text-stone-400">
-                    {currentLanguage === "hi" 
-                      ? `भाषा: ${selectedLanguage.name}` 
+                    {currentLanguage === "hi"
+                      ? `भाषा: ${selectedLanguage.name}`
                       : `Speaking in ${selectedLanguage.name}`}
                   </p>
                 </div>
@@ -365,7 +397,12 @@ export default function VoiceSearch({
                       <motion.span
                         key={idx}
                         animate={{ height: ["4px", `${val * 10}px`, "4px"] }}
-                        transition={{ repeat: Infinity, duration: 0.8, delay: idx * 0.06, ease: "easeInOut" }}
+                        transition={{
+                          repeat: Infinity,
+                          duration: 0.8,
+                          delay: idx * 0.06,
+                          ease: "easeInOut",
+                        }}
                         className="w-0.75 bg-brand-coral rounded-full"
                       />
                     ))}
@@ -376,7 +413,9 @@ export default function VoiceSearch({
               {/* Live Transcript Panel */}
               <div className="space-y-2">
                 <label className="text-[9px] font-mono font-bold text-stone-500 block uppercase">
-                  {currentLanguage === "hi" ? "वास्तविक समय प्रतिलेख (Live Transcript):" : "Dynamic Transcribed Text:"}
+                  {currentLanguage === "hi"
+                    ? "वास्तविक समय प्रतिलेख (Live Transcript):"
+                    : "Dynamic Transcribed Text:"}
                 </label>
                 <div className="min-h-16 p-3.5 bg-stone-50 rounded-xl border border-stone-200/80 text-xs font-medium text-stone-800 leading-relaxed font-sans max-h-28 overflow-y-auto">
                   {transcript || interimTranscript ? (
@@ -409,10 +448,15 @@ export default function VoiceSearch({
                 <div className="flex items-center gap-1">
                   <Globe className="w-3 h-3 text-stone-400" />
                   <span className="text-[9px] font-mono font-black text-stone-500 uppercase tracking-wider">
-                    {currentLanguage === "hi" ? "अपनी क्षेत्रीय भाषा चुनें:" : "Choose Speak Language:"}
+                    {currentLanguage === "hi"
+                      ? "अपनी क्षेत्रीय भाषा चुनें:"
+                      : "Choose Speak Language:"}
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-1.5 max-h-24 overflow-y-auto pr-1" id="voice-languages-list">
+                <div
+                  className="grid grid-cols-3 gap-1.5 max-h-24 overflow-y-auto pr-1"
+                  id="voice-languages-list"
+                >
                   {INDIAN_SPEECH_LANGUAGES.map((lang) => {
                     const isSel = selectedLanguage.locale === lang.locale;
                     return (
@@ -472,7 +516,6 @@ export default function VoiceSearch({
                   </button>
                 </div>
               </div>
-
             </motion.div>
           </motion.div>
         )}

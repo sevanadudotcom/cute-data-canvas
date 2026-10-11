@@ -80,7 +80,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { name: "author", content: "SewaNadu" },
       { property: "og:title", content: "SewaNadu — Indian Citizen e-Service Directory" },
-      { property: "og:description", content: "Explore Indian government services, eligibility, documents and grievance guidance in your language." },
+      {
+        property: "og:description",
+        content:
+          "Explore Indian government services, eligibility, documents and grievance guidance in your language.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },

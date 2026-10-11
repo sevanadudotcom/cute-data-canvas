@@ -19,50 +19,57 @@ interface SimulatedAd {
 
 const SIMULATED_ADS_POOL: SimulatedAd[] = [
   {
-    title: { 
-      en: "Direct DigiLocker Backup Tool", 
-      hi: "सीधा डिजीलॉकर बैकअप टूल" 
+    title: {
+      en: "Direct DigiLocker Backup Tool",
+      hi: "सीधा डिजीलॉकर बैकअप टूल",
     },
-    desc: { 
+    desc: {
       en: "Protect and sync your critical certificates with cloud redundancy. Free offline storage vault.",
-      hi: "क्लाउड रिडंडेंसी के साथ अपने महत्वपूर्ण प्रमाणपत्रों को सुरक्षित रखें। निःशुल्क ऑफ़लाइन संग्रहण।"
+      hi: "क्लाउड रिडंडेंसी के साथ अपने महत्वपूर्ण प्रमाणपत्रों को सुरक्षित रखें। निःशुल्क ऑफ़लाइन संग्रहण।",
     },
     cta: { en: "Secure Sync", hi: "सत्यापित सिंक" },
     url: "https://digilocker.gov.in",
-    badge: { en: "Utility Backup", hi: "उपयोगिता बैकअप" }
+    badge: { en: "Utility Backup", hi: "उपयोगिता बैकअप" },
   },
   {
-    title: { 
-      en: "Official Aadhaar Correction Directory", 
-      hi: "आधिकारिक आधार सुधार निर्देशिका" 
+    title: {
+      en: "Official Aadhaar Correction Directory",
+      hi: "आधिकारिक आधार सुधार निर्देशिका",
     },
-    desc: { 
+    desc: {
       en: "Need a name, date of birth, or mobile update? Access direct regional kiosk coordinates instantly.",
-      hi: "नाम, जन्म तिथि या मोबाइल नंबर अपडेट करना है? सीधे क्षेत्रीय कियोस्क के पते खोजें।"
+      hi: "नाम, जन्म तिथि या मोबाइल नंबर अपडेट करना है? सीधे क्षेत्रीय कियोस्क के पते खोजें।",
     },
     cta: { en: "Find Kiosk", hi: "कियोस्क ढूंढें" },
     url: "https://uidai.gov.in",
-    badge: { en: "Aadhaar Help", hi: "आधार सहायता" }
+    badge: { en: "Aadhaar Help", hi: "आधार सहायता" },
   },
   {
-    title: { 
-      en: "Govt Job & Skill India Training", 
-      hi: "सरकारी नौकरी और कौशल विकास" 
+    title: {
+      en: "Govt Job & Skill India Training",
+      hi: "सरकारी नौकरी और कौशल विकास",
     },
-    desc: { 
+    desc: {
       en: "Join PMKVY vocational modules and receive certified apprentice stipends up to ₹8,000 monthly.",
-      hi: "पीएमकेवीवाई व्यावसायिक कोर्सेज में शामिल हों और ₹8,000 मासिक तक वजीफा प्राप्त करें।"
+      hi: "पीएमकेवीवाई व्यावसायिक कोर्सेज में शामिल हों और ₹8,000 मासिक तक वजीफा प्राप्त करें।",
     },
     cta: { en: "Apply Free", hi: "निशुल्क आवेदन" },
     url: "https://www.pmkvayom.org.in",
-    badge: { en: "Skill India", hi: "कौशल भारत" }
-  }
+    badge: { en: "Skill India", hi: "कौशल भारत" },
+  },
 ];
 
-export default function AdSenseUnit({ id, format = "horizontal", slotId = "0000000000", className = "" }: AdSenseUnitProps) {
+export default function AdSenseUnit({
+  id,
+  format = "horizontal",
+  slotId = "0000000000",
+  className = "",
+}: AdSenseUnitProps) {
   const { language } = useLanguage();
   const [inspectMode, setInspectMode] = useState(false);
-  const [adIndex, setAdIndex] = useState(() => Math.floor(Math.random() * SIMULATED_ADS_POOL.length));
+  const [adIndex, setAdIndex] = useState(() =>
+    Math.floor(Math.random() * SIMULATED_ADS_POOL.length),
+  );
   const [adRemoved, setAdRemoved] = useState(false);
 
   // Lazy loading states
@@ -87,7 +94,7 @@ export default function AdSenseUnit({ id, format = "horizontal", slotId = "00000
       {
         rootMargin: "120px", // Pre-fetch 120px before entering viewport to prevent content delay
         threshold: 0.01,
-      }
+      },
     );
 
     const currentRef = containerRef.current;
@@ -119,11 +126,15 @@ export default function AdSenseUnit({ id, format = "horizontal", slotId = "00000
   // Render static skeleton matching format's height when outside the viewport (prevents Cumulative Layout Shift!)
   if (!isVisible) {
     return (
-      <div 
-        ref={containerRef} 
-        id={`adsense-deferred-${id}`} 
+      <div
+        ref={containerRef}
+        id={`adsense-deferred-${id}`}
         className={`group/ad relative select-none animate-pulse bg-stone-50/50 dark:bg-stone-900/10 border border-dashed border-stone-200 dark:border-stone-800/80 rounded-2xl ${
-          format === "horizontal" ? "min-h-[110px] mb-6" : format === "sidebar" ? "min-h-[285px] mb-4" : "min-h-[145px] mb-4"
+          format === "horizontal"
+            ? "min-h-[110px] mb-6"
+            : format === "sidebar"
+              ? "min-h-[285px] mb-4"
+              : "min-h-[145px] mb-4"
         } ${className}`}
       >
         <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
@@ -134,8 +145,8 @@ export default function AdSenseUnit({ id, format = "horizontal", slotId = "00000
             </span>
           </div>
           <p className="text-[9px] text-stone-400 dark:text-stone-600 mt-1 font-sans text-center max-w-xs md:max-w-md">
-            {language === "hi" 
-              ? "पेज स्पीड और कोर वेब वाइटल्स नियंत्रण: व्यूपोर्ट में प्रवेश करने पर लोड होगा।" 
+            {language === "hi"
+              ? "पेज स्पीड और कोर वेब वाइटल्स नियंत्रण: व्यूपोर्ट में प्रवेश करने पर लोड होगा।"
               : "Intersection Observer active for Core Web Vitals (CLS & LCP Optimization)"}
           </p>
         </div>
@@ -146,11 +157,15 @@ export default function AdSenseUnit({ id, format = "horizontal", slotId = "00000
   // Render async retrieval loader when first entering viewport to simulate real programmatic auctions
   if (isLoading) {
     return (
-      <div 
-        ref={containerRef} 
-        id={`adsense-fetching-${id}`} 
+      <div
+        ref={containerRef}
+        id={`adsense-fetching-${id}`}
         className={`group/ad relative select-none bg-sky-50/20 dark:bg-sky-950/5 border border-dashed border-sky-200 dark:border-sky-900/40 rounded-2xl ${
-          format === "horizontal" ? "min-h-[110px] mb-6" : format === "sidebar" ? "min-h-[285px] mb-4" : "min-h-[145px] mb-4"
+          format === "horizontal"
+            ? "min-h-[110px] mb-6"
+            : format === "sidebar"
+              ? "min-h-[285px] mb-4"
+              : "min-h-[145px] mb-4"
         } ${className}`}
       >
         <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
@@ -161,7 +176,9 @@ export default function AdSenseUnit({ id, format = "horizontal", slotId = "00000
             </span>
           </div>
           <span className="text-[8px] font-mono text-sky-400 dark:text-sky-600 mt-1.5 uppercase tracking-wide">
-            {language === "hi" ? "डिजिटल विज्ञापन स्लॉट असाइनमेंट" : `SLOT_ID: gp-${slotId} | INITIALIZING PROGRAMMATIC BIDDING...`}
+            {language === "hi"
+              ? "डिजिटल विज्ञापन स्लॉट असाइनमेंट"
+              : `SLOT_ID: gp-${slotId} | INITIALIZING PROGRAMMATIC BIDDING...`}
           </span>
         </div>
       </div>
@@ -172,24 +189,26 @@ export default function AdSenseUnit({ id, format = "horizontal", slotId = "00000
 
   // Formatting structures
   const containerClasses = {
-    horizontal: "w-full min-h-[105px] border border-dashed border-sky-200 bg-sky-50/50 p-3 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden transition-all hover:bg-sky-50/80 mb-6",
-    sidebar: "w-full min-h-[280px] border border-dashed border-sky-200 bg-sky-50/50 p-4 rounded-xl flex flex-col justify-between gap-4 relative overflow-hidden transition-all hover:bg-sky-50/80 mb-4",
-    inline: "w-full min-h-[140px] border border-dashed border-teal-100 bg-teal-50/30 p-4 rounded-xl flex flex-col justify-between gap-3 relative overflow-hidden transition-all hover:bg-teal-50/50 mb-4"
+    horizontal:
+      "w-full min-h-[105px] border border-dashed border-sky-200 bg-sky-50/50 p-3 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden transition-all hover:bg-sky-50/80 mb-6",
+    sidebar:
+      "w-full min-h-[280px] border border-dashed border-sky-200 bg-sky-50/50 p-4 rounded-xl flex flex-col justify-between gap-4 relative overflow-hidden transition-all hover:bg-sky-50/80 mb-4",
+    inline:
+      "w-full min-h-[140px] border border-dashed border-teal-100 bg-teal-50/30 p-4 rounded-xl flex flex-col justify-between gap-3 relative overflow-hidden transition-all hover:bg-teal-50/50 mb-4",
   }[format];
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      id={`adsense-${id}`} 
+      id={`adsense-${id}`}
       className={`group/ad relative select-none ${containerClasses} ${className}`}
     >
-      
       {/* Absolute top badge indicators */}
       <div className="absolute top-1 right-2 flex items-center gap-1.5 z-10">
         <span className="text-[8px] font-bold font-mono text-sky-600/70 uppercase tracking-widest bg-sky-100/50 px-1.5 py-0.5 rounded leading-none select-none">
           {language === "hi" ? "प्रायोजित विज्ञापन" : "Sponsored Ad"}
         </span>
-        
+
         {/* Toggle inspect mode */}
         <button
           onClick={() => setInspectMode(!inspectMode)}
@@ -232,11 +251,11 @@ export default function AdSenseUnit({ id, format = "horizontal", slotId = "00000
             // Replace the interactive mockup with this native code when ready:
           </p>
           <pre className="overflow-x-auto whitespace-pre-wrap leading-tight text-emerald-400 scrollbar-none max-h-[110px]">
-{`<ins className="adsbygoogle"
+            {`<ins className="adsbygoogle"
      style={{ display: 'block' }}
      data-ad-client="ca-pub-XXXXXXXXXXXXX"
      data-ad-slot="${slotId}"
-     data-ad-format="${format === 'horizontal' ? 'horizontal' : format === 'sidebar' ? 'vertical' : 'fluid'}"
+     data-ad-format="${format === "horizontal" ? "horizontal" : format === "sidebar" ? "vertical" : "fluid"}"
      data-full-width-responsive="true"></ins>
 <script>
   (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -307,7 +326,7 @@ export default function AdSenseUnit({ id, format = "horizontal", slotId = "00000
                     </h5>
                   </div>
                 </div>
-                
+
                 <p className="text-[11px] text-slate-600 leading-normal">
                   {language === "hi" ? activeAd.desc.hi : activeAd.desc.en}
                 </p>

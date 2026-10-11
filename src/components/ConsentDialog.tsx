@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ShieldAlert, Check, ChevronRight, Scale, FileText, Sparkles, ExternalLink } from "lucide-react";
+import {
+  ShieldAlert,
+  Check,
+  ChevronRight,
+  Scale,
+  FileText,
+  Sparkles,
+  ExternalLink,
+} from "lucide-react";
 
 interface ConsentDialogProps {
   isOpen: boolean;
@@ -13,23 +21,24 @@ export default function ConsentDialog({
   isOpen,
   language,
   onAccept,
-  onViewPolicy
+  onViewPolicy,
 }: ConsentDialogProps) {
   const [preferences, setPreferences] = useState({
     privacy: true,
     terms: true,
     cookies: true,
-    disclaimer: true
+    disclaimer: true,
   });
 
   if (!isOpen) return null;
 
-  const isAllChecked = preferences.privacy && preferences.terms && preferences.cookies && preferences.disclaimer;
+  const isAllChecked =
+    preferences.privacy && preferences.terms && preferences.cookies && preferences.disclaimer;
 
   const handleToggle = (key: keyof typeof preferences) => {
     setPreferences((prev) => ({
       ...prev,
-      [key]: !prev[key]
+      [key]: !prev[key],
     }));
   };
 
@@ -38,7 +47,7 @@ export default function ConsentDialog({
       privacy: true,
       terms: true,
       cookies: true,
-      disclaimer: true
+      disclaimer: true,
     });
   };
 
@@ -70,7 +79,7 @@ export default function ConsentDialog({
                   {isHi ? "नागरिक कानूनी और सहमति प्रपत्र" : "Citizen Agreement & Policy Consent"}
                 </h3>
                 <p className="text-[11px] text-charcoal-500 leading-normal font-sans">
-                  {isHi 
+                  {isHi
                     ? "SewaNadu का उपयोग जारी रखने से पहले कृपया निम्नलिखित कानूनी नीतियों और स्वीकृतियों की समीक्षा करें और सहमति दें।"
                     : "Before exploring SewaNadu, please review and accept our legal transparency terms to configure your secure browsing session."}
                 </p>
@@ -80,21 +89,20 @@ export default function ConsentDialog({
 
           {/* Checklist Area */}
           <div className="p-6 py-4 space-y-2.5 overflow-y-auto max-h-72">
-            
             {/* 1. Privacy Policy */}
-            <div 
+            <div
               className={`p-3.5 rounded-lg border transition-all flex items-start gap-3 text-left ${
-                preferences.privacy 
-                  ? "bg-brand-cream-card border-public-blue/25 shadow-2xs" 
+                preferences.privacy
+                  ? "bg-brand-cream-card border-public-blue/25 shadow-2xs"
                   : "bg-brand-cream-dark border-border-subtle"
               }`}
             >
-              <button 
+              <button
                 type="button"
                 onClick={() => handleToggle("privacy")}
                 className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
-                  preferences.privacy 
-                    ? "bg-public-blue border-public-blue text-on-primary" 
+                  preferences.privacy
+                    ? "bg-public-blue border-public-blue text-on-primary"
                     : "border-border-subtle hover:border-public-blue bg-brand-cream-card"
                 }`}
               >
@@ -105,7 +113,7 @@ export default function ConsentDialog({
                   <span className="text-[12px] font-extrabold text-stone-900 dark:text-white">
                     {isHi ? "1. गोपनीयता नीति" : "1. Privacy Policy"}
                   </span>
-                  <button 
+                  <button
                     onClick={() => onViewPolicy("privacy")}
                     className="text-[9.5px] font-mono text-public-blue hover:underline flex items-center gap-0.5"
                   >
@@ -114,7 +122,7 @@ export default function ConsentDialog({
                   </button>
                 </div>
                 <p className="text-[10px] text-stone-500 dark:text-slate-400 leading-normal">
-                  {isHi 
+                  {isHi
                     ? "हम आपके व्यक्तिगत डेटा को सुरक्षित रखते हैं और इसे किसी बाहरी विज्ञापनदाता को लीक नहीं करते हैं।"
                     : "Outlines how data remains secured locally. We absolute safeguard citizen security on client levels."}
                 </p>
@@ -122,19 +130,19 @@ export default function ConsentDialog({
             </div>
 
             {/* 2. Terms & Conditions */}
-            <div 
+            <div
               className={`p-3.5 rounded-lg border transition-all flex items-start gap-3 text-left ${
-                preferences.terms 
-                  ? "bg-brand-cream-card border-public-blue/25 shadow-2xs" 
+                preferences.terms
+                  ? "bg-brand-cream-card border-public-blue/25 shadow-2xs"
                   : "bg-brand-cream-dark border-border-subtle"
               }`}
             >
-              <button 
+              <button
                 type="button"
                 onClick={() => handleToggle("terms")}
                 className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
-                  preferences.terms 
-                    ? "bg-public-blue border-public-blue text-on-primary" 
+                  preferences.terms
+                    ? "bg-public-blue border-public-blue text-on-primary"
                     : "border-border-subtle hover:border-public-blue bg-brand-cream-card"
                 }`}
               >
@@ -145,7 +153,7 @@ export default function ConsentDialog({
                   <span className="text-[12px] font-extrabold text-stone-900 dark:text-white">
                     {isHi ? "2. नियम और शर्तें" : "2. Terms & Conditions"}
                   </span>
-                  <button 
+                  <button
                     onClick={() => onViewPolicy("terms")}
                     className="text-[9.5px] font-mono text-public-blue hover:underline flex items-center gap-0.5"
                   >
@@ -154,7 +162,7 @@ export default function ConsentDialog({
                   </button>
                 </div>
                 <p className="text-[10px] text-stone-500 dark:text-slate-400 leading-normal">
-                  {isHi 
+                  {isHi
                     ? "हमारे शैक्षिक सिमुलेटर और नागरिक सेवाओं के गैर-व्यावसायिक उपयोग के कानूनी नियम।"
                     : "Rules of conduct concerning civic information tools, educational simulation limits, and user licenses."}
                 </p>
@@ -162,19 +170,19 @@ export default function ConsentDialog({
             </div>
 
             {/* 3. Cookie Policy */}
-            <div 
+            <div
               className={`p-3.5 rounded-lg border transition-all flex items-start gap-3 text-left ${
-                preferences.cookies 
-                  ? "bg-brand-cream-card border-public-blue/25 shadow-2xs" 
+                preferences.cookies
+                  ? "bg-brand-cream-card border-public-blue/25 shadow-2xs"
                   : "bg-brand-cream-dark border-border-subtle"
               }`}
             >
-              <button 
+              <button
                 type="button"
                 onClick={() => handleToggle("cookies")}
                 className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
-                  preferences.cookies 
-                    ? "bg-public-blue border-public-blue text-on-primary" 
+                  preferences.cookies
+                    ? "bg-public-blue border-public-blue text-on-primary"
                     : "border-border-subtle hover:border-public-blue bg-brand-cream-card"
                 }`}
               >
@@ -185,7 +193,7 @@ export default function ConsentDialog({
                   <span className="text-[12px] font-extrabold text-stone-900 dark:text-white">
                     {isHi ? "3. कुकी नीति" : "3. Cookie Policy"}
                   </span>
-                  <button 
+                  <button
                     onClick={() => onViewPolicy("cookies")}
                     className="text-[9.5px] font-mono text-public-blue hover:underline flex items-center gap-0.5"
                   >
@@ -194,7 +202,7 @@ export default function ConsentDialog({
                   </button>
                 </div>
                 <p className="text-[10px] text-stone-500 dark:text-slate-400 leading-normal">
-                  {isHi 
+                  {isHi
                     ? "हम उपयोगकर्ता सुविधा और प्राथमिकता सहेजने के लिए स्थानीय ब्राउज़र भंडारण (localStorage) का उपयोग करते हैं।"
                     : "Clarifying our minimal local browser storage to persist saved services and user configuration preferences."}
                 </p>
@@ -202,19 +210,19 @@ export default function ConsentDialog({
             </div>
 
             {/* 4. Disclaimer for this website */}
-            <div 
+            <div
               className={`p-3.5 rounded-lg border transition-all flex items-start gap-3 text-left ${
-                preferences.disclaimer 
-                  ? "bg-brand-cream-card border-public-blue/25 shadow-2xs" 
+                preferences.disclaimer
+                  ? "bg-brand-cream-card border-public-blue/25 shadow-2xs"
                   : "bg-brand-cream-dark border-border-subtle"
               }`}
             >
-              <button 
+              <button
                 type="button"
                 onClick={() => handleToggle("disclaimer")}
                 className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
-                  preferences.disclaimer 
-                    ? "bg-public-blue border-public-blue text-on-primary" 
+                  preferences.disclaimer
+                    ? "bg-public-blue border-public-blue text-on-primary"
                     : "border-border-subtle hover:border-public-blue bg-brand-cream-card"
                 }`}
               >
@@ -225,7 +233,7 @@ export default function ConsentDialog({
                   <span className="text-[12px] font-extrabold text-stone-900 dark:text-white">
                     {isHi ? "4. वेबसाइट का कानूनी अस्वीकरण" : "4. Official Disclaimer"}
                   </span>
-                  <button 
+                  <button
                     onClick={() => onViewPolicy("disclaimer")}
                     className="text-[9.5px] font-mono text-public-blue hover:underline flex items-center gap-0.5"
                   >
@@ -234,13 +242,12 @@ export default function ConsentDialog({
                   </button>
                 </div>
                 <p className="text-[10px] text-stone-500 dark:text-slate-400 leading-normal">
-                  {isHi 
+                  {isHi
                     ? "यह एक स्वतंत्र संसाधन मार्गदर्शिका है जिसका किसी भी सरकारी मंत्रालय से संबंध नहीं है।"
                     : "Confirms our status as an independent helper portal and educational guide without state affiliations."}
                 </p>
               </div>
             </div>
-
           </div>
 
           {/* Actions Footer */}
@@ -260,10 +267,18 @@ export default function ConsentDialog({
             <div className="flex items-center gap-2.5 w-full sm:w-auto">
               <button
                 type="button"
-                disabled={!preferences.privacy || !preferences.terms || !preferences.cookies || !preferences.disclaimer}
+                disabled={
+                  !preferences.privacy ||
+                  !preferences.terms ||
+                  !preferences.cookies ||
+                  !preferences.disclaimer
+                }
                 onClick={onAccept}
                 className={`w-full sm:w-auto px-5 py-2.5 rounded-xl font-sans font-black text-xs leading-none transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                  preferences.privacy && preferences.terms && preferences.cookies && preferences.disclaimer
+                  preferences.privacy &&
+                  preferences.terms &&
+                  preferences.cookies &&
+                  preferences.disclaimer
                     ? "bg-public-blue hover:bg-public-blue-hover text-on-primary active:scale-95 shadow-sm"
                     : "bg-stone-200 dark:bg-stone-800 text-stone-400 dark:text-stone-500 cursor-not-allowed"
                 }`}

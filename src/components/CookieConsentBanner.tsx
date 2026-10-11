@@ -1,11 +1,6 @@
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Cookie, Check, SlidersHorizontal, X } from "lucide-react";
-import {
-  CONSENT_EVENT,
-  readConsent,
-  saveConsent,
-  type CookieConsent,
-} from "@/lib/cookie-consent";
+import { CONSENT_EVENT, readConsent, saveConsent, type CookieConsent } from "@/lib/cookie-consent";
 
 interface Props {
   language?: string;
@@ -67,11 +62,13 @@ export default function CookieConsentBanner({ language = "en", onSaved }: Props)
   const commit = useCallback(
     (choice: { analytics: boolean; advertising: boolean }) => {
       const saved = saveConsent(choice);
-      setStatus(t("Your cookie preferences have been saved.", "आपकी कुकी प्राथमिकताएँ सहेज ली गई हैं।"));
+      setStatus(
+        t("Your cookie preferences have been saved.", "आपकी कुकी प्राथमिकताएँ सहेज ली गई हैं।"),
+      );
       close();
       onSaved?.(saved);
     },
-    [close, onSaved, t]
+    [close, onSaved, t],
   );
 
   // Escape closes only when a prior choice exists (banner stays until first decision).
@@ -154,7 +151,10 @@ export default function CookieConsentBanner({ language = "en", onSaved }: Props)
         >
           <div className="mx-auto w-full max-w-3xl rounded-2xl border border-stone-200 bg-white/98 shadow-2xl backdrop-blur dark:border-stone-800 dark:bg-stone-900/98">
             <div className="flex items-start gap-3 p-4 sm:p-5">
-              <div className="hidden sm:flex p-2 rounded-xl bg-amber-500/10 shrink-0" aria-hidden="true">
+              <div
+                className="hidden sm:flex p-2 rounded-xl bg-amber-500/10 shrink-0"
+                aria-hidden="true"
+              >
                 <Cookie className="h-5 w-5 text-amber-600 dark:text-amber-500" />
               </div>
               <div className="min-w-0 flex-1">
@@ -166,10 +166,13 @@ export default function CookieConsentBanner({ language = "en", onSaved }: Props)
                 >
                   {t("We use cookies", "हम कुकीज़ का उपयोग करते हैं")}
                 </h2>
-                <p id={descId} className="mt-1 text-[12px] leading-relaxed text-stone-600 dark:text-slate-400">
+                <p
+                  id={descId}
+                  className="mt-1 text-[12px] leading-relaxed text-stone-600 dark:text-slate-400"
+                >
                   {t(
                     "Essential cookies keep SewaNadu working. With your permission we also use analytics cookies and advertising cookies (including Google and its partners) to measure traffic and show ads. You can accept, reject, or choose individually — and change your mind anytime.",
-                    "आवश्यक कुकीज़ SewaNadu को चालू रखती हैं। आपकी अनुमति से हम विश्लेषण और विज्ञापन कुकीज़ (Google और उसके साझेदारों सहित) का भी उपयोग करते हैं। आप स्वीकार, अस्वीकार या अलग-अलग चयन कर सकते हैं।"
+                    "आवश्यक कुकीज़ SewaNadu को चालू रखती हैं। आपकी अनुमति से हम विश्लेषण और विज्ञापन कुकीज़ (Google और उसके साझेदारों सहित) का भी उपयोग करते हैं। आप स्वीकार, अस्वीकार या अलग-अलग चयन कर सकते हैं।",
                   )}{" "}
                   <a
                     href="/privacy"
@@ -198,7 +201,7 @@ export default function CookieConsentBanner({ language = "en", onSaved }: Props)
                         disabled
                         label={t(
                           "Strictly necessary cookies (always on, cannot be disabled)",
-                          "आवश्यक कुकीज़ (हमेशा चालू, बंद नहीं की जा सकतीं)"
+                          "आवश्यक कुकीज़ (हमेशा चालू, बंद नहीं की जा सकतीं)",
                         )}
                         describedBy={`${headingId}-nec-desc`}
                       />
@@ -215,7 +218,7 @@ export default function CookieConsentBanner({ language = "en", onSaved }: Props)
                         >
                           {t(
                             "Security, language and saved preferences stored on your device.",
-                            "सुरक्षा, भाषा और आपकी सहेजी गई प्राथमिकताएँ आपके डिवाइस पर संग्रहीत।"
+                            "सुरक्षा, भाषा और आपकी सहेजी गई प्राथमिकताएँ आपके डिवाइस पर संग्रहीत।",
                           )}
                         </p>
                       </div>
@@ -238,7 +241,7 @@ export default function CookieConsentBanner({ language = "en", onSaved }: Props)
                         >
                           {t(
                             "Aggregate, non-identifying traffic measurement to improve content.",
-                            "सामग्री सुधारने के लिए गैर-पहचान योग्य ट्रैफ़िक माप।"
+                            "सामग्री सुधारने के लिए गैर-पहचान योग्य ट्रैफ़िक माप।",
                           )}
                         </p>
                       </div>
@@ -261,7 +264,7 @@ export default function CookieConsentBanner({ language = "en", onSaved }: Props)
                         >
                           {t(
                             "Used by Google and third-party vendors to serve and measure ads, including personalised ads.",
-                            "Google और तृतीय-पक्ष विक्रेताओं द्वारा विज्ञापन दिखाने और मापने के लिए।"
+                            "Google और तृतीय-पक्ष विक्रेताओं द्वारा विज्ञापन दिखाने और मापने के लिए।",
                           )}
                         </p>
                       </div>

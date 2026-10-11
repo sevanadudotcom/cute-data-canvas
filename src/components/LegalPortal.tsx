@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { 
-  Shield, 
-  Scale, 
-  BookOpen, 
-  Info, 
-  Download, 
-  FileText, 
-  AlertTriangle, 
-  Building2, 
-  Globe2, 
-  MapPin, 
-  UserCheck, 
+import {
+  Shield,
+  Scale,
+  BookOpen,
+  Info,
+  Download,
+  FileText,
+  AlertTriangle,
+  Building2,
+  Globe2,
+  MapPin,
+  UserCheck,
   HelpCircle,
   FileCheck2,
   Lock,
@@ -18,7 +18,7 @@ import {
   Scroll,
   Handshake,
   CheckCircle2,
-  Printer
+  Printer,
 } from "lucide-react";
 
 interface LegalPortalProps {
@@ -32,9 +32,11 @@ export default function LegalPortal({
   language,
   defaultSection = "about",
   triggerToast,
-  onBackToServices
+  onBackToServices,
 }: LegalPortalProps) {
-  const [activeSection, setActiveSection] = useState<"privacy" | "terms" | "rules" | "about" | "cookies" | "disclaimer">(defaultSection);
+  const [activeSection, setActiveSection] = useState<
+    "privacy" | "terms" | "rules" | "about" | "cookies" | "disclaimer"
+  >(defaultSection);
 
   useEffect(() => {
     if (defaultSection) {
@@ -44,10 +46,10 @@ export default function LegalPortal({
 
   const handlePrint = () => {
     triggerToast(
-      language === "hi" 
-        ? "दस्तावेज़ प्रिटिंग डायलॉग तैयार किया जा रहा है..." 
+      language === "hi"
+        ? "दस्तावेज़ प्रिटिंग डायलॉग तैयार किया जा रहा है..."
         : "Preparing printer-friendly document layout...",
-      "info"
+      "info",
     );
     window.print();
   };
@@ -58,47 +60,50 @@ export default function LegalPortal({
       label_en: "About & Vision",
       label_hi: "हमारे बारे में",
       icon: Info,
-      color: "text-blue-600 bg-blue-100/50"
+      color: "text-blue-600 bg-blue-100/50",
     },
     {
       id: "privacy" as const,
       label_en: "Privacy Policy",
       label_hi: "गोपनीयता नीति",
       icon: Shield,
-      color: "text-emerald-600 bg-emerald-100/50"
+      color: "text-emerald-600 bg-emerald-100/50",
     },
     {
       id: "terms" as const,
       label_en: "Terms & Conditions",
       label_hi: "नियम एवं शर्तें",
       icon: Handshake,
-      color: "text-amber-600 bg-amber-100/50"
+      color: "text-amber-600 bg-amber-100/50",
     },
     {
       id: "cookies" as const,
       label_en: "Cookie Policy",
       label_hi: "कुकी नीति",
       icon: FileText,
-      color: "text-purple-600 bg-purple-100/50"
+      color: "text-purple-600 bg-purple-100/50",
     },
     {
       id: "disclaimer" as const,
       label_en: "Disclaimer",
       label_hi: "अस्वीकरण",
       icon: AlertTriangle,
-      color: "text-red-600 bg-red-100/50"
+      color: "text-red-600 bg-red-100/50",
     },
     {
       id: "rules" as const,
       label_en: "Rules & Regulations",
       label_hi: "नियम और विनियम",
       icon: Scroll,
-      color: "text-stone-600 bg-stone-100/60"
-    }
+      color: "text-stone-600 bg-stone-100/60",
+    },
   ];
 
   return (
-    <div className="bg-white border border-stone-200 rounded-3xl shadow-xs overflow-hidden" id="national-legal-hub-page">
+    <div
+      className="bg-white border border-stone-200 rounded-3xl shadow-xs overflow-hidden"
+      id="national-legal-hub-page"
+    >
       {/* Visual Identity banner */}
       <div className="bg-stone-900 text-white p-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -109,16 +114,20 @@ export default function LegalPortal({
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
               <span className="text-[9px] bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-mono font-bold uppercase tracking-wider">
-                {language === "hi" ? "विकासक द्वारा लिखित एवं सरकारी नियमानुसार" : "Developer Curated & Govt Compliant"}
+                {language === "hi"
+                  ? "विकासक द्वारा लिखित एवं सरकारी नियमानुसार"
+                  : "Developer Curated & Govt Compliant"}
               </span>
               <span className="text-[9px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-mono font-bold uppercase tracking-wider">
                 MeitY Compliant Standards
               </span>
             </div>
             <h1 className="text-xl md:text-2xl font-black font-display tracking-tight text-white">
-              {language === "hi" ? "प्रशासनिक नियमावली एवं प्रलेखन नीति केंद्र" : "Administrative Rules & Program Policies"}
+              {language === "hi"
+                ? "प्रशासनिक नियमावली एवं प्रलेखन नीति केंद्र"
+                : "Administrative Rules & Program Policies"}
             </h1>
-            <p className="text-xs text-stone-400 max-w-xl font-sans leading-relaxed">
+            <p className="text-xs text-slate-100 max-w-xl font-sans leading-relaxed">
               {language === "hi"
                 ? "यह संपूर्ण नियम, गोपनीयता नीति, विज्ञापन शर्तें और नियमावली हमारे विकासक (Developer) द्वारा स्वतंत्र रूप से विकसित की गई हैं, न कि सरकार द्वारा। हम नागरिकों की सुविधा के लिए सभी प्रासंगिक सरकारी नियमों, कानूनों और ई-सेवा शुल्कों का पूर्णतः पालन करते हैं।"
                 : "This framework, privacy protocols, and digital terms have been fully drafted and maintained by our platform Developer (not the government). To ensure premium safety and precise simulation, we carefully conform to all relevant central and state government service guidelines."}
@@ -129,7 +138,7 @@ export default function LegalPortal({
             {onBackToServices && (
               <button
                 onClick={onBackToServices}
-                className="px-4 py-2 text-xs font-bold text-stone-300 hover:text-white hover:bg-white/10 uppercase tracking-wider rounded-xl transition border border-white/15 cursor-pointer"
+                className="px-4 py-2 text-xs font-bold text-slate-100 hover:text-white hover:bg-white/20 uppercase tracking-wider rounded-xl transition border border-white/20 cursor-pointer"
               >
                 {language === "hi" ? "वापस सेवा पर" : "Back to Services"}
               </button>
@@ -149,7 +158,7 @@ export default function LegalPortal({
         {/* Sidebar Tabs - 3 Cols */}
         <div className="md:col-span-3 bg-stone-50/70 p-4 border-r border-stone-200 justify-between flex flex-col gap-6">
           <div className="space-y-1.5">
-            <span className="text-[9px] font-mono font-bold text-stone-400 uppercase tracking-widest pl-2 block">
+            <span className="text-[9px] font-mono font-bold text-stone-700 dark:text-slate-300 uppercase tracking-widest pl-2 block">
               {language === "hi" ? "दस्तावेज़ अनुभाग" : "DOCUMENT INDEX"}
             </span>
             <div className="grid grid-cols-2 md:grid-cols-1 gap-1.5">
@@ -161,12 +170,14 @@ export default function LegalPortal({
                     key={tab.id}
                     onClick={() => setActiveSection(tab.id)}
                     className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
-                      isSelected 
-                        ? "bg-white border-stone-200 shadow-xs text-[#FF5A2B] font-extrabold" 
+                      isSelected
+                        ? "bg-white border-stone-200 shadow-xs text-[#FF5A2B] font-extrabold"
                         : "bg-transparent border-transparent text-stone-600 hover:bg-stone-100 hover:text-stone-900 font-semibold"
                     }`}
                   >
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${tab.color}`}>
+                    <div
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${tab.color}`}
+                    >
                       <Icon className="w-4 h-4" />
                     </div>
                     <span className="text-xs tracking-tight font-sans text-stone-800">
@@ -191,7 +202,6 @@ export default function LegalPortal({
 
         {/* Content Page - 9 Cols */}
         <div className="md:col-span-9 p-6 sm:p-8 space-y-6">
-
           {/* Header Action Row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-150 pb-4">
             <div className="flex items-center gap-2">
@@ -201,27 +211,44 @@ export default function LegalPortal({
               {activeSection === "cookies" && <FileText className="w-5 h-5 text-purple-600" />}
               {activeSection === "disclaimer" && <AlertTriangle className="w-5 h-5 text-red-650" />}
               {activeSection === "rules" && <Scroll className="w-5 h-5 text-stone-600" />}
-              
+
               <h2 className="font-display font-black text-lg text-stone-900">
-                {activeSection === "about" && (language === "hi" ? "हमारे बारे में" : "About India SewaNadu (Vision & Concepts)")}
-                {activeSection === "privacy" && (language === "hi" ? "गोपनीयता नीति (Privacy Policy)" : "Privacy Policy (Standard Safe Protocols)")}
-                {activeSection === "terms" && (language === "hi" ? "नियम और शर्तें (Terms & Conditions)" : "Terms & Conditions (User License Agreement)")}
-                {activeSection === "cookies" && (language === "hi" ? "कुकी नीति (Cookie Policy)" : "Cookie Policy (Local Storage & Transparency)")}
-                {activeSection === "disclaimer" && (language === "hi" ? "वेबसाइट अस्वीकरण (Disclaimer)" : "Website Disclaimer (Legal Liability Limits)")}
-                {activeSection === "rules" && (language === "hi" ? "नियम और विनियम" : "Rules & Regulations (SLA & Standards)")}
+                {activeSection === "about" &&
+                  (language === "hi"
+                    ? "हमारे बारे में"
+                    : "About India SewaNadu (Vision & Concepts)")}
+                {activeSection === "privacy" &&
+                  (language === "hi"
+                    ? "गोपनीयता नीति (Privacy Policy)"
+                    : "Privacy Policy (Standard Safe Protocols)")}
+                {activeSection === "terms" &&
+                  (language === "hi"
+                    ? "नियम और शर्तें (Terms & Conditions)"
+                    : "Terms & Conditions (User License Agreement)")}
+                {activeSection === "cookies" &&
+                  (language === "hi"
+                    ? "कुकी नीति (Cookie Policy)"
+                    : "Cookie Policy (Local Storage & Transparency)")}
+                {activeSection === "disclaimer" &&
+                  (language === "hi"
+                    ? "वेबसाइट अस्वीकरण (Disclaimer)"
+                    : "Website Disclaimer (Legal Liability Limits)")}
+                {activeSection === "rules" &&
+                  (language === "hi" ? "नियम और विनियम" : "Rules & Regulations (SLA & Standards)")}
               </h2>
             </div>
           </div>
 
           <div className="space-y-5 text-xs text-stone-600 leading-relaxed font-sans font-normal">
-            
             {/* 1. ABOUT US PAGE */}
             {activeSection === "about" && (
               <div className="space-y-4 animate-fadeIn">
                 <div className="p-4 bg-[#FF5A2B]/5 rounded-2xl border border-[#FF5A2B]/15 space-y-2">
                   <h4 className="font-extrabold text-stone-900 text-[13px] flex items-center gap-1.5 animate-fadeIn">
                     <Globe2 className="w-4 h-4 text-[#FF5A2B]" />
-                    {language === "hi" ? "हमारा विजन: स्वतंत्र नागरिक कल्याण एवं दिशा-निर्देश" : "Our Vision: Independent Citizen Guidance & Education"}
+                    {language === "hi"
+                      ? "हमारा विजन: स्वतंत्र नागरिक कल्याण एवं दिशा-निर्देश"
+                      : "Our Vision: Independent Citizen Guidance & Education"}
                   </h4>
                   <p className="leading-relaxed text-stone-600">
                     {language === "hi"
@@ -231,7 +258,9 @@ export default function LegalPortal({
                 </div>
 
                 <h3 className="font-extrabold text-[#FF5A2B] text-xs uppercase tracking-wider font-mono border-b border-stone-150 pb-1.5 pt-3">
-                  {language === "hi" ? "डिजिटल साक्षरता और विकासक प्रतिबद्धता" : "Digital Literacy & Developer Compliance"}
+                  {language === "hi"
+                    ? "डिजिटल साक्षरता और विकासक प्रतिबद्धता"
+                    : "Digital Literacy & Developer Compliance"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -252,7 +281,11 @@ export default function LegalPortal({
                 <div className="p-3 bg-emerald-50 text-emerald-850 rounded-2xl border border-emerald-150 flex items-start gap-2.5">
                   <Lock className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <h5 className="font-extrabold text-[12px] text-emerald-900">{language === "hi" ? "विकासक द्वारा डेटा संरक्षण एवं मुद्रीकरण नियम" : "Developer Curated Information & Ads Security Policies"}</h5>
+                    <h5 className="font-extrabold text-[12px] text-emerald-900">
+                      {language === "hi"
+                        ? "विकासक द्वारा डेटा संरक्षण एवं मुद्रीकरण नियम"
+                        : "Developer Curated Information & Ads Security Policies"}
+                    </h5>
                     <p className="text-[11px] leading-relaxed font-normal text-emerald-800 mt-1">
                       {language === "hi"
                         ? "यह गोपनीयता नीति स्वतंत्र रूप से हमारे विकासक द्वारा तैयार की गई है, सरकारी विभाग द्वारा नहीं। हम भारत सरकार के गोपनीयता दिशा-निर्देशों और ग्राहक हितों का पूर्ण सम्मान करते हैं। इस पोर्टल पर उपयोग की जाने वाली विज्ञापन प्रणालियाँ (जैसे Google AdSense) और उनके विवरण केवल विकासक (Developer) के प्रोजेक्ट परीक्षण, अनुसंधान एवं मुद्रीकरण उद्देश्यों के लिए हैं; ये पोर्टल के आम उपयोगकर्ताओं के लिए नहीं हैं।"
@@ -262,7 +295,10 @@ export default function LegalPortal({
                 </div>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  1. {language === "hi" ? "डेटा संग्रहण की सीमाएं (स्थानीय और सुरक्षित)" : "Strict Personal Privacy Controls"}
+                  1.{" "}
+                  {language === "hi"
+                    ? "डेटा संग्रहण की सीमाएं (स्थानीय और सुरक्षित)"
+                    : "Strict Personal Privacy Controls"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -271,7 +307,10 @@ export default function LegalPortal({
                 </p>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  2. {language === "hi" ? "विज्ञापन नीति (केवल विकासक उपयोग हेतु)" : "AdSense and Analytics Declarations (Developer Utility)"}
+                  2.{" "}
+                  {language === "hi"
+                    ? "विज्ञापन नीति (केवल विकासक उपयोग हेतु)"
+                    : "AdSense and Analytics Declarations (Developer Utility)"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -280,7 +319,10 @@ export default function LegalPortal({
                 </p>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  3. {language === "hi" ? "आईटी अधिनियम (IT Act) अनुपालन" : "Standard IT Act (India) Regulatory Conformance"}
+                  3.{" "}
+                  {language === "hi"
+                    ? "आईटी अधिनियम (IT Act) अनुपालन"
+                    : "Standard IT Act (India) Regulatory Conformance"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -294,11 +336,16 @@ export default function LegalPortal({
             {activeSection === "terms" && (
               <div className="space-y-4 animate-fadeIn">
                 <p className="text-stone-500 italic pb-2 border-b border-stone-150">
-                  {language === "hi" ? "अंतिम संशोधन: 15 जून, 2026. विकासक द्वारा अनुमोदित प्रलेख।" : "Last Modified: June 15, 2026. Developer Curated for Educational Simulations."}
+                  {language === "hi"
+                    ? "अंतिम संशोधन: 15 जून, 2026. विकासक द्वारा अनुमोदित प्रलेख।"
+                    : "Last Modified: June 15, 2026. Developer Curated for Educational Simulations."}
                 </p>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  1. {language === "hi" ? "नियमों का विकासक घोषणापत्र" : "Aesthetic Standard & Portal Operational Limits"}
+                  1.{" "}
+                  {language === "hi"
+                    ? "नियमों का विकासक घोषणापत्र"
+                    : "Aesthetic Standard & Portal Operational Limits"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -309,7 +356,9 @@ export default function LegalPortal({
                 <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 space-y-1.5 text-amber-900 my-2.5">
                   <span className="font-extrabold flex items-center gap-1">
                     <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-                    {language === "hi" ? "अस्वीकरण और सरकारी नियमों का अनुपालन:" : "Disclaimer & Official Regulation Alignment:"}
+                    {language === "hi"
+                      ? "अस्वीकरण और सरकारी नियमों का अनुपालन:"
+                      : "Disclaimer & Official Regulation Alignment:"}
                   </span>
                   <p className="text-[10.5px] leading-relaxed text-amber-800">
                     {language === "hi"
@@ -319,7 +368,10 @@ export default function LegalPortal({
                 </div>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  2. {language === "hi" ? "विज्ञापन प्रतिबंध एवं AdSense सीमा (केवल विकासक उपयोग)" : "Advertising Controls & AdSense Limitation Details"}
+                  2.{" "}
+                  {language === "hi"
+                    ? "विज्ञापन प्रतिबंध एवं AdSense सीमा (केवल विकासक उपयोग)"
+                    : "Advertising Controls & AdSense Limitation Details"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -328,7 +380,10 @@ export default function LegalPortal({
                 </p>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  3. {language === "hi" ? "सुरक्षित उपयोग और स्पैम निषेध" : "Fair Use and Prohibited Spamming"}
+                  3.{" "}
+                  {language === "hi"
+                    ? "सुरक्षित उपयोग और स्पैम निषेध"
+                    : "Fair Use and Prohibited Spamming"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -342,13 +397,19 @@ export default function LegalPortal({
             {activeSection === "cookies" && (
               <div className="space-y-4 animate-fadeIn">
                 <p className="text-stone-500 italic pb-2 border-b border-stone-150">
-                  {language === "hi" ? "अंतिम संशोधन: 15 जून, 2026. कुकी पारदर्शिता नीति।" : "Last Modified: June 15, 2026. Cookie Transparency Policy."}
+                  {language === "hi"
+                    ? "अंतिम संशोधन: 15 जून, 2026. कुकी पारदर्शिता नीति।"
+                    : "Last Modified: June 15, 2026. Cookie Transparency Policy."}
                 </p>
 
                 <div className="p-3 bg-purple-55 bg-indigo-50/50 text-indigo-950 rounded-2xl border border-indigo-150 flex items-start gap-2.5">
                   <FileText className="w-4 h-4 text-indigo-700 shrink-0 mt-0.5" />
                   <div>
-                    <h5 className="font-extrabold text-[12px] text-indigo-900">{language === "hi" ? "कुकीज़ और स्थानीय भंडारण (Local Storage) का विवरण" : "Detailed Cookies & Client Local Storage Transparency"}</h5>
+                    <h5 className="font-extrabold text-[12px] text-indigo-900">
+                      {language === "hi"
+                        ? "कुकीज़ और स्थानीय भंडारण (Local Storage) का विवरण"
+                        : "Detailed Cookies & Client Local Storage Transparency"}
+                    </h5>
                     <p className="text-[11px] leading-relaxed font-normal text-indigo-800 mt-1">
                       {language === "hi"
                         ? "हम इस वेबसाइट पर नागरिक सुविधा, सेटिंग्स को याद रखने और सेवाओं को कस्टमाइज़ करने के लिए आवश्यक कुकीज़ और ब्राउज़र लोकल स्टोरेज (localStorage) तकनीकों का उपयोग करते हैं। ये डेटा आपके डिवाइस तक ही सीमित रहता है और कभी भी किसी अनधिकृत बाहरी सर्वर पर अपलोड नहीं किया जाता।"
@@ -358,7 +419,10 @@ export default function LegalPortal({
                 </div>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  1. {language === "hi" ? "स्थानीय भंडारण (Client-Side LocalStorage)" : "Essential Client-Side Storage"}
+                  1.{" "}
+                  {language === "hi"
+                    ? "स्थानीय भंडारण (Client-Side LocalStorage)"
+                    : "Essential Client-Side Storage"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -367,7 +431,10 @@ export default function LegalPortal({
                 </p>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  2. {language === "hi" ? "तृतीय-पक्ष कुकीज़ और विज्ञापन नेटवर्क (Mock AdSense & Analytics)" : "Third-Party & Marketing Cookies (Mock Analytics & Ads)"}
+                  2.{" "}
+                  {language === "hi"
+                    ? "तृतीय-पक्ष कुकीज़ और विज्ञापन नेटवर्क (Mock AdSense & Analytics)"
+                    : "Third-Party & Marketing Cookies (Mock Analytics & Ads)"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -376,7 +443,10 @@ export default function LegalPortal({
                 </p>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  3. {language === "hi" ? "कुकीज़ को नियंत्रित और निष्क्रिय करना" : "How to Manage & Disable Cookies"}
+                  3.{" "}
+                  {language === "hi"
+                    ? "कुकीज़ को नियंत्रित और निष्क्रिय करना"
+                    : "How to Manage & Disable Cookies"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -390,13 +460,19 @@ export default function LegalPortal({
             {activeSection === "disclaimer" && (
               <div className="space-y-4 animate-fadeIn">
                 <p className="text-stone-500 italic pb-2 border-b border-stone-150">
-                  {language === "hi" ? "अंतिम संशोधन: 15 जून, 2026. आधिकारिक वेबसाइट कानूनी अस्वीकरण।" : "Last Modified: June 15, 2026. Official Website Legal Disclaimer."}
+                  {language === "hi"
+                    ? "अंतिम संशोधन: 15 जून, 2026. आधिकारिक वेबसाइट कानूनी अस्वीकरण।"
+                    : "Last Modified: June 15, 2026. Official Website Legal Disclaimer."}
                 </p>
 
                 <div className="p-3 bg-red-50 text-red-950 rounded-2xl border border-red-150 flex items-start gap-2.5 animate-pulse">
                   <AlertTriangle className="w-4 h-4 text-red-650 shrink-0 mt-0.5" />
                   <div>
-                    <h5 className="font-extrabold text-[12px] text-red-950">{language === "hi" ? "महत्वपूर्ण कानूनी सूचना एवं अस्वीकरण" : "CRITICAL INDEPENDENT STATUS DECLARATION"}</h5>
+                    <h5 className="font-extrabold text-[12px] text-red-950">
+                      {language === "hi"
+                        ? "महत्वपूर्ण कानूनी सूचना एवं अस्वीकरण"
+                        : "CRITICAL INDEPENDENT STATUS DECLARATION"}
+                    </h5>
                     <p className="text-[11px] leading-relaxed font-normal text-red-800 mt-1">
                       {language === "hi"
                         ? "SewaNadu एक स्वतंत्र शैक्षिक सिमुलेशन और नागरिक ई-निर्देशिका सेवा है। इस मंच का किसी भी सरकारी विनियामक निकाय, केंद्रीय/राज्य प्रशासनिक प्राधिकरण, या सरकारी विभाग के साथ कोई सीधा वित्तीय, कानूनी या प्रशासनिक संबंध या संबद्धता नहीं है।"
@@ -406,7 +482,10 @@ export default function LegalPortal({
                 </div>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  1. {language === "hi" ? "अनाधिकारिक सिमुलेशन की घोषणा" : "Non-Official Simulated Workflows"}
+                  1.{" "}
+                  {language === "hi"
+                    ? "अनाधिकारिक सिमुलेशन की घोषणा"
+                    : "Non-Official Simulated Workflows"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -415,7 +494,10 @@ export default function LegalPortal({
                 </p>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  2. {language === "hi" ? "सटीकता और सूचनात्मक उद्देश्य" : "Information Accuracy & Sourcing Limits"}
+                  2.{" "}
+                  {language === "hi"
+                    ? "सटीकता और सूचनात्मक उद्देश्य"
+                    : "Information Accuracy & Sourcing Limits"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -424,7 +506,10 @@ export default function LegalPortal({
                 </p>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  3. {language === "hi" ? "दायित्व की सीमा (No Liability)" : "Absolute Limitation of Liability"}
+                  3.{" "}
+                  {language === "hi"
+                    ? "दायित्व की सीमा (No Liability)"
+                    : "Absolute Limitation of Liability"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -440,7 +525,9 @@ export default function LegalPortal({
                 <div className="p-3.5 bg-purple-50 text-purple-900 border border-purple-150 rounded-2xl space-y-1.5 leading-normal">
                   <span className="font-extrabold flex items-center gap-1.5 text-[12px] text-purple-950">
                     <FileCheck2 className="w-4 h-4 text-purple-700 shrink-0" />
-                    {language === "hi" ? "सरकारी सेवा विनियम - विकासक संकलन और अनुपालन" : "Central Digital Services Regulations - Curated Compilation"}
+                    {language === "hi"
+                      ? "सरकारी सेवा विनियम - विकासक संकलन और अनुपालन"
+                      : "Central Digital Services Regulations - Curated Compilation"}
                   </span>
                   <p className="text-[11px] leading-relaxed font-normal text-purple-800">
                     {language === "hi"
@@ -450,7 +537,10 @@ export default function LegalPortal({
                 </div>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  1. {language === "hi" ? "आधिकारिक सामान्य सेवा केंद्र (CSC) सेवा शुल्क की मर्यादा नियमों का अनुपालन" : "CSC Service Fee Regulation Compliance"}
+                  1.{" "}
+                  {language === "hi"
+                    ? "आधिकारिक सामान्य सेवा केंद्र (CSC) सेवा शुल्क की मर्यादा नियमों का अनुपालन"
+                    : "CSC Service Fee Regulation Compliance"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -459,7 +549,10 @@ export default function LegalPortal({
                 </p>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  2. {language === "hi" ? "पारदर्शी प्रशासन और शिकायत समय-सीमा (SLA)" : "Official Administrative Turnaround Agreement (SLA)"}
+                  2.{" "}
+                  {language === "hi"
+                    ? "पारदर्शी प्रशासन और शिकायत समय-सीमा (SLA)"
+                    : "Official Administrative Turnaround Agreement (SLA)"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -468,7 +561,10 @@ export default function LegalPortal({
                 </p>
 
                 <h3 className="font-bold text-[13px] text-stone-900 border-b border-stone-200 pb-1">
-                  3. {language === "hi" ? "विज्ञापन एवं AdSense विशेषाधिकार" : "Developer Monetization and Administration Code"}
+                  3.{" "}
+                  {language === "hi"
+                    ? "विज्ञापन एवं AdSense विशेषाधिकार"
+                    : "Developer Monetization and Administration Code"}
                 </h3>
                 <p className="text-stone-600">
                   {language === "hi"
@@ -477,7 +573,6 @@ export default function LegalPortal({
                 </p>
               </div>
             )}
-
           </div>
 
           {/* Interactive footer checklist confirming user understands policy rules */}
@@ -496,10 +591,10 @@ export default function LegalPortal({
             <button
               onClick={() => {
                 triggerToast(
-                  language === "hi" 
-                    ? "घोषणा स्वीकार की गई! आधिकारिक नियमों के लिए नागरिक धन्यवाद।" 
+                  language === "hi"
+                    ? "घोषणा स्वीकार की गई! आधिकारिक नियमों के लिए नागरिक धन्यवाद।"
                     : "Attestation recorded! Thank you for complying with the citizen code.",
-                  "success"
+                  "success",
                 );
               }}
               className="px-4 py-2 bg-emerald-600 hover:bg-emerald-750 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition cursor-pointer self-start sm:self-auto shadow-xs"
@@ -507,7 +602,6 @@ export default function LegalPortal({
               {language === "hi" ? "मंजूर करें" : "Accept & Comply"}
             </button>
           </div>
-
         </div>
       </div>
     </div>
