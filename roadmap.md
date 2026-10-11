@@ -29,7 +29,7 @@ Sevanadu civic-services portal (uploaded zip) moved into this Supabase-connected
 - [x] Add dedicated responsive RTI filing and service status pages, linked from the top navigation.
 
 ## Current queue
-- [ ] Admin-only /admin page: citizen accounts with saved services + feedback (in progress)
+- [x] Admin-only /admin page (needs an admin role granted to your account)
 - [ ] Test citizen accounts + saved services + feedback so /reports isn't zeros
 - [ ] Last-logged-in column on /reports + track sign-ins
 - [ ] Replace chatbot with real AI backend answering about services
