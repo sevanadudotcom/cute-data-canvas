@@ -44,10 +44,7 @@ export const getWeeklyReport = createServerFn({ method: "GET" }).handler(
       });
     }
 
-    const add = (
-      iso: string | null | undefined,
-      field: keyof Omit<WeeklyRow, "weekStart" | "label">,
-    ) => {
+    const add = (iso: string | null | undefined, field: keyof Omit<WeeklyRow, "weekStart" | "label">) => {
       if (!iso) return;
       const key = mondayOf(new Date(iso)).toISOString().slice(0, 10);
       const row = buckets.get(key);

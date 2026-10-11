@@ -65,7 +65,8 @@ let serviceApplications: any[] = [
     state: "Karnataka",
     submissionDate: "2026-06-11T12:00:00Z",
     status: "APPROVED",
-    comments: "Verified against State Revenue ledger by Tehsildar Indiranagar on 2026-06-12.",
+    comments:
+      "Verified against State Revenue ledger by Tehsildar Indiranagar on 2026-06-12.",
     formData: {
       fatherName: "K. Khan",
       educationQuota: "Yes",
@@ -99,7 +100,8 @@ let grievanceList: any[] = [
     department: "Unique Identification Authority of India (UIDAI)",
     serviceAffected: "Biometric Enrollment Delays",
     refNumber: "CPG-UIDAI-2026-8941",
-    subject: "Aadhaar center at Indiranagar postal house charging hidden convenience fees",
+    subject:
+      "Aadhaar center at Indiranagar postal house charging hidden convenience fees",
     description:
       "The appointed executive is demanding ₹150 for scanning thumb impressions whereas the official regulatory circular states biometric update holds standard ₹50 service pricing. Citizen service charter needs close enforcement.",
     stateOfGrievance: "Karnataka",
@@ -114,7 +116,8 @@ let grievanceList: any[] = [
     department: "Ministry of Road Transport & Highways",
     serviceAffected: "National Highways & Regional Tolls",
     refNumber: "CPG-MORTH-2026-1205",
-    subject: "Excessive queuing at NH-44 Devanahalli toll gate due to slow Fastag reader",
+    subject:
+      "Excessive queuing at NH-44 Devanahalli toll gate due to slow Fastag reader",
     description:
       "The digital Fastag RFID scanners at the left-side lanes fail frequently, creating 45-minute bottlenecks for commuters connecting to Bangalore International Airport. It compromises highway service-level metrics.",
     stateOfGrievance: "Karnataka",
@@ -248,7 +251,9 @@ export async function handleESevaRequest(request: Request): Promise<Response> {
   const path = url.pathname.replace(/^\/api\/public\/eseva/, "").replace(/\/$/, "");
   const method = request.method.toUpperCase();
   const body: any =
-    method === "GET" || method === "DELETE" ? {} : await request.json().catch(() => ({}));
+    method === "GET" || method === "DELETE"
+      ? {}
+      : await request.json().catch(() => ({}));
 
   // 1. Services
   if (path === "/services" && method === "GET") return json(officialServices);
@@ -462,7 +467,10 @@ Please generate an official, bureaucratic official response in a structural gove
   if (path === "/translate" && method === "POST") {
     const { text, targetLanguage } = body;
     if (!text || !targetLanguage) {
-      return json({ error: "Missing required translation fields: text, targetLanguage." }, 400);
+      return json(
+        { error: "Missing required translation fields: text, targetLanguage." },
+        400,
+      );
     }
     try {
       const translatedText =
@@ -488,7 +496,10 @@ Original text:
   if (path === "/report" && method === "POST") {
     const { serviceId, serviceTitle, issueType, details, email } = body;
     if (!serviceId || !issueType || !details) {
-      return json({ error: "Missing required fields: serviceId, issueType, details." }, 400);
+      return json(
+        { error: "Missing required fields: serviceId, issueType, details." },
+        400,
+      );
     }
     const newReport = {
       id: "report-" + Date.now(),
@@ -526,10 +537,7 @@ Provide the response as a strict JSON array of objects. Each object MUST have:
 
 Do NOT include markdown code blocks, conversational text or backticks. Output only valid JSON.`,
       });
-      const cleaned = raw
-        .replace(/```json/g, "")
-        .replace(/```/g, "")
-        .trim();
+      const cleaned = raw.replace(/```json/g, "").replace(/```/g, "").trim();
       const newsList = JSON.parse(cleaned);
       return json({
         success: true,
@@ -590,7 +598,8 @@ Do NOT include markdown code blocks, conversational text or backticks. Output on
     if (!title || !policyArea || !content || !postedBy) {
       return json(
         {
-          error: "Missing required discussion fields: title, policyArea, content, postedBy.",
+          error:
+            "Missing required discussion fields: title, policyArea, content, postedBy.",
         },
         400,
       );
@@ -603,7 +612,8 @@ Do NOT include markdown code blocks, conversational text or backticks. Output on
       postedBy: String(postedBy).trim(),
       profileStatus: profileStatus || "Unverified Citizen",
       verificationCount: profileStatus === "Aadhaar Verified" ? 1 : 0,
-      verifiedCitizens: profileStatus === "Aadhaar Verified" ? [String(postedBy).trim()] : [],
+      verifiedCitizens:
+        profileStatus === "Aadhaar Verified" ? [String(postedBy).trim()] : [],
       comments: [],
       timestamp: new Date().toISOString(),
       status: "PROPOSED",
@@ -668,11 +678,7 @@ You are safe, polite "PM e-Seva Suvidha Sahayak" - the flagship administrative A
 You help Indian citizens understand government services, criteria, prerequisites, documents, and schemes.
 
 Available e-Seva Services in this specific gateway:
-${JSON.stringify(
-  officialServices.map((s) => ({ id: s.id, title: s.title, category: s.category })),
-  null,
-  2,
-)}
+${JSON.stringify(officialServices.map((s) => ({ id: s.id, title: s.title, category: s.category })), null, 2)}
 
 Other Major Indian Citizen Schemes you can guide on:
 - Pradhan Mantri Garib Kalyan Anna Yojana (PM-GKAY)

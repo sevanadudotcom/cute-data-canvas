@@ -1,19 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import {
-  Heart,
-  Landmark,
-  Award,
-  ShieldCheck,
-  QrCode,
-  CreditCard,
-  Users,
-  Download,
-  ArrowRight,
-  Sparkles,
-  CheckCircle2,
-  IndianRupee,
-} from "lucide-react";
+import { Heart, Landmark, Award, ShieldCheck, QrCode, CreditCard, Users, Download, ArrowRight, Sparkles, CheckCircle2, IndianRupee } from "lucide-react";
 
 interface NationalFundWidgetProps {
   language: string;
@@ -32,24 +19,9 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
   const targetAmount = 1000000;
   const [currentAmount, setCurrentAmount] = useState(741250);
   const [contributors, setContributors] = useState<Contributor[]>([
-    {
-      name: "Rajesh Kumar",
-      amount: 1000,
-      message: "Excellent initiative for digital empowerment!",
-      date: "2 mins ago",
-    },
-    {
-      name: "Sneha Patel",
-      amount: 500,
-      message: "SewaNadu certificates saved me hours of waiting.",
-      date: "1 hour ago",
-    },
-    {
-      name: "Ananya Iyer",
-      amount: 2500,
-      message: "Proud contributor to India's rural digitization donation initiative.",
-      date: "3 hours ago",
-    },
+    { name: "Rajesh Kumar", amount: 1000, message: "Excellent initiative for digital empowerment!", date: "2 mins ago" },
+    { name: "Sneha Patel", amount: 500, message: "SewaNadu certificates saved me hours of waiting.", date: "1 hour ago" },
+    { name: "Ananya Iyer", amount: 2500, message: "Proud contributor to India's rural digitization donation initiative.", date: "3 hours ago" },
   ]);
 
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
@@ -61,7 +33,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
   const [selectedPreset, setSelectedPreset] = useState<number | "custom">(500);
   const [customAmount, setCustomAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<"upi" | "card" | "net">("upi");
-
+  
   // Last Contribution details for Certificate generator
   const [lastContribution, setLastContribution] = useState<{
     name: string;
@@ -72,21 +44,9 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
 
   // Pre-set Tiers info
   const presetTiers = [
-    {
-      value: 100,
-      label: language === "hi" ? "₹100 (रजत)" : "₹100 (Silver)",
-      desc: language === "hi" ? "रजत समर्थक बैज" : "Silver Supporter Badge",
-    },
-    {
-      value: 500,
-      label: language === "hi" ? "₹500 (स्वर्ण)" : "₹500 (Gold)",
-      desc: language === "hi" ? "स्वर्ण पेट्रन प्रशस्ति" : "Gold Patron Badge",
-    },
-    {
-      value: 2500,
-      label: language === "hi" ? "₹2500 (हीरा)" : "₹2500 (Diamond)",
-      desc: language === "hi" ? "विशेष आमंत्रण पत्र" : "Special Invitation Badge",
-    },
+    { value: 100, label: language === "hi" ? "₹100 (रजत)" : "₹100 (Silver)", desc: language === "hi" ? "रजत समर्थक बैज" : "Silver Supporter Badge" },
+    { value: 500, label: language === "hi" ? "₹500 (स्वर्ण)" : "₹500 (Gold)", desc: language === "hi" ? "स्वर्ण पेट्रन प्रशस्ति" : "Gold Patron Badge" },
+    { value: 2500, label: language === "hi" ? "₹2500 (हीरा)" : "₹2500 (Diamond)", desc: language === "hi" ? "विशेष आमंत्रण पत्र" : "Special Invitation Badge" },
   ];
 
   const getActiveAmount = (): number => {
@@ -105,10 +65,8 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
     const finalAmount = getActiveAmount();
     if (finalAmount < 10) {
       triggerToast(
-        language === "hi"
-          ? "कृपया योगदान के लिए कम से कम ₹10 का चयन करें।"
-          : "Please select at least ₹10 to contribute.",
-        "error",
+        language === "hi" ? "कृपया योगदान के लिए कम से कम ₹10 का चयन करें।" : "Please select at least ₹10 to contribute.", 
+        "error"
       );
       return;
     }
@@ -118,37 +76,35 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
     const currentDate = new Date().toLocaleDateString(language === "hi" ? "hi-IN" : "en-US", {
       day: "numeric",
       month: "short",
-      year: "numeric",
+      year: "numeric"
     });
 
     // Update state to simulate live funding addition
-    setCurrentAmount((prev) => prev + finalAmount);
-    setContributors((prev) => [
-      {
-        name: finalName,
-        amount: finalAmount,
-        message:
-          donorMessage.trim() ||
-          (language === "hi" ? "डिजिटल इंडिया को सलाम!" : "Salute to Digital India!"),
-        date: language === "hi" ? "अभी-अभी" : "Just now",
+    setCurrentAmount(prev => prev + finalAmount);
+    setContributors(prev => [
+      { 
+        name: finalName, 
+        amount: finalAmount, 
+        message: donorMessage.trim() || (language === "hi" ? "डिजिटल इंडिया को सलाम!" : "Salute to Digital India!"), 
+        date: language === "hi" ? "अभी-अभी" : "Just now" 
       },
-      ...prev,
+      ...prev
     ]);
 
     setLastContribution({
       name: finalName,
       amount: finalAmount,
       txnId: txn,
-      date: currentDate,
+      date: currentDate
     });
 
     setPaymentModalOpen(false);
     setSuccessModalOpen(true);
     triggerToast(
-      language === "hi"
-        ? `योगदान प्राप्त हुआ! ₹${finalAmount} के लिए हार्दिक धन्यवाद।`
+      language === "hi" 
+        ? `योगदान प्राप्त हुआ! ₹${finalAmount} के लिए हार्दिक धन्यवाद।` 
         : `Contribution received! Heartfelt thanks for ₹${finalAmount}.`,
-      "success",
+      "success"
     );
   };
 
@@ -162,7 +118,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
       if (!ctx) {
         triggerToast(
           language === "hi" ? "कैनवास लोड करने में विफल।" : "Failed to load canvas context.",
-          "error",
+          "error"
         );
         return;
       }
@@ -190,7 +146,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
 
       // 4. Content alignment and text drawing
       ctx.textAlign = "center";
-
+      
       // Top category
       ctx.font = "bold 13px sans-serif";
       ctx.fillStyle = "#78716C"; // Stone 500
@@ -200,23 +156,16 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
       ctx.font = "9px monospace";
       ctx.fillStyle = "#EF4444"; // Red 500
       ctx.fillText(
-        language === "hi"
-          ? "स्वैच्छिक दान आभार पत्र (यह भारत सरकार द्वारा प्रदत्त या अनुमोदित आधिकारिक दस्तावेज नहीं है)"
-          : "VOLUNTARY SYSTEM APPRECIATION - NOT AN OFFICIAL DOCUMENT ISSUED BY THE GOVERNMENT OF INDIA",
-        500,
-        120,
+        language === "hi" 
+          ? "स्वैच्छिक दान आभार पत्र (यह भारत सरकार द्वारा प्रदत्त या अनुमोदित आधिकारिक दस्तावेज नहीं है)" 
+          : "VOLUNTARY SYSTEM APPRECIATION - NOT AN OFFICIAL DOCUMENT ISSUED BY THE GOVERNMENT OF INDIA", 
+        500, 120
       );
 
       // Certificate Title
       ctx.font = "bold 28px sans-serif";
       ctx.fillStyle = "#1C1917"; // Stone 900
-      ctx.fillText(
-        language === "hi"
-          ? "राष्ट्रीय डिजिटल सेवा अंशदान पत्र"
-          : "NATIONAL DIGITAL SEVA DONATION CERTIFICATE",
-        500,
-        165,
-      );
+      ctx.fillText(language === "hi" ? "राष्ट्रीय डिजिटल सेवा अंशदान पत्र" : "NATIONAL DIGITAL SEVA DONATION CERTIFICATE", 500, 165);
 
       // Middle thin split divider line
       ctx.strokeStyle = "#E7E5E4";
@@ -230,11 +179,10 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
       ctx.font = "italic 16px Georgia, serif";
       ctx.fillStyle = "#57534E"; // Stone 600
       ctx.fillText(
-        language === "hi"
-          ? "यह सम्मान पत्र बड़े हर्ष एवं आभार के साथ प्रदान किया जाता है:"
-          : "This certificate of appreciation is proudly presented to:",
-        500,
-        235,
+        language === "hi" 
+          ? "यह सम्मान पत्र बड़े हर्ष एवं आभार के साथ प्रदान किया जाता है:" 
+          : "This certificate of appreciation is proudly presented to:", 
+        500, 235
       );
 
       // Contributor name
@@ -251,13 +199,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
       ctx.stroke();
 
       // Detailed text statement wrapping helper
-      const wrapText = (
-        text: string,
-        x: number,
-        y: number,
-        maxWidth: number,
-        lineHeight: number,
-      ) => {
+      const wrapText = (text: string, x: number, y: number, maxWidth: number, lineHeight: number) => {
         const words = text.split(" ");
         let line = "";
         let currentY = y;
@@ -278,10 +220,9 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
 
       ctx.font = "15px sans-serif";
       ctx.fillStyle = "#44403C"; // Stone 700
-      const descText =
-        language === "hi"
-          ? `जिन्होंने डिजिटल सेवा सैंडबॉक्स पहल के समर्थन में स्वेच्छा से ₹${lastContribution.amount} का दान देकर देश के ग्रामीण इलाकों में इंटरनेट साक्षरता, नागरिक प्रलेखन जागरूकता और ऑफलाइन-फर्स्ट उपकरणों के प्रसार में अपना बहुमूल्य योगदान दिया है।`
-          : `In high recognition of their voluntary contribution of ₹${lastContribution.amount} to the National Digital Seva sandbox project, aiding in the development of open-source citizen documentation wizards and digital tool outreach.`;
+      const descText = language === "hi"
+        ? `जिन्होंने डिजिटल सेवा सैंडबॉक्स पहल के समर्थन में स्वेच्छा से ₹${lastContribution.amount} का दान देकर देश के ग्रामीण इलाकों में इंटरनेट साक्षरता, नागरिक प्रलेखन जागरूकता और ऑफलाइन-फर्स्ट उपकरणों के प्रसार में अपना बहुमूल्य योगदान दिया है।`
+        : `In high recognition of their voluntary contribution of ₹${lastContribution.amount} to the National Digital Seva sandbox project, aiding in the development of open-source citizen documentation wizards and digital tool outreach.`;
 
       wrapText(descText, 500, 365, 760, 24);
 
@@ -292,8 +233,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
         language === "hi"
           ? "यह पूर्णतः स्वैच्छिक दान की सहयोग रसीद व प्रशस्ति पत्र है। प्रणाली के संचालन में सहायता के लिए हम कृतज्ञ हैं।"
           : "This is a voluntary donation acknowledgement. We appreciate your kind support to keep our sandbox servers running.",
-        500,
-        480,
+        500, 480
       );
 
       // Signature & QR boundary separator line
@@ -311,7 +251,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
       ctx.font = "bold 11px monospace";
       ctx.fillStyle = "#57534E";
       ctx.fillText("VERIFIED SANDBOX COMMUNITY CELL", 150, 575);
-
+      
       ctx.font = "italic 14px Georgia, serif";
       ctx.fillStyle = "#FF5A2B";
       ctx.fillText("Digital Setu Team", 150, 610);
@@ -347,15 +287,13 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
         language === "hi"
           ? "प्रशंसा प्रमाण-पत्र सफलतापूर्वक डाउनलोड हो गया!"
           : "Appreciation certificate downloaded successfully!",
-        "success",
+        "success"
       );
     } catch (err) {
       console.error(err);
       triggerToast(
-        language === "hi"
-          ? "डाउनलोड करने में त्रुटि आई।"
-          : "Error downloading the certificate file.",
-        "error",
+        language === "hi" ? "डाउनलोड करने में त्रुटि आई।" : "Error downloading the certificate file.",
+        "error"
       );
     }
   };
@@ -363,22 +301,19 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
   const fundingPercentage = Math.min(100, Math.round((currentAmount / targetAmount) * 100));
 
   return (
-    <div
-      className="bg-white border border-stone-200 rounded-2xl p-5 shadow-xs space-y-4 relative overflow-hidden"
-      id="national-dev-fund-widget"
-    >
+    <div className="bg-white border border-stone-200 rounded-2xl p-5 shadow-xs space-y-4 relative overflow-hidden" id="national-dev-fund-widget">
       {/* Header Banner info */}
       <div className="border-b border-stone-100 pb-3 flex items-start justify-between gap-2">
         <div className="space-y-1">
           <div className="flex items-center gap-1.5">
             <Heart className="w-4 h-4 text-brand-coral shrink-0 animate-pulse fill-brand-coral" />
-            <h3 className="font-extrabold text-stone-900 dark:text-white text-xs uppercase tracking-wider font-display">
+            <h3 className="font-extrabold text-stone-900 text-xs uppercase tracking-wider font-display">
               {language === "hi" ? "राष्ट्रीय डिजिटल सेवा दान" : "National Digital Seva Donation"}
             </h3>
           </div>
-          <p className="text-[10px] text-stone-700 dark:text-slate-300 font-medium leading-relaxed">
-            {language === "hi"
-              ? "ग्रामीण भारत में डिजिटल साक्षरता और त्वरित नागरिक संदूक सहायता टूल के संचालन में सहयोग करें।"
+          <p className="text-[10px] text-stone-500 font-medium leading-relaxed">
+            {language === "hi" 
+              ? "ग्रामीण भारत में डिजिटल साक्षरता और त्वरित नागरिक संदूक सहायता टूल के संचालन में सहयोग करें।" 
               : "Support rural digital literacy, free platform sandbox development, and instant offline-first e-citizen tools."}
           </p>
         </div>
@@ -389,20 +324,17 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
 
       {/* Progress Bar with beautiful visuals */}
       <div className="space-y-2">
-        <div className="flex items-end justify-between font-mono text-[9px] font-bold text-stone-700 dark:text-slate-300 uppercase">
+        <div className="flex items-end justify-between font-mono text-[9px] font-bold text-stone-450 uppercase">
           <span>
             {language === "hi" ? "संग्रहित: " : "Collected: "}
-            <span className="text-stone-900 dark:text-white font-extrabold">₹{currentAmount.toLocaleString()}</span>
+            <span className="text-stone-900 font-extrabold">₹{currentAmount.toLocaleString()}</span>
           </span>
-          <span className="font-black text-brand-coral">{fundingPercentage}%</span>
+          <span>{fundingPercentage}%</span>
           <span>{language === "hi" ? "लक्ष्य: " : "Goal: "} ₹10L</span>
         </div>
-
-        <div
-          className="w-full bg-stone-100 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden flex"
-          id="fund-progress-track"
-        >
-          <motion.div
+        
+        <div className="w-full bg-stone-100 rounded-full h-2.5 overflow-hidden flex" id="fund-progress-track">
+          <motion.div 
             initial={{ width: 0 }}
             animate={{ width: `${fundingPercentage}%` }}
             transition={{ duration: 1.2, ease: "easeOut" }}
@@ -410,17 +342,15 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
           />
         </div>
 
-        <div className="flex items-center justify-between text-[9px] text-stone-700 dark:text-slate-300 font-sans">
+        <div className="flex items-center justify-between text-[9px] text-stone-500 font-sans">
           <span className="flex items-center gap-1">
             <span className="relative flex h-1.5 w-1.5 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
             </span>
-            <span className="font-semibold text-stone-800 dark:text-slate-200">
-              {contributors.length} {language === "hi" ? "सक्रिय देशभक्त" : "Generous Patrons"}
-            </span>
+            <span className="font-medium">{contributors.length} {language === "hi" ? "सक्रिय देशभक्त" : "Generous Patrons"}</span>
           </span>
-          <span className="font-bold text-emerald-700 dark:text-emerald-400">
+          <span className="font-semibold text-emerald-600">
             {language === "hi" ? "₹2,58,750 शेष है" : "₹2,58,750 remaining"}
           </span>
         </div>
@@ -435,14 +365,10 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
               setSelectedPreset(tier.value);
               handleOpenPayment();
             }}
-            className="flex flex-col items-center justify-center p-2.5 bg-brand-cream-card hover:bg-white dark:bg-slate-900/60 border border-stone-200 dark:border-white/10 rounded-xl transition hover:border-brand-coral hover:shadow-2xs text-left cursor-pointer group"
+            className="flex flex-col items-center justify-center p-2.5 bg-brand-cream-card hover:bg-white border border-stone-200 rounded-xl transition hover:border-brand-coral hover:shadow-2xs text-left cursor-pointer group"
           >
-            <span className="text-xs font-black text-stone-900 dark:text-white group-hover:text-brand-coral transition">
-              ₹{tier.value}
-            </span>
-            <span className="text-[8px] text-stone-700 dark:text-slate-300 font-semibold truncate mt-0.5 max-w-full text-center">
-              {tier.desc}
-            </span>
+            <span className="text-xs font-black text-stone-900 group-hover:text-brand-coral transition">₹{tier.value}</span>
+            <span className="text-[8px] text-stone-450 font-medium truncate mt-0.5 max-w-full text-center">{tier.desc}</span>
           </button>
         ))}
       </div>
@@ -457,11 +383,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
         id="open-nation-fund-modal-btn"
       >
         <Landmark className="w-3.5 h-3.5 animate-bounce" />
-        <span>
-          {language === "hi"
-            ? "स्वैच्छिक सहायता दान करें"
-            : "Contribute & Get platform Certificate"}
-        </span>
+        <span>{language === "hi" ? "स्वैच्छिक सहायता दान करें" : "Contribute & Get platform Certificate"}</span>
         <ArrowRight className="w-3.5 h-3.5" />
       </button>
 
@@ -474,20 +396,12 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
           </p>
         </div>
 
-        <div
-          className="space-y-2 max-h-24 overflow-y-auto scrollbar-none"
-          id="donor-bulletin-board"
-        >
+        <div className="space-y-2 max-h-24 overflow-y-auto scrollbar-none" id="donor-bulletin-board">
           {contributors.map((contrib, idx) => (
-            <div
-              key={idx}
-              className="text-[9.5px] border-b border-stone-105 pb-1.5 last:border-0 last:pb-0 font-sans flex items-start justify-between gap-1.5"
-            >
+            <div key={idx} className="text-[9.5px] border-b border-stone-105 pb-1.5 last:border-0 last:pb-0 font-sans flex items-start justify-between gap-1.5">
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1">
-                  <span className="font-extrabold text-stone-900 truncate max-w-[125px]">
-                    {contrib.name}
-                  </span>
+                  <span className="font-extrabold text-stone-900 truncate max-w-[125px]">{contrib.name}</span>
                   <span className="text-[8px] bg-amber-500/10 text-amber-700 px-1 rounded font-mono font-bold shrink-0">
                     ₹{contrib.amount}
                   </span>
@@ -496,9 +410,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
                   "{contrib.message}"
                 </p>
               </div>
-              <span className="text-[8px] text-stone-400 font-mono whitespace-nowrap pt-0.5">
-                {contrib.date}
-              </span>
+              <span className="text-[8px] text-stone-400 font-mono whitespace-nowrap pt-0.5">{contrib.date}</span>
             </div>
           ))}
         </div>
@@ -519,9 +431,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
                 <div className="flex items-center gap-2">
                   <Landmark className="w-4 h-4 text-brand-coral" />
                   <h3 className="text-xs font-display font-black text-stone-900 uppercase tracking-wide">
-                    {language === "hi"
-                      ? "सुरक्षित पेमेंट गेटवे (सिम्युलेटर)"
-                      : "Secured Platform Gateway (Simulator)"}
+                    {language === "hi" ? "सुरक्षित पेमेंट गेटवे (सिम्युलेटर)" : "Secured Platform Gateway (Simulator)"}
                   </h3>
                 </div>
                 <button
@@ -557,11 +467,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
                   <input
                     type="text"
                     maxLength={60}
-                    placeholder={
-                      language === "hi"
-                        ? "डिजिटल इंडिया के उज्ज्वल भविष्य के लिए..."
-                        : "For a better digital tomorrow..."
-                    }
+                    placeholder={language === "hi" ? "डिजिटल इंडिया के उज्ज्वल भविष्य के लिए..." : "For a better digital tomorrow..."}
                     value={donorMessage}
                     onChange={(e) => setDonorMessage(e.target.value)}
                     className="w-full bg-stone-50 border border-stone-250 py-2 px-3 rounded-xl text-xs font-sans outline-none focus:border-brand-coral focus:bg-white text-stone-850"
@@ -608,11 +514,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
                         min="10"
                         max="100000"
                         required
-                        placeholder={
-                          language === "hi"
-                            ? "राशि दर्ज करें (उदा. १५००)"
-                            : "Enter amount (e.g. 1500)"
-                        }
+                        placeholder={language === "hi" ? "राशि दर्ज करें (उदा. १५००)" : "Enter amount (e.g. 1500)"}
                         value={customAmount}
                         onChange={(e) => setCustomAmount(e.target.value)}
                         className="w-full bg-stone-50 border border-stone-250 py-2 px-3 rounded-xl text-xs font-sans outline-none focus:border-brand-coral focus:bg-white text-stone-850 placeholder:text-stone-400"
@@ -678,8 +580,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
                       </div>
                     </div>
                     <span className="text-[9px] font-mono font-bold text-stone-600">
-                      Amount:{" "}
-                      <span className="text-stone-900 font-extrabold">₹{getActiveAmount()}</span>
+                      Amount: <span className="text-stone-900 font-extrabold">₹{getActiveAmount()}</span>
                     </span>
                     <p className="text-[7.5px] text-stone-400 font-sans text-center leading-tight">
                       Scan QR safely with BHIM, GPay, PhonePe, or Paytm simulator.
@@ -698,8 +599,8 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
                   type="submit"
                   className="w-full py-2.5 bg-slate-900 hover:bg-slate-950 text-white font-sans font-extrabold text-xs rounded-xl shadow-xs transition active:scale-[0.98] cursor-pointer text-center"
                 >
-                  {language === "hi"
-                    ? `₹${getActiveAmount()} सुरक्षित भुगतान करें`
+                  {language === "hi" 
+                    ? `₹${getActiveAmount()} सुरक्षित भुगतान करें` 
                     : `Pay ₹${getActiveAmount()} to Contribute`}
                 </button>
               </form>
@@ -723,9 +624,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
                 <div className="flex items-center gap-2">
                   <Award className="w-4 h-4 text-amber-500" />
                   <h3 className="text-xs font-display font-black text-stone-900 uppercase tracking-wider">
-                    {language === "hi"
-                      ? "स्वैच्छिक आभार पत्र"
-                      : "Voluntary Appreciation Certificate"}
+                    {language === "hi" ? "स्वैच्छिक आभार पत्र" : "Voluntary Appreciation Certificate"}
                   </h3>
                 </div>
                 <button
@@ -739,26 +638,18 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
               {/* Certificate Template */}
               <div className="p-5 border-4 border-double border-amber-600 bg-[#FCFBF7] rounded-2xl relative text-center space-y-4 shadow-inner min-h-[300px]">
                 {/* Vintage Corner decorations */}
-                <span className="absolute top-2 left-2 text-amber-600 font-mono text-[8px] select-none">
-                  ❖
-                </span>
-                <span className="absolute top-2 right-2 text-amber-600 font-mono text-[8px] select-none">
-                  ❖
-                </span>
-                <span className="absolute bottom-2 left-2 text-amber-600 font-mono text-[8px] select-none">
-                  ❖
-                </span>
-                <span className="absolute bottom-2 right-2 text-amber-600 font-mono text-[8px] select-none">
-                  ❖
-                </span>
+                <span className="absolute top-2 left-2 text-amber-600 font-mono text-[8px] select-none">❖</span>
+                <span className="absolute top-2 right-2 text-amber-600 font-mono text-[8px] select-none">❖</span>
+                <span className="absolute bottom-2 left-2 text-amber-600 font-mono text-[8px] select-none">❖</span>
+                <span className="absolute bottom-2 right-2 text-amber-600 font-mono text-[8px] select-none">❖</span>
 
                 <div className="space-y-1">
                   <p className="text-[8px] font-mono text-stone-400 font-extrabold uppercase tracking-widest leading-none">
                     SEWANADU VOLUNTARY COMMUNITY SANDBOX
                   </p>
                   <p className="text-[7.5px] font-mono text-red-500 font-bold uppercase tracking-tight bg-red-50 border border-red-100 p-1 rounded inline-block">
-                    {language === "hi"
-                      ? "विशेष सूचना: यह भारत सरकार का प्रमाणपत्र नहीं है"
+                    {language === "hi" 
+                      ? "विशेष सूचना: यह भारत सरकार का प्रमाणपत्र नहीं है" 
                       : "NOTICE: NOT A GOVERNMENT ISSUED CERTIFICATE"}
                   </p>
                   <h4 className="font-display font-black text-stone-900 text-xs tracking-tight uppercase">
@@ -769,9 +660,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
 
                 <div className="space-y-1.5">
                   <p className="text-[10px] font-sans text-stone-505 italic">
-                    {language === "hi"
-                      ? "यह सम्मान पत्र बड़े हर्ष एवं आभार के साथ प्रदान किया जाता है:"
-                      : "This certificate of appreciation is proudly presented to:"}
+                    {language === "hi" ? "यह सम्मान पत्र बड़े हर्ष एवं आभार के साथ प्रदान किया जाता है:" : "This certificate of appreciation is proudly presented to:"}
                   </p>
                   <p className="font-display font-black text-lg text-brand-coral tracking-tight">
                     {lastContribution.name}
@@ -780,7 +669,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
                 </div>
 
                 <p className="text-[10.5px] font-sans text-stone-605 max-w-xs mx-auto leading-relaxed">
-                  {language === "hi"
+                  {language === "hi" 
                     ? `जिन्होंने राष्ट्रीय डिजिटल सेवा दान में ₹${lastContribution.amount} का स्वेच्छा से योगदान देकर ग्रामीण भारत को डिजिटल रूप से साक्षर और सुदृढ़ बनाने के संकल्प में अतुल्य भूमिका निभाई है।`
                     : `In deep appreciation of their voluntary contribution of ₹${lastContribution.amount} to the National Digital Seva Sandbox initiative, supporting rural documentation awareness and digital tools.`}
                 </p>
@@ -819,9 +708,7 @@ export default function NationalFundWidget({ language, triggerToast }: NationalF
                   className="flex-1 py-2 bg-gradient-to-r from-amber-500 to-amber-655 hover:from-amber-600 hover:to-amber-500 text-white font-sans font-extrabold text-[11px] uppercase tracking-wider rounded-xl shadow-xs transition active:scale-95 cursor-pointer flex items-center justify-center gap-1 border-0"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>
-                    {language === "hi" ? "डाउनलोड प्रमाण-पत्र (PNG)" : "Download Certificate (PNG)"}
-                  </span>
+                  <span>{language === "hi" ? "डाउनलोड प्रमाण-पत्र (PNG)" : "Download Certificate (PNG)"}</span>
                 </button>
                 <button
                   onClick={() => setSuccessModalOpen(false)}

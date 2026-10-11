@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ClientOnly } from "@tanstack/react-router";
 import React, { Suspense } from "react";
 import { LanguageProvider } from "@/LanguageContext";
-import PortalSSRPreRender from "@/components/PortalSSRPreRender";
 
 const App = React.lazy(() => import("@/App"));
 
@@ -28,10 +27,18 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
+function Loading() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-brand-cream-bg text-charcoal-500 text-sm font-medium">
+      Loading SewaNadu…
+    </div>
+  );
+}
+
 function HomePage() {
   return (
-    <ClientOnly fallback={<PortalSSRPreRender />}>
-      <Suspense fallback={<PortalSSRPreRender />}>
+    <ClientOnly fallback={<Loading />}>
+      <Suspense fallback={<Loading />}>
         <LanguageProvider>
           <App />
         </LanguageProvider>

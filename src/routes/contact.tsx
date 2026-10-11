@@ -13,8 +13,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact SewaNadu" },
       {
         property: "og:description",
-        content:
-          "Report corrections, request services, or contact us about privacy and advertising.",
+        content: "Report corrections, request services, or contact us about privacy and advertising.",
       },
       { property: "og:type", content: "article" },
       { property: "og:url", content: "/contact" },
@@ -37,8 +36,7 @@ export const Route = createFileRoute("/contact")({
                 <a href="mailto:support@sewanadu.in">support@sewanadu.in</a>
               </li>
               <li>
-                Privacy &amp; data requests:{" "}
-                <a href="mailto:privacy@sewanadu.in">privacy@sewanadu.in</a>
+                Privacy &amp; data requests: <a href="mailto:privacy@sewanadu.in">privacy@sewanadu.in</a>
               </li>
               <li>
                 Advertising: <a href="mailto:ads@sewanadu.in">ads@sewanadu.in</a>

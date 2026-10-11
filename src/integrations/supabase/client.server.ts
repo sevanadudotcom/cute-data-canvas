@@ -2,24 +2,17 @@
 // Server-side Supabase client with service role key - bypasses RLS.
 // Use this for admin operations in server functions and server routes only.
 // For user-authenticated queries (with RLS), use the auth middleware instead.
-import { createClient } from "@supabase/supabase-js";
-import type { Database } from "./types";
+import { createClient } from '@supabase/supabase-js';
+import type { Database } from './types';
 
 function isNewSupabaseApiKey(value: string): boolean {
-  return value.startsWith("sb_publishable_") || value.startsWith("sb_secret_");
+  return value.startsWith('sb_publishable_') || value.startsWith('sb_secret_');
 }
 
-function createSupabaseFetch(supabaseKey: string, isMock = false): typeof fetch {
-  return async (input, init) => {
-    if (isMock) {
-      return new Response(JSON.stringify([]), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
+function createSupabaseFetch(supabaseKey: string): typeof fetch {
+  return (input, init) => {
     const headers = new Headers(
-      typeof Request !== "undefined" && input instanceof Request ? input.headers : undefined,
+      typeof Request !== 'undefined' && input instanceof Request ? input.headers : undefined,
     );
 
     if (init?.headers) {
@@ -27,46 +20,38 @@ function createSupabaseFetch(supabaseKey: string, isMock = false): typeof fetch 
     }
 
     // New Supabase API keys are opaque strings, not bearer JWTs.
-    if (
-      isNewSupabaseApiKey(supabaseKey) &&
-      headers.get("Authorization") === `Bearer ${supabaseKey}`
-    ) {
-      headers.delete("Authorization");
+    if (isNewSupabaseApiKey(supabaseKey) && headers.get('Authorization') === `Bearer ${supabaseKey}`) {
+      headers.delete('Authorization');
     }
 
-    headers.set("apikey", supabaseKey);
+    headers.set('apikey', supabaseKey);
     return fetch(input, { ...init, headers });
   };
 }
 
 function createSupabaseAdminClient() {
-  const SUPABASE_URL = process.env["SUPABASE_URL"];
-  const SUPABASE_SERVICE_ROLE_KEY = process.env["SUPABASE_SERVICE_ROLE_KEY"];
+  const SUPABASE_URL = process.env['SUPABASE_URL'];
+  const SUPABASE_SERVICE_ROLE_KEY = process.env['SUPABASE_SERVICE_ROLE_KEY'];
 
-  const isConfigured = Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
-  if (!isConfigured) {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     const missing = [
-      ...(!SUPABASE_URL ? ["SUPABASE_URL"] : []),
-      ...(!SUPABASE_SERVICE_ROLE_KEY ? ["SUPABASE_SERVICE_ROLE_KEY"] : []),
+      ...(!SUPABASE_URL ? ['SUPABASE_URL'] : []),
+      ...(!SUPABASE_SERVICE_ROLE_KEY ? ['SUPABASE_SERVICE_ROLE_KEY'] : []),
     ];
-    console.warn(
-      `[Supabase Admin] Missing environment variable(s): ${missing.join(", ")}. Using mock client.`,
-    );
+    const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Connect Supabase in Lovable Cloud.`;
+    console.error(`[Supabase] ${message}`);
+    throw new Error(message);
   }
 
-  const effectiveUrl = SUPABASE_URL || "https://placeholder-project.supabase.co";
-  const effectiveKey =
-    SUPABASE_SERVICE_ROLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.placeholder";
-
-  return createClient<Database>(effectiveUrl, effectiveKey, {
+  return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
     global: {
-      fetch: createSupabaseFetch(effectiveKey, !isConfigured),
+      fetch: createSupabaseFetch(SUPABASE_SERVICE_ROLE_KEY),
     },
     auth: {
       storage: undefined,
       persistSession: false,
       autoRefreshToken: false,
-    },
+    }
   });
 }
 

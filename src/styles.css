@@ -9,30 +9,6 @@ body {
   overflow-x: hidden;
 }
 
-body {
-  background-color: var(--color-brand-cream-bg, #FAF8F5);
-  color: #1E293B;
-  font-family: var(--font-sans, "Manrope", sans-serif);
-  line-height: 1.5;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #0F172A;
-  letter-spacing: -0.015em;
-}
-
-html.dark h1,
-html.dark h2,
-html.dark h3,
-html.dark h4,
-html.dark h5,
-html.dark h6 {
-  color: #F8FAFC;
-}
-
 *,
 *::before,
 *::after {
@@ -58,147 +34,57 @@ svg {
   }
 }
 
-/* Visible keyboard focus with Indian Saffron outline */
+/* Visible keyboard focus everywhere */
 :focus-visible {
-  outline: 2px solid var(--india-saffron, #E85D04);
+  outline: 2px solid var(--color-public-blue);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
+
 :root {
-  /* =================================================================
-     AUTHENTIC INDIA CIVIC & SOVEREIGN TRI-COLOR DESIGN SYSTEM
-     - Indian Saffron / Kesari (#E85D04 / #FF671F): Civic energy & public service
-     - Saffron Text (#C84700): Deep contrast Kesari for legible font (WCAG AA > 4.5:1)
-     - Ashoka Chakra Navy (#0A2E5C / #002B5C): Constitutional law & authority
-     - Tiranga Emerald Green (#046A38): Growth, verification & welfare benefits
-     - Gazette Archival Ivory (#FAF8F5): Warm administrative reading paper
-     ================================================================= */
-  --india-saffron: #E85D04;
-  --india-saffron-dark: #C84700;
-  --india-saffron-text: #C84700;
-  --india-saffron-light: #FF7A1A;
-  --india-saffron-soft: #FFF4EC;
-  
-  --india-navy: #0A2E5C;
-  --india-navy-dark: #061F3F;
-  --india-navy-light: #164E8A;
-  --india-navy-soft: #EFF6FF;
-
-  --india-green: #046A38;
-  --india-green-dark: #03532C;
-  --india-green-soft: #ECFDF5;
-
-  --color-brand-cream-bg: #FAF8F5;
-  --color-brand-cream-card: #FFFFFF;
-  --color-brand-cream-dark: #F3ECE1;
-
-  /* Authoritative, crisp typography colors for high contrast readability */
-  --color-charcoal-900: #0F172A;
-  --color-charcoal-700: #1E293B;
-  --color-charcoal-500: #475569;
-  --color-charcoal-400: #64748B;
-  --color-border-subtle: #E8E2D6;
-
-  --public-blue: var(--india-navy);
-  --public-blue-hover: var(--india-navy-dark);
-  --public-blue-soft: var(--india-navy-soft);
-
-  --civic-amber: var(--india-saffron);
-  --civic-amber-soft: var(--india-saffron-soft);
-  --on-primary: #FFFFFF;
-
-  --color-slate-450: #334155;
-  --color-slate-455: #1E293B;
-
-  /* Shadcn standard design tokens */
-  --background: #FAF8F5;
-  --foreground: #0F172A;
-  --card: #FFFFFF;
-  --card-foreground: #0F172A;
-  --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
-  --primary: #0A2E5C;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F3ECE1;
-  --secondary-foreground: #0F172A;
-  --muted: #F1ECE2;
-  --muted-foreground: #475569;
-  --accent: #FFF4EC;
-  --accent-foreground: #0F172A;
-  --destructive: #DC2626;
-  --destructive-foreground: #FFFFFF;
-  --border: #E8E2D6;
-  --input: #E2DCD0;
-  --ring: #E85D04;
-  --radius: 0.75rem;
+  --color-brand-cream-bg: oklch(0.977 0.004 247.9);
+  --color-brand-cream-card: oklch(1 0 0);
+  --color-brand-cream-dark: oklch(0.946 0.007 247.9);
+  --color-charcoal-900: oklch(0.278 0.029 256.8);
+  --color-charcoal-700: oklch(0.372 0.03 256.8);
+  --color-charcoal-500: oklch(0.52 0.025 256.8);
+  --color-border-subtle: oklch(0.88 0.012 247.9);
+  --public-blue: oklch(0.43 0.095 218.8);
+  --public-blue-hover: oklch(0.36 0.085 218.8);
+  --public-blue-soft: oklch(0.95 0.025 218.8);
+  --civic-amber: oklch(0.62 0.13 69.8);
+  --civic-amber-soft: oklch(0.96 0.035 82);
+  --on-primary: oklch(1 0 0);
+  --color-slate-450: #64748B;
+  --color-slate-455: #475569;
 }
 
-/* Elegant High-contrast Dark Mode tuned for Indian Civic Palette */
+/* Elegant High-contrast Dark Mode variables suitable for low-light environments */
 html.dark {
-  --india-saffron: #FB923C;
-  --india-saffron-dark: #EA580C;
-  --india-saffron-text: #FDBA74;
-  --india-saffron-light: #FDBA74;
-  --india-saffron-soft: rgba(234, 88, 12, 0.18);
-
-  --india-navy: #60A5FA;
-  --india-navy-dark: #3B82F6;
-  --india-navy-light: #93C5FD;
-  --india-navy-soft: rgba(30, 58, 138, 0.35);
-
-  --india-green: #34D399;
-  --india-green-dark: #10B981;
-  --india-green-soft: rgba(16, 185, 129, 0.18);
-
-  --color-brand-cream-bg: #0A111C;
-  --color-brand-cream-card: #111A2E;
-  --color-brand-cream-dark: #1E293B;
-
-  --color-charcoal-900: #F8FAFC;
-  --color-charcoal-700: #E2E8F0;
-  --color-charcoal-500: #94A3B8;
-  --color-charcoal-400: #94A3B8;
-  --color-border-subtle: #273549;
-
-  --public-blue: var(--india-navy);
-  --public-blue-hover: var(--india-navy-dark);
-  --public-blue-soft: var(--india-navy-soft);
-
-  --civic-amber: var(--india-saffron);
-  --civic-amber-soft: var(--india-saffron-soft);
-  --on-primary: #090E17;
-
-  --color-slate-450: #CBD5E1;
-  --color-slate-455: #E2E8F0;
+  --color-brand-cream-bg: oklch(0.18 0.03 238);
+  --color-brand-cream-card: oklch(0.23 0.035 238);
+  --color-brand-cream-dark: oklch(0.28 0.04 238);
+  --color-charcoal-900: oklch(0.97 0.005 248);
+  --color-charcoal-700: oklch(0.87 0.018 248);
+  --color-charcoal-500: oklch(0.72 0.025 248);
+  --color-border-subtle: oklch(0.34 0.035 238);
+  --public-blue: oklch(0.72 0.105 211);
+  --public-blue-hover: oklch(0.79 0.105 211);
+  --public-blue-soft: oklch(0.28 0.05 218);
+  --civic-amber: oklch(0.75 0.13 75);
+  --civic-amber-soft: oklch(0.29 0.045 69);
+  --on-primary: oklch(0.16 0.025 238);
+  --color-slate-450: #94A3B8;
+  --color-slate-455: #CBD5E1;
   
-  --background: #0A111C;
-  --foreground: #F8FAFC;
-  --card: #111A2E;
-  --card-foreground: #F8FAFC;
-  --popover: #111A2E;
-  --popover-foreground: #F8FAFC;
-  --primary: #60A5FA;
-  --primary-foreground: #090E17;
-  --secondary: #1E293B;
-  --secondary-foreground: #F8FAFC;
-  --muted: #1E293B;
-  --muted-foreground: #94A3B8;
-  --accent: rgba(234, 88, 12, 0.18);
-  --accent-foreground: #F8FAFC;
-  --destructive: #EF4444;
-  --destructive-foreground: #FFFFFF;
-  --border: #273549;
-  --input: #273549;
-  --ring: #FB923C;
-
-  background-color: #0A111C;
+  background-color: #090E17;
   color: #F8FAFC;
 }
 
 /* Force state transformations for elements that have hardcoded white and stone classes */
 html.dark body {
-  background-color: #0A111C;
+  background-color: #090E17;
   color: #F8FAFC;
 }
 
@@ -213,34 +99,25 @@ html.dark .bg-\[\#FAF8F5\]\/10 {
   background-color: #1E293B !important;
 }
 
-html.dark .bg-\[\#FCFBF7\],
-html.dark .bg-\[\#FDFBF7\] {
-  background-color: #0A111C !important;
+html.dark .bg-\[\#FCFBF7\] {
+  background-color: #090E17 !important;
 }
 
 html.dark .text-stone-900,
 html.dark .text-stone-850,
 html.dark .text-slate-900,
 html.dark .text-neutral-900,
-html.dark .text-stone-950,
-html.dark .text-charcoal-900,
-html.dark .text-stone-755,
-html.dark .text-stone-750,
-html.dark .text-stone-705 {
+html.dark .text-stone-950 {
   color: #F8FAFC !important;
 }
 
 html.dark .text-stone-800,
+html.dark .text-stone-750,
 html.dark .text-stone-700,
 html.dark .text-stone-650,
-html.dark .text-stone-605,
 html.dark .text-slate-700,
-html.dark .text-slate-600,
-html.dark .text-neutral-700,
-html.dark .text-charcoal-700,
-html.dark .text-stone-555,
-html.dark .text-stone-550 {
-  color: #E2E8F0 !important;
+html.dark .text-neutral-700 {
+  color: #CBD5E1 !important;
 }
 
 html.dark .text-stone-600,
@@ -249,57 +126,8 @@ html.dark .text-stone-450,
 html.dark .text-stone-400,
 html.dark .text-slate-500,
 html.dark .text-slate-400,
-html.dark .text-slate-450,
-html.dark .text-charcoal-500,
-html.dark .text-charcoal-400 {
-  color: #CBD5E1 !important;
-}
-
-html.dark .text-stone-300,
-html.dark .text-slate-300 {
-  color: #E2E8F0 !important;
-}
-
-/* Ensure elements inside permanently dark containers (hero headers, dossiers, flyers)
-   always have luminous, high-contrast text even when global theme is light mode */
-.bg-stone-900,
-.bg-slate-900,
-.bg-slate-950,
-[class*="from-stone-900"],
-[class*="from-[#0A2540]"],
-[class*="from-[#0E3A73]"],
-[class*="from-[#071324]"],
-[class*="from-[#0A2E5C]"] {
-  color: #F8FAFC;
-}
-
-.bg-stone-900 .text-stone-400,
-.bg-slate-900 .text-stone-400,
-.bg-slate-950 .text-stone-400,
-[class*="from-stone-900"] .text-stone-400,
-[class*="from-[#0A2540]"] .text-stone-400,
-[class*="from-[#071324]"] .text-stone-400,
-[class*="from-[#0A2E5C]"] .text-stone-400,
-.bg-stone-900 .text-stone-450,
-[class*="from-stone-900"] .text-stone-450,
-.bg-stone-900 .text-stone-500,
-[class*="from-stone-900"] .text-stone-500,
-[class*="from-[#0A2540]"] .text-stone-500 {
-  color: #CBD5E1 !important;
-}
-
-.bg-stone-900 .text-stone-300,
-.bg-slate-900 .text-stone-300,
-[class*="from-stone-900"] .text-stone-300,
-[class*="from-[#0A2540]"] .text-stone-300,
-[class*="from-[#071324]"] .text-stone-300 {
-  color: #E2E8F0 !important;
-}
-
-.bg-stone-900 .text-stone-200,
-[class*="from-stone-900"] .text-stone-200,
-[class*="from-[#0A2540]"] .text-stone-200 {
-  color: #F8FAFC !important;
+html.dark .text-slate-450 {
+  color: #94A3B8 !important;
 }
 
 html.dark .border-stone-200,
@@ -307,8 +135,7 @@ html.dark .border-stone-250,
 html.dark .border-stone-150,
 html.dark .border-stone-100,
 html.dark .border-neutral-200,
-html.dark .border-\[\#E5E2D9\],
-html.dark .border-\[\#E8E2D6\] {
+html.dark .border-\[\#E5E2D9\] {
   border-color: #273549 !important;
 }
 
@@ -333,130 +160,70 @@ html.dark .shadow-xl {
   --font-display: "Sora", var(--font-sans);
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* Sovereign Indian Civic Brand Colors */
+  /* Premium variables mapped dynamically */
   --color-brand-cream-bg: var(--color-brand-cream-bg);
   --color-brand-cream-card: var(--color-brand-cream-card);
   --color-brand-cream-dark: var(--color-brand-cream-dark);
-  
-  --color-brand-coral: var(--india-saffron);
-  --color-brand-coral-hover: var(--india-saffron-dark);
-  --color-brand-coral-soft: var(--india-saffron-soft);
-
-  --color-india-saffron: var(--india-saffron);
-  --color-india-saffron-dark: var(--india-saffron-dark);
-  --color-india-saffron-soft: var(--india-saffron-soft);
-
-  --color-india-navy: var(--india-navy);
-  --color-india-navy-dark: var(--india-navy-dark);
-  --color-india-navy-soft: var(--india-navy-soft);
-
-  --color-india-green: var(--india-green);
-  --color-india-green-dark: var(--india-green-dark);
-  --color-india-green-soft: var(--india-green-soft);
-
+  --color-brand-coral: var(--public-blue);
+  --color-brand-coral-hover: var(--public-blue-hover);
   --color-public-blue: var(--public-blue);
   --color-public-blue-hover: var(--public-blue-hover);
   --color-public-blue-soft: var(--public-blue-soft);
-
   --color-civic-amber: var(--civic-amber);
   --color-civic-amber-soft: var(--civic-amber-soft);
   --color-on-primary: var(--on-primary);
-
   --color-charcoal-900: var(--color-charcoal-900);
   --color-charcoal-700: var(--color-charcoal-700);
   --color-charcoal-500: var(--color-charcoal-500);
-
-  --color-slate-400: #475569;
   --color-slate-450: var(--color-slate-450);
   --color-slate-455: var(--color-slate-455);
-  --color-slate-500: #334155;
-  --color-slate-600: #1E293B;
-  --color-slate-700: #0F172A;
-
-  --color-charcoal-400: var(--color-charcoal-400);
-  --color-charcoal-600: #334155;
-  --color-charcoal-800: #0F172A;
-
-  --color-brand-coral-text: var(--india-saffron-text);
-  --color-india-saffron-text: var(--india-saffron-text);
-
-  /* Enhanced High-Contrast Stone Scale: Replaces washed-out 2.3:1 gray with crisp 5.8:1 to 15:1 text */
-  --color-stone-150: #EFECE6;
-  --color-stone-250: #DDD7CD;
-  --color-stone-300: #94A3B8;
-  --color-stone-400: #4B5563;
-  --color-stone-450: #374151;
-  --color-stone-500: #1F2937;
-  --color-stone-550: #1E293B;
-  --color-stone-555: #1E293B;
-  --color-stone-600: #0F172A;
-  --color-stone-605: #0F172A;
-  --color-stone-650: #0F172A;
-  --color-stone-700: #0F172A;
-  --color-stone-705: #0F172A;
-  --color-stone-750: #0F172A;
-  --color-stone-755: #0F172A;
-  --color-stone-800: #090D16;
-  --color-stone-850: #090D16;
-  --color-stone-900: #05080F;
-  --color-stone-950: #020617;
-
-  /* Shadcn UI tokens mapping */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
 }
 
-/* Indian Civic Theme: Harmonizes state portal aesthetics with high-contrast legibility */
-.institutional-theme .bg-brand-coral {
-  background-color: var(--india-saffron);
+/* Modern Institutional theme: remap the legacy warm accents without changing
+   the portal's information architecture or service behavior. */
+.institutional-theme .text-orange-600,
+.institutional-theme .text-orange-650,
+.institutional-theme .text-orange-655,
+.institutional-theme .text-amber-600,
+.institutional-theme .text-amber-700,
+.institutional-theme .text-amber-800,
+.institutional-theme .text-amber-900 {
+  color: var(--public-blue);
 }
 
-.institutional-theme .text-brand-coral {
-  color: var(--india-saffron-text, #C84700);
+.institutional-theme .bg-orange-500,
+.institutional-theme .bg-orange-600,
+.institutional-theme .bg-amber-500,
+.institutional-theme .bg-amber-600 {
+  background-color: var(--public-blue);
 }
 
-.institutional-theme .text-india-saffron {
-  color: var(--india-saffron-text, #C84700);
+.institutional-theme .border-orange-600,
+.institutional-theme .border-amber-500,
+.institutional-theme .border-amber-600 {
+  border-color: var(--public-blue);
 }
 
-.institutional-theme .border-brand-coral {
-  border-color: var(--india-saffron);
+.institutional-theme .bg-amber-50,
+.institutional-theme .bg-amber-50\/40,
+.institutional-theme .bg-orange-500\/10,
+.institutional-theme .bg-amber-500\/10,
+.institutional-theme .bg-amber-500\/15 {
+  background-color: var(--public-blue-soft);
 }
 
-.institutional-theme .bg-public-blue {
-  background-color: var(--india-navy);
-}
-
-.institutional-theme .text-public-blue {
-  color: var(--india-navy);
-}
-
-.institutional-theme .border-public-blue {
-  border-color: var(--india-navy);
+.institutional-theme .border-amber-200,
+.institutional-theme .border-amber-200\/50,
+.institutional-theme .border-amber-200\/60,
+.institutional-theme .border-amber-500\/30 {
+  border-color: color-mix(in oklab, var(--public-blue) 28%, transparent);
 }
 
 .institutional-theme .shadow-sm,
 .institutional-theme .shadow-md,
 .institutional-theme .shadow-xl,
 .institutional-theme .shadow-2xl {
-  --tw-shadow-color: rgba(10, 46, 92, 0.08);
+  --tw-shadow-color: color-mix(in oklab, var(--color-charcoal-900) 11%, transparent);
 }
 
 @layer utilities {

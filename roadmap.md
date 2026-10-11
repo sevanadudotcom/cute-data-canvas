@@ -3,7 +3,6 @@
 Sevanadu civic-services portal (uploaded zip) moved into this Supabase-connected project, Firebase replaced by Supabase.
 
 ## Tasks
-
 - [x] Overlay Sevanadu source onto project (keep Supabase integrations + build configs)
 - [x] Restore project build files (server.ts, start.ts with CSRF)
 - [x] Add deps (motion, @supabase/supabase-js, @supabase/ssr); firebase already absent
@@ -15,7 +14,6 @@ Sevanadu civic-services portal (uploaded zip) moved into this Supabase-connected
 - [x] Clear all typecheck build errors (relaxed 4 over-strict TS flags for the ported code)
 
 ## Open / blocked
-
 - Google sign-in requires user to add Google Cloud OAuth credentials in Supabase Auth → Providers → Google (BYO Supabase; Lovable-managed Google not available for external Supabase).
 - (resolved) Pre-existing strict-TS warnings in Sevanadu's own files (LanguageContext, AdSenseUnit, ServiceDossier, SavedServices, ESevaServiceList) under this project's stricter tsconfig — do not block Vite dev/build (esbuild strips types); not in scope to fix unless asked.
 
@@ -26,7 +24,20 @@ Sevanadu civic-services portal (uploaded zip) moved into this Supabase-connected
 - [x] Refresh the portal with the selected Modern Institutional theme (public-service blue, Sora + Manrope, dashboard structure)
 
 ## Known minor issue
-
 - [x] Service cards now show the state/UT name on the badge (central services still show "Central").
 - [x] Simplify the top navigation with responsive search, prioritized actions, and overflow menus.
 - [x] Add dedicated responsive RTI filing and service status pages, linked from the top navigation.
+
+## Current queue
+- [ ] Admin-only /admin page: citizen accounts with saved services + feedback (in progress)
+- [ ] Test citizen accounts + saved services + feedback so /reports isn't zeros
+- [ ] Last-logged-in column on /reports + track sign-ins
+- [ ] Replace chatbot with real AI backend answering about services
+- [ ] Show real feedback entries on the portal
+- [ ] Google provider setup — blocked: user must paste Google credentials in their own Supabase dashboard
+- [ ] Logged-out citizen portal page (browse, feedback, save for later)
+- [ ] Admin CRUD for services/categories + feedback approval
+- [ ] State/UT dropdown on homepage + state landing page with category counts
+- [ ] Copy audit for pan-India wording
+- [x] Service card badges show state/UT (done earlier)
+- [ ] AI RTI draft improver
