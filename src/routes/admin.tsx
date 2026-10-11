@@ -128,7 +128,7 @@ function Review({ citizens, anonymousFeedback }: { citizens: CitizenRecord[]; an
                     {c.feedback.length === 0 ? <p className="text-sm text-charcoal-500">None.</p> : (
                       <ul className="space-y-3 text-sm">{c.feedback.map((f) => (
                         <li key={f.id}>
-                          <span className="flex items-center gap-1 font-medium"><Star className="h-3.5 w-3.5 text-saffron" />{f.rating}/5 · {f.serviceId}</span>
+                          <span className="flex items-center gap-1 font-medium"><Star className="h-3.5 w-3.5 text-civic-amber" />{f.rating}/5 · {f.serviceId}</span>
                           {f.comment && <p className="text-charcoal-700">{f.comment}</p>}
                           <span className="text-xs text-charcoal-500">{fmt(f.createdAt)}</span>
                         </li>
