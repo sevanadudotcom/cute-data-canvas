@@ -27,3 +27,17 @@ Sevanadu civic-services portal (uploaded zip) moved into this Supabase-connected
 - [x] Service cards now show the state/UT name on the badge (central services still show "Central").
 - [x] Simplify the top navigation with responsive search, prioritized actions, and overflow menus.
 - [x] Add dedicated responsive RTI filing and service status pages, linked from the top navigation.
+
+## Current queue
+- [ ] Admin-only /admin page: citizen accounts with saved services + feedback (in progress)
+- [ ] Test citizen accounts + saved services + feedback so /reports isn't zeros
+- [ ] Last-logged-in column on /reports + track sign-ins
+- [ ] Replace chatbot with real AI backend answering about services
+- [ ] Show real feedback entries on the portal
+- [ ] Google provider setup — blocked: user must paste Google credentials in their own Supabase dashboard
+- [ ] Logged-out citizen portal page (browse, feedback, save for later)
+- [ ] Admin CRUD for services/categories + feedback approval
+- [ ] State/UT dropdown on homepage + state landing page with category counts
+- [ ] Copy audit for pan-India wording
+- [x] Service card badges show state/UT (done earlier)
+- [ ] AI RTI draft improver
