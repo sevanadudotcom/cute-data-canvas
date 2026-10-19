@@ -87,7 +87,7 @@ export default function StateGovernanceNewsWidget({ language, triggerToast }: St
       <span className="absolute -top-12 -left-12 w-28 h-28 bg-amber-500/5 rounded-full blur-xl pointer-events-none"></span>
 
       {/* Header Bar */}
-      <div className="border-b border-stone-100 pb-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="border-b border-stone-100 pb-3.5 flex flex-col gap-3">
         <div className="space-y-1">
           <div className="flex items-center gap-1.5">
             <div className="w-5 h-5 bg-amber-500/15 rounded-lg flex items-center justify-center">
@@ -109,7 +109,7 @@ export default function StateGovernanceNewsWidget({ language, triggerToast }: St
         </div>
 
         {/* State / UT selector select box */}
-        <div className="relative shrink-0 min-w-[130px]" id="news-state-dropdown-wrapper">
+        <div className="relative w-full" id="news-state-dropdown-wrapper">
           <MapPin className="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <select
             value={selectedStateId}
