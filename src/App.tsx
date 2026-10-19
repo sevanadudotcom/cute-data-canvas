@@ -327,15 +327,24 @@ export default function App() {
     }
   }, [darkMode]);
 
-  // Small compliance disclaimer notification state
-  const [showSewaNaduDisclaimer, setShowSewaNaduDisclaimer] = useState(true);
+  // Small compliance disclaimer notification state — shown once per session,
+  // only after the legal consent dialog is dismissed, so popups never pile up.
+  const [showSewaNaduDisclaimer, setShowSewaNaduDisclaimer] = useState(false);
 
   useEffect(() => {
+    if (!hasConsentAccepted) return;
+    try {
+      if (sessionStorage.getItem("sewanadu_disclaimer_shown") === "true") return;
+      sessionStorage.setItem("sewanadu_disclaimer_shown", "true");
+    } catch {
+      /* storage unavailable — still show once */
+    }
+    setShowSewaNaduDisclaimer(true);
     const timer = setTimeout(() => {
       setShowSewaNaduDisclaimer(false);
-    }, 10000); // appears briefly for 10 seconds on load
+    }, 10000); // appears briefly for 10 seconds
     return () => clearTimeout(timer);
-  }, []);
+  }, [hasConsentAccepted]);
 
   // Back to Top button state
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -2455,7 +2464,9 @@ export default function App() {
         }}
       />
 
-      {/* 16. Cookie consent banner (granular opt-in) */}
+      {/* 16. Cookie consent banner (granular opt-in) — mounts only after the
+          legal consent dialog is accepted, so the two never overlap. */}
+      {hasConsentAccepted && (
       <CookieConsentBanner
         language={language}
         onSaved={(c) =>
@@ -2467,6 +2478,7 @@ export default function App() {
           )
         }
       />
+      )}
 
     </div>
   );
