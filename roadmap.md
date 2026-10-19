@@ -41,3 +41,4 @@ Sevanadu civic-services portal (uploaded zip) moved into this Supabase-connected
 - [ ] Copy audit for pan-India wording
 - [x] Service card badges show state/UT (done earlier)
 - [ ] AI RTI draft improver
+- [x] Design polish pass: popups no longer pile up (consent → cookies → one-time advisory), news widget header no longer overlaps in the sidebar
