@@ -93,9 +93,9 @@ export default function StateGovernanceNewsWidget({ language, triggerToast }: St
             <div className="w-5 h-5 bg-amber-500/15 rounded-lg flex items-center justify-center">
               <Newspaper className="w-3.5 h-3.5 text-amber-600" />
             </div>
-            <h3 className="font-extrabold text-stone-900 text-xs uppercase tracking-wider font-display flex items-center gap-1.5">
-              <span>{language === "hi" ? "राज्य लाइव सरकारी समाचार" : "Live State Governance News"}</span>
-              <span className="flex items-center gap-0.5 bg-amber-500/10 text-amber-700 text-[8.5px] px-1.5 py-0.2 rounded font-mono font-bold uppercase shrink-0">
+            <h3 className="font-extrabold text-stone-900 text-xs uppercase tracking-wider font-display flex flex-wrap items-center gap-x-1.5 gap-y-1 min-w-0">
+              <span className="min-w-0">{language === "hi" ? "राज्य लाइव सरकारी समाचार" : "Live State Governance News"}</span>
+              <span className="inline-flex items-center gap-0.5 bg-amber-500/10 text-amber-700 text-[8.5px] px-1.5 py-0.5 rounded font-mono font-bold uppercase shrink-0">
                 <Sparkles className="w-2.5 h-2.5" />
                 <span>Grounding</span>
               </span>
