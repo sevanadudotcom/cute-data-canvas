@@ -4,7 +4,7 @@ import {
   Building2, Landmark, FolderCheck, Megaphone, Bot, User, 
   MapPin, LogOut, CheckCircle2, RefreshCw, BookmarkCheck, FileCheck2, 
   Handshake, ArrowRight, ShieldCheck, CreditCard, ExternalLink, Globe, Award,
-  Zap, Plus, Search, LayoutGrid, FileText, HelpCircle,
+  Zap, Plus, Search, LayoutGrid, FileText, HelpCircle, Sparkles,
   Bell, BellRing, Volume2, VolumeX, Star, Sun, Moon, Share2, AlertTriangle,
   ArrowUp, Home, ChevronRight, ChevronDown, Scale, ClipboardCheck, Users, LogIn, Menu
 } from "lucide-react";
@@ -809,6 +809,7 @@ export default function App() {
                   <DropdownMenuSeparator className="lg:hidden" />
                   <DropdownMenuItem asChild className="min-h-10 cursor-pointer"><Link to="/rti"><Scale />{language === "hi" ? "RTI दाखिला" : "RTI filing"}</Link></DropdownMenuItem>
                   <DropdownMenuItem asChild className="min-h-10 cursor-pointer"><Link to="/status"><ClipboardCheck />{language === "hi" ? "स्थिति जांच" : "Application status"}</Link></DropdownMenuItem>
+                  <DropdownMenuItem asChild className="min-h-10 cursor-pointer"><Link to="/advisor"><Sparkles />{language === "hi" ? "एआई सेवा सलाहकार" : "AI service advisor"}</Link></DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => setShowLauncher(true)} className="min-h-10 cursor-pointer"><LayoutGrid />{language === "hi" ? "त्वरित लॉन्च" : "Quick launch"}</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={() => setDarkMode((value) => !value)} className="min-h-10 cursor-pointer">{darkMode ? <Sun /> : <Moon />}{darkMode ? "Light mode" : "Dark mode"}</DropdownMenuItem>
