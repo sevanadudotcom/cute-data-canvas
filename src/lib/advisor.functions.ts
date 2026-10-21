@@ -268,7 +268,8 @@ function keywordFallback(
   candidates: ServiceRow[],
 ): AdvisorResult {
   const pool = candidates.length > 0 ? candidates : scored.map((s) => s.row);
-  const fallbackRows = (scored.length > 0 && scored[0].score > 0 ? scored.slice(0, 3).map((s) => s.row) : pool.slice(0, 3));
+  const ranked = scored.filter((s) => s.score > 0).slice(0, 3);
+  const fallbackRows = ranked.length > 0 ? ranked.map((s) => s.row) : pool.slice(0, 3);
   return {
     summary:
       "The AI advisor is briefly unavailable, so here are the closest catalogue matches based on your words. Please double-check details on the official portal.",
@@ -287,7 +288,7 @@ function keywordFallback(
       processingTime: row.processing_time,
       documentsRequired: row.documents_required ?? [],
       why: "Matched keywords from your description (offline matching).",
-      fit: Math.min(80, 40 + scoreService(row, tokenize("match"))),
+      fit: 45,
     })),
     source: "keyword",
     note: "AI recommendation is temporarily unavailable.",
